@@ -1,10 +1,32 @@
+/*
+ * *
+ *
+ *
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
 package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.generated.NoSqlJDBCBaseListener;
 import bbejeck.nosql.antlr.generated.NoSqlJDBCParser;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
@@ -12,7 +34,7 @@ import org.apache.lucene.search.BooleanQuery;
 
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 /**
  * User: Bill Bejeck
@@ -22,11 +44,18 @@ import java.util.stream.Collectors;
 public class LuceneQueryListener extends NoSqlJDBCBaseListener {
 
     private String indexPath;
-    private List<BooleanClause> booleanClauses = Lists.newArrayList();
     private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
+    private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
+    private Stack<BooleanClause> nestedBooleanClauses = new Stack<>();
+    private Stack<BooleanClause.Occur> nestedOccurs = new Stack<>();
     private boolean isFilter = false;
+    private Function<Joiner,Function<Iterable<TerminalNode>,String>> toJoinedFunction = j -> j::join;
+    private Function<Iterable<TerminalNode>,String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
 
+    public LuceneQueryListener() {
+        booleanClausesListStack.push(Lists.newArrayList());
+    }
 
     public void exitSelect_stmt(@NotNull NoSqlJDBCParser.Select_stmtContext ctx) {
 
@@ -39,12 +68,7 @@ public class LuceneQueryListener extends NoSqlJDBCBaseListener {
 
     @Override
     public void exitPredicate(@NotNull NoSqlJDBCParser.PredicateContext ctx) {
-        if (isFilter) {
-            filterClauses.add(queryBuilders.pop().buildFilter());
-            isFilter = false;
-        } else {
-            booleanClauses.add(queryBuilders.pop().build());
-        }
+            booleanClausesListStack.peek().add(queryBuilders.pop().build());
     }
 
     @Override
@@ -91,18 +115,14 @@ public class LuceneQueryListener extends NoSqlJDBCBaseListener {
     @Override
     public void enterBetween_term(@NotNull NoSqlJDBCParser.Between_termContext ctx) {
         LuceneQueryBuilder builder = queryBuilders.peek();
-        String firstTerm = ctx.TERM(0).getText();
-        String secondTerm = ctx.TERM(1).getText();
-        builder.setText(firstTerm + ":" + secondTerm);
+        builder.setText(toJoinedString.apply(ctx.TERM()));
         builder.setQueryType(QueryType.TERM_RANGE);
     }
 
     @Override
     public void enterBetween_number(@NotNull NoSqlJDBCParser.Between_numberContext ctx) {
         LuceneQueryBuilder builder = queryBuilders.peek();
-        String firstTerm = ctx.NUMBER(0).getText();
-        String secondTerm = ctx.NUMBER(1).getText();
-        builder.setText(firstTerm + ":" + secondTerm);
+        builder.setText(toJoinedString.apply(ctx.NUMBER()));
         builder.setQueryType(QueryType.INTEGER_RANGE);
     }
 
@@ -114,16 +134,31 @@ public class LuceneQueryListener extends NoSqlJDBCBaseListener {
     }
 
     @Override
-    public void enterIn(@NotNull NoSqlJDBCParser.InContext ctx) {
-        isFilter = true;
+    public void enterNumber_list(@NotNull NoSqlJDBCParser.Number_listContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        builder.setText(toJoinedString.apply(ctx.NUMBER()));
+        builder.setQueryType(QueryType.BOOLEAN_OR_LIST);
     }
 
     @Override
-    public void enterNumber_list(@NotNull NoSqlJDBCParser.Number_listContext ctx) {
-        List<String> numbers = ctx.NUMBER().stream().map(ParseTree::getText).collect(Collectors.toList());
+    public void enterTerm_list(@NotNull NoSqlJDBCParser.Term_listContext ctx) {
         LuceneQueryBuilder builder = queryBuilders.peek();
-        builder.setTextValues(numbers);
-        builder.setFilterType(FilterType.TERMS_FILTER);
+        builder.setText(toJoinedString.apply(ctx.TERM()));
+        builder.setQueryType(QueryType.BOOLEAN_OR_LIST);
+    }
+
+    @Override
+    public void enterNested_predicate(@NotNull NoSqlJDBCParser.Nested_predicateContext ctx) {
+               booleanClausesListStack.push(Lists.newArrayList());
+               queryBuilders.push(new LuceneQueryBuilder());
+    }
+
+    @Override
+    public void exitNested_predicate(@NotNull NoSqlJDBCParser.Nested_predicateContext ctx) {
+               List<BooleanClause> nestedClauses = booleanClausesListStack.pop();
+               LuceneQueryBuilder queryBuilder = queryBuilders.pop();
+               queryBuilder.setBooleanClauses(nestedClauses);
+               booleanClausesListStack.peek().add(queryBuilder.build());
     }
 
     @Override
@@ -138,7 +173,7 @@ public class LuceneQueryListener extends NoSqlJDBCBaseListener {
 
 
     public BooleanQuery getQuery() {
-        return LuceneQueryFunctions.toBooleanQuery.apply(booleanClauses);
+        return LuceneQueryFunctions.toBooleanQuery.apply(booleanClausesListStack.pop());
     }
     public BooleanFilter getFilter() { return LuceneQueryFunctions.toBooleanFilter.apply(filterClauses);}
 

@@ -1,12 +1,29 @@
+/*
+ * *
+ *
+ *
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
 package bbejeck.nosql.lucene;
 
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queries.FilterClause;
-import org.apache.lucene.queries.TermsFilter;
 import org.apache.lucene.search.*;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -124,19 +141,196 @@ public class LuceneQueryParsingTest {
         String query = "select foo from /path/index/ where name='Beth' and score in (0, 50, 55)";
         QueryContainer qc = parseQueryAndFilter(query);
         BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        assertThat(clauses.length,is(2));
+
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
         assertThat(termQuery.getTerm().field(), is("name"));
         assertThat(termQuery.getTerm().text(), is("beth"));
 
-        List<FilterClause> filtersList = qc.booleanFilter.clauses();
-        FilterClause filterClause = filtersList.get(0);
-        assertThat(filterClause.getOccur(),is(BooleanClause.Occur.MUST));
-        TermsFilter termsFilter = (TermsFilter) filtersList.get(0).getFilter();
+        BooleanQuery booleanQuery = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery.clauses().size(),is(3));
 
-        TermsFilter expected = new TermsFilter(new Term("score","70"),new Term("score","50"),new Term("score","55"));
-        assertThat(termsFilter,is(expected));
+        clauses = booleanQuery.getClauses();
+
+        TermQuery termQuery1 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery1.getTerm().field(), is("score"));
+        assertThat(termQuery1.getTerm().text(), is("0"));
+
+        TermQuery termQuery2 = (TermQuery) clauses[1].getQuery();
+        assertThat(termQuery2.getTerm().field(), is("score"));
+        assertThat(termQuery2.getTerm().text(), is("50"));
+
+        TermQuery termQuery3 = (TermQuery) clauses[2].getQuery();
+        assertThat(termQuery3.getTerm().field(), is("score"));
+        assertThat(termQuery3.getTerm().text(), is("55"));
+
     }
 
+    @Test
+    public void test_parse_in_term_listquery() throws Exception {
+        String query = "select foo from /path/index/ where name='Beth' and score in ('0', '50', '55')";
+        QueryContainer qc = parseQueryAndFilter(query);
+        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        assertThat(clauses.length,is(2));
+
+        TermQuery termQuery = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery.getTerm().field(), is("name"));
+        assertThat(termQuery.getTerm().text(), is("beth"));
+
+        BooleanQuery booleanQuery = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery.clauses().size(),is(3));
+
+        clauses = booleanQuery.getClauses();
+
+        TermQuery termQuery1 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery1.getTerm().field(), is("score"));
+        assertThat(termQuery1.getTerm().text(), is("0"));
+
+        TermQuery termQuery2 = (TermQuery) clauses[1].getQuery();
+        assertThat(termQuery2.getTerm().field(), is("score"));
+        assertThat(termQuery2.getTerm().text(), is("50"));
+
+        TermQuery termQuery3 = (TermQuery) clauses[2].getQuery();
+        assertThat(termQuery3.getTerm().field(), is("score"));
+        assertThat(termQuery3.getTerm().text(), is("55"));
+
+    }
+
+    @Test
+    public void test_parse_nested_query() throws Exception{
+        String query = "select foo from D:/some/path/ where a='1' and (b='2' and c='3' and d='4')";
+        QueryContainer qc = parseQueryAndFilter(query);
+        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        assertThat(clauses.length,is(2));
+
+        TermQuery termQuery = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery.getTerm().field(), is("a"));
+        assertThat(termQuery.getTerm().text(), is("1"));
+
+        BooleanQuery booleanQuery = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery.clauses().size(),is(3));
+
+        clauses = booleanQuery.getClauses();
+
+        TermQuery termQuery1 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery1.getTerm().field(), is("b"));
+        assertThat(termQuery1.getTerm().text(), is("2"));
+
+        TermQuery termQuery2 = (TermQuery) clauses[1].getQuery();
+        assertThat(termQuery2.getTerm().field(), is("c"));
+        assertThat(termQuery2.getTerm().text(), is("3"));
+
+        TermQuery termQuery3 = (TermQuery) clauses[2].getQuery();
+        assertThat(termQuery3.getTerm().field(), is("d"));
+        assertThat(termQuery3.getTerm().text(), is("4"));
+    }
+
+    @Test
+    public void test_parse_deeper_nested_query() throws Exception{
+        String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e='5')))";
+        QueryContainer qc = parseQueryAndFilter(query);
+        //Overall query
+        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        assertThat(clauses.length,is(2));
+
+        TermQuery termQuery = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery.getTerm().field(), is("a"));
+        assertThat(termQuery.getTerm().text(), is("1"));
+
+        BooleanQuery booleanQuery = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery.clauses().size(),is(2));
+
+        //First nesting
+        clauses = booleanQuery.getClauses();
+
+        TermQuery termQuery1 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery1.getTerm().field(), is("b"));
+        assertThat(termQuery1.getTerm().text(), is("2"));
+
+        BooleanQuery booleanQuery1 = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery1.clauses().size(),is(2));
+
+        //Second nesting
+        clauses = booleanQuery1.getClauses();
+
+        TermQuery termQuery2 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery2.getTerm().field(), is("c"));
+        assertThat(termQuery2.getTerm().text(), is("3"));
+
+        BooleanQuery booleanQuery2 = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery2.clauses().size(),is(2));
+
+        //Third nesting
+        clauses = booleanQuery2.getClauses();
+
+        TermQuery termQuery3 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery3.getTerm().field(), is("d"));
+        assertThat(termQuery3.getTerm().text(), is("4"));
+
+        TermQuery termQuery4 = (TermQuery) clauses[1].getQuery();
+        assertThat(termQuery4.getTerm().field(), is("e"));
+        assertThat(termQuery4.getTerm().text(), is("5"));
+    }
+
+    @Test
+    public void test_parse_deeper_nested_with_in_term_clause_query() throws Exception{
+        String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e in (5,6,7))))";
+        QueryContainer qc = parseQueryAndFilter(query);
+        //Overall query
+        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        assertThat(clauses.length,is(2));
+
+        TermQuery termQuery = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery.getTerm().field(), is("a"));
+        assertThat(termQuery.getTerm().text(), is("1"));
+
+        BooleanQuery booleanQuery = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery.clauses().size(),is(2));
+
+        //First nesting
+        clauses = booleanQuery.getClauses();
+
+        TermQuery termQuery1 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery1.getTerm().field(), is("b"));
+        assertThat(termQuery1.getTerm().text(), is("2"));
+
+        BooleanQuery booleanQuery1 = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery1.clauses().size(),is(2));
+
+        //Second nesting
+        clauses = booleanQuery1.getClauses();
+
+        TermQuery termQuery2 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery2.getTerm().field(), is("c"));
+        assertThat(termQuery2.getTerm().text(), is("3"));
+
+        BooleanQuery booleanQuery2 = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery2.clauses().size(),is(2));
+
+        //Third nesting
+        clauses = booleanQuery2.getClauses();
+
+        TermQuery termQuery3 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery3.getTerm().field(), is("d"));
+        assertThat(termQuery3.getTerm().text(), is("4"));
+
+        BooleanQuery booleanQuery3 = (BooleanQuery) clauses[1].getQuery();
+        assertThat(booleanQuery3.clauses().size(),is(3));
+
+        clauses = booleanQuery3.getClauses();
+
+        TermQuery termQuery4 = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery4.getTerm().field(), is("e"));
+        assertThat(termQuery4.getTerm().text(), is("5"));
+
+        TermQuery termQuery5 = (TermQuery) clauses[1].getQuery();
+        assertThat(termQuery5.getTerm().field(), is("e"));
+        assertThat(termQuery5.getTerm().text(), is("6"));
+
+        TermQuery termQuery6 = (TermQuery) clauses[2].getQuery();
+        assertThat(termQuery6.getTerm().field(), is("e"));
+        assertThat(termQuery6.getTerm().text(), is("7"));
+    }
 
 
     private BooleanQuery parseQuery(String luceneQuery) {

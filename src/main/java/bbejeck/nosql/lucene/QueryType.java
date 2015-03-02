@@ -21,11 +21,15 @@
 
 package bbejeck.nosql.lucene;
 
+import com.google.common.base.Splitter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * User: Bill Bejeck
@@ -68,19 +72,25 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
         }
     },
 
-    MULTI_PHRASE {
+    BOOLEAN_OR_LIST {
         @Override
         Query query(String field, String value) {
-            throw new RuntimeException("Not implemented");
+            Function<String,Term> toTerm = termFunction.apply(field);
+            List<BooleanClause> booleanClauseList = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase)
+                                                                     .map(toTerm)
+                                                                     .map(toTermQuery)
+                                                                     .map(toOrBooleanClause)
+                                                                     .collect(Collectors.toList());
+            return toBooleanQuery.apply(booleanClauseList);
         }
     },
 
     TERM_RANGE {
         @Override
         Query query(String field, String value) {
-            String[] ranges = value.split(":");
-            String lower = lettersNumbersTrimLowerCase.apply(ranges[0]);
-            String upper = lettersNumbersTrimLowerCase.apply(ranges[1]);
+            List<String> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).collect(Collectors.toList());
+            String lower = terms.get(0);
+            String upper = terms.get(1);
             return TermRangeQuery.newStringRange(field, lower, upper, true, true);
         }
     },
@@ -88,16 +98,17 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
     INTEGER_RANGE {
         @Override
         Query query(String field, String value) {
-            String[] ranges = value.split(":");
-            Integer lower = Integer.decode(trim.apply(ranges[0]));
-            Integer upper = Integer.decode(trim.apply(ranges[1]));
+            List<Integer> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).map(Integer::decode).collect(Collectors.toList());
+            Integer lower = terms.get(0);
+            Integer upper = terms.get(1);
             return NumericRangeQuery.newIntRange(field, lower, upper, true, true);
         }
     };
 
     abstract Query query(String field, String value);
 
-
+    private static Function<String,Function<String,Stream<String>>> setDelimiter = d -> s -> Splitter.on(d).splitToList(s).stream();
+    private static Function<String,Stream<String>> toStreamFromDelimitedValue =  setDelimiter.apply(":");
     private static Function<String, String> phraseFormatter = removeMultipleSpace.andThen(lowerCase).andThen(lettersNumbersWhitespace).andThen(trim);
     private static Function<String, String> wildCardPrefixFormatter = lettersNumbersWildcard.andThen(lowerCase);
     private static Predicate<String> isPrefix = s -> s.indexOf('?') < 0 && s.endsWith("*");

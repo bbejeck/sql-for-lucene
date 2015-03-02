@@ -28,10 +28,7 @@ import com.google.common.collect.Lists;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.PhraseQuery;
-import org.apache.lucene.search.Query;
+import org.apache.lucene.search.*;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -59,6 +56,11 @@ public interface LuceneQueryFunctions {
     };
 
 
+    Function<BooleanClause.Occur,Function<Query,BooleanClause>> fromOccurToClause = occur -> query -> new BooleanClause(query,occur);
+    Function<Query,BooleanClause> toOrBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.SHOULD);
+    Function<Query,BooleanClause> toAndBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST);
+    Function<Query,BooleanClause> toNotBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST_NOT);
+    Function<Term,Query> toTermQuery = t -> toQuery.apply(t, TermQuery.class);
     Function<String, Function<String, Term>> termFunction = field -> text -> createTerm.apply(field, text);
     Function<String, Stream<String>> toWordStream = s -> Lists.newArrayList(Splitter.on(" ").split(s)).stream();
     BiFunction<String, String, PhraseQuery> toPhraseQuery = (field, text) ->

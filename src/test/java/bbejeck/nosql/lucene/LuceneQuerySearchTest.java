@@ -21,12 +21,21 @@
 
 package bbejeck.nosql.lucene;
 
+import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Lists;
+import com.google.common.base.Splitter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.junit.Test;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.function.Function;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -47,14 +56,13 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         init();
         Document doc = new Document();
         FieldType fieldType = new FieldType();
-        fieldType.setIndexed(true);
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
         fieldType.setStored(true);
         doc.add(new Field("first_name", "Beth", fieldType));
         doc.add(new Field("last_name","Bejeck",fieldType));
         doc.add(new Field("type","Big",fieldType));
         doc.add(new Field("type","Cutie",fieldType));
         add(doc);
-
         doc = new Document();
 
         doc.add(new Field("first_name", "Beth", fieldType));
@@ -75,5 +83,14 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         assertThat(scoreDocs.length, is(1));
     }
 
+    private void index_fake_names() throws Exception {
+        Path fakeNames = Paths.get("test/FakeNameGenerator.com_d5d6d718.csv");
+        List<String> lines = Files.readAllLines(fakeNames);
 
+    }
+
+    private Function<String,List<Field>> getColumnNames = line -> Lists.newArrayList(Splitter.on(',').split(line));
+
+
+//    private Function<String,Void> indexLine = line ->
 }

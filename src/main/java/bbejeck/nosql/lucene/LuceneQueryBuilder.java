@@ -1,8 +1,28 @@
+/*
+ * *
+ *
+ *
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
 package bbejeck.nosql.lucene;
 
-import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Lists;
-import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 
 import java.util.List;
 
@@ -16,9 +36,14 @@ public class LuceneQueryBuilder {
     private String field;
     private String text;
     private List<String> textValues;
+    private List<BooleanClause> booleanClauses;
+
+    public void setBooleanClauses(List<BooleanClause> booleanClauses) {
+        this.booleanClauses = booleanClauses;
+    }
+
     private BooleanClause.Occur occur;
     private QueryType queryType;
-    private FilterType filterType;
 
 
     public void setField(String field) {
@@ -33,12 +58,8 @@ public class LuceneQueryBuilder {
         this.queryType = queryType;
     }
 
-    public void setFilterType(FilterType filterType) {
-        this.filterType = filterType;
-    }
-
     public void setTextValues(List<String> textValues) {
-        this.textValues = Lists.newArrayList(textValues);
+        this.textValues = textValues;
     }
 
     public void setOccur(BooleanClause.Occur occur) {
@@ -49,13 +70,13 @@ public class LuceneQueryBuilder {
         if (occur == null) {
             occur = BooleanClause.Occur.MUST;
         }
-        return new BooleanClause(queryType.query(field, text), occur);
+
+        if (booleanClauses == null || booleanClauses.isEmpty()) {
+            return new BooleanClause(queryType.query(field, text), occur);
+        }
+
+        BooleanQuery booleanQuery = LuceneQueryFunctions.toBooleanQuery.apply(booleanClauses);
+        return new BooleanClause(booleanQuery, occur);
     }
 
-    public FilterClause buildFilter(){
-        if (occur == null){
-            occur = BooleanClause.Occur.MUST;
-        }
-       return new FilterClause(filterType.filter(field,textValues),occur);
-    }
 }

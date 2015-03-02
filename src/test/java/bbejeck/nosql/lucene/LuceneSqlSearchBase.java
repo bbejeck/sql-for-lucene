@@ -32,7 +32,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.Version;
 
 /**
  * User: Bill Bejeck
@@ -43,7 +42,7 @@ public abstract class LuceneSqlSearchBase {
 
     protected Analyzer analyzer = new StandardAnalyzer();
     protected Directory directory = new RAMDirectory();
-    protected IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_10_0, analyzer);
+    protected IndexWriterConfig config = new IndexWriterConfig(analyzer);
     protected IndexWriter iwriter;
     protected DirectoryReader ireader;
     protected IndexSearcher isearcher;
