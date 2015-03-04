@@ -1,4 +1,4 @@
-grammar NoSqlJDBC;
+grammar LuceneSql;
 
 //Parser Rules Start
 
@@ -86,8 +86,6 @@ date_list : DATE (COMMA DATE)*
 
 term_list : TERM (COMMA TERM)*
           ;
-
-
 //Parser Rules End
 
 //Lexer Rules Start

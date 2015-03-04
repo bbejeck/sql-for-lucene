@@ -1,10 +1,30 @@
+/*
+ * *
+ *
+ *
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
 package bbejeck.nosql.antlr;
 
-import bbejeck.nosql.antlr.generated.NoSqlJDBCLexer;
-import bbejeck.nosql.antlr.generated.NoSqlJDBCParser;
+import bbejeck.nosql.antlr.generated.LuceneSqlLexer;
+import bbejeck.nosql.antlr.generated.LuceneSqlParser;
 import bbejeck.nosql.lucene.LuceneQueryListener;
 import bbejeck.nosql.lucene.QueryContainer;
-import bbejeck.nosql.util.TriFunction;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -18,38 +38,27 @@ import java.util.function.Supplier;
  * Date: 10/14/14
  * Time: 10:10 PM
  */
-public interface AntlrFunctions {
+public class AntlrFunctions {
 
-    Function<String,ANTLRInputStream> toAntlrInputStream = ANTLRInputStream::new;
-    Function<ANTLRInputStream,NoSqlJDBCLexer>  toLexer = NoSqlJDBCLexer::new;
-    Function<NoSqlJDBCLexer,CommonTokenStream>  toTokenStream = CommonTokenStream::new;
-    Function<CommonTokenStream,NoSqlJDBCParser> toNoSqlJDBCParser = NoSqlJDBCParser::new;
-    Function<NoSqlJDBCParser,NoSqlJDBCParser.QueryContext> toParseTree = NoSqlJDBCParser::query;
-    Supplier<ParseTreeWalker> parseTreeWalkerSupplier = ParseTreeWalker::new;
-    Supplier<LuceneQueryListener> luceneQueryListenerSupplier = LuceneQueryListener::new;
+    private static Function<String, ANTLRInputStream> toAntlrInputStream = ANTLRInputStream::new;
+    private static Function<ANTLRInputStream, LuceneSqlLexer> toLexer = LuceneSqlLexer::new;
+    private static Function<LuceneSqlLexer, CommonTokenStream> toTokenStream = CommonTokenStream::new;
+    private static Function<CommonTokenStream, LuceneSqlParser> toLuceneSqlParser = LuceneSqlParser::new;
+    private static Function<LuceneSqlParser, LuceneSqlParser.QueryContext> toParseTree = LuceneSqlParser::query;
+    private static Supplier<ParseTreeWalker> parseTreeWalkerSupplier = ParseTreeWalker::new;
+    private static Supplier<LuceneQueryListener> luceneQueryListenerSupplier = LuceneQueryListener::new;
 
-   TriFunction<NoSqlJDBCParser,Supplier<ParseTreeWalker>,Supplier<LuceneQueryListener>,QueryContainer> parse = (p,s1,s2)->{
-       LuceneQueryListener listener = s2.get();
-       ParseTree parseTree = toParseTree.apply(p);
-       ParseTreeWalker walker = s1.get();
-       walker.walk(listener,parseTree);
-       return new QueryContainer(listener.getQuery(),listener.getFilter());
-   };
+    private static Function<LuceneSqlParser, QueryContainer> parse = p -> {
+        LuceneQueryListener listener = luceneQueryListenerSupplier.get();
+        ParseTree parseTree = toParseTree.apply(p);
+        ParseTreeWalker walker = parseTreeWalkerSupplier.get();
+        walker.walk(listener, parseTree);
+        return new QueryContainer(listener.getQuery(), listener.getFilter());
+    };
 
+    private static Function<String, LuceneSqlParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toLuceneSqlParser);
 
-
-//    Function<NoSqlJDBCParser,Function<Supplier<ParseTreeWalker>,Function<Supplier<LuceneQueryListener>,LuceneQueryListener>>> parse =
-//            parser -> ptws -> lql -> {
-//                ParseTreeWalker walker = ptws.get();
-//                LuceneQueryListener listener = lql.get();
-//                ParseTree parseTree = toParseTree.apply(parser);
-//                walker.walk(listener,parseTree);
-//                return listener;
-//            };
-
-    Function<String,NoSqlJDBCParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toNoSqlJDBCParser);
-
-    default QueryContainer doParseLuceneQuery(String query){
-           return parse.apply(toParser.apply(query),parseTreeWalkerSupplier,luceneQueryListenerSupplier);
+    public static QueryContainer doParseLuceneQuery(String query) {
+        return parse.apply(toParser.apply(query));
     }
 }

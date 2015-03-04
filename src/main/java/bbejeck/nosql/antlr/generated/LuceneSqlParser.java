@@ -1,20 +1,37 @@
-// Generated from /Users/bbejeck/workspace_intellij/nosql-jdbc-driver/src/main/java/NoSqlJDBC.g4 by ANTLR 4.5
-package bbejeck.nosql.antlr.generated;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
+/*
+ * *
+ *
+ *
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
 
+// Generated from /Users/bbejeck/workspace_intellij/nosql-jdbc-driver/src/main/java/LuceneSql.g4 by ANTLR 4.5
+package bbejeck.nosql.antlr.generated;
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class NoSqlJDBCParser extends Parser {
+public class LuceneSqlParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -87,7 +104,7 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "NoSqlJDBC.g4"; }
+	public String getGrammarFileName() { return "LuceneSql.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -98,7 +115,7 @@ public class NoSqlJDBCParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public NoSqlJDBCParser(TokenStream input) {
+	public LuceneSqlParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -121,15 +138,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_query; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterQuery(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterQuery(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitQuery(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitQuery(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitQuery(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitQuery(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -184,23 +201,23 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Describe_stmtContext extends ParserRuleContext {
-		public TerminalNode DESCRIBE() { return getToken(NoSqlJDBCParser.DESCRIBE, 0); }
-		public TerminalNode PATH() { return getToken(NoSqlJDBCParser.PATH, 0); }
+		public TerminalNode DESCRIBE() { return getToken(LuceneSqlParser.DESCRIBE, 0); }
+		public TerminalNode PATH() { return getToken(LuceneSqlParser.PATH, 0); }
 		public Describe_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_describe_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterDescribe_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterDescribe_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitDescribe_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitDescribe_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitDescribe_stmt(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitDescribe_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -229,14 +246,14 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Select_stmtContext extends ParserRuleContext {
-		public TerminalNode SELECT() { return getToken(NoSqlJDBCParser.SELECT, 0); }
-		public List<TerminalNode> FIELD() { return getTokens(NoSqlJDBCParser.FIELD); }
+		public TerminalNode SELECT() { return getToken(LuceneSqlParser.SELECT, 0); }
+		public List<TerminalNode> FIELD() { return getTokens(LuceneSqlParser.FIELD); }
 		public TerminalNode FIELD(int i) {
-			return getToken(NoSqlJDBCParser.FIELD, i);
+			return getToken(LuceneSqlParser.FIELD, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(NoSqlJDBCParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LuceneSqlParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(NoSqlJDBCParser.COMMA, i);
+			return getToken(LuceneSqlParser.COMMA, i);
 		}
 		public Select_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -244,15 +261,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_select_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterSelect_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterSelect_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitSelect_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitSelect_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitSelect_stmt(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitSelect_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -298,10 +315,10 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class From_stmtContext extends ParserRuleContext {
-		public TerminalNode FROM() { return getToken(NoSqlJDBCParser.FROM, 0); }
-		public List<TerminalNode> RPAREN() { return getTokens(NoSqlJDBCParser.RPAREN); }
+		public TerminalNode FROM() { return getToken(LuceneSqlParser.FROM, 0); }
+		public List<TerminalNode> RPAREN() { return getTokens(LuceneSqlParser.RPAREN); }
 		public TerminalNode RPAREN(int i) {
-			return getToken(NoSqlJDBCParser.RPAREN, i);
+			return getToken(LuceneSqlParser.RPAREN, i);
 		}
 		public List<QueryContext> query() {
 			return getRuleContexts(QueryContext.class);
@@ -309,13 +326,13 @@ public class NoSqlJDBCParser extends Parser {
 		public QueryContext query(int i) {
 			return getRuleContext(QueryContext.class,i);
 		}
-		public List<TerminalNode> LPAREN() { return getTokens(NoSqlJDBCParser.LPAREN); }
+		public List<TerminalNode> LPAREN() { return getTokens(LuceneSqlParser.LPAREN); }
 		public TerminalNode LPAREN(int i) {
-			return getToken(NoSqlJDBCParser.LPAREN, i);
+			return getToken(LuceneSqlParser.LPAREN, i);
 		}
-		public List<TerminalNode> PATH() { return getTokens(NoSqlJDBCParser.PATH); }
+		public List<TerminalNode> PATH() { return getTokens(LuceneSqlParser.PATH); }
 		public TerminalNode PATH(int i) {
-			return getToken(NoSqlJDBCParser.PATH, i);
+			return getToken(LuceneSqlParser.PATH, i);
 		}
 		public From_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -323,15 +340,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_from_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterFrom_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterFrom_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitFrom_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitFrom_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitFrom_stmt(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitFrom_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -390,7 +407,7 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Where_stmtContext extends ParserRuleContext {
-		public TerminalNode WHERE() { return getToken(NoSqlJDBCParser.WHERE, 0); }
+		public TerminalNode WHERE() { return getToken(LuceneSqlParser.WHERE, 0); }
 		public List<Search_conditionContext> search_condition() {
 			return getRuleContexts(Search_conditionContext.class);
 		}
@@ -403,15 +420,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_where_stmt; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterWhere_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterWhere_stmt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitWhere_stmt(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitWhere_stmt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitWhere_stmt(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitWhere_stmt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -471,15 +488,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_search_condition; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterSearch_condition(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterSearch_condition(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitSearch_condition(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitSearch_condition(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitSearch_condition(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitSearch_condition(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -549,15 +566,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_predicate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterPredicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitPredicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitPredicate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitPredicate(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitPredicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -622,15 +639,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_comparison_predicate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterComparison_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterComparison_predicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitComparison_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitComparison_predicate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitComparison_predicate(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitComparison_predicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -679,15 +696,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_function_predicate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterFunction_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterFunction_predicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitFunction_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitFunction_predicate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitFunction_predicate(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitFunction_predicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -740,22 +757,22 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class FieldContext extends ParserRuleContext {
-		public TerminalNode FIELD() { return getToken(NoSqlJDBCParser.FIELD, 0); }
+		public TerminalNode FIELD() { return getToken(LuceneSqlParser.FIELD, 0); }
 		public FieldContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_field; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterField(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterField(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitField(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitField(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitField(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitField(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -793,104 +810,104 @@ public class NoSqlJDBCParser extends Parser {
 		}
 	}
 	public static class GreaterThanEqualsContext extends Comparison_opContext {
-		public TerminalNode GTE() { return getToken(NoSqlJDBCParser.GTE, 0); }
+		public TerminalNode GTE() { return getToken(LuceneSqlParser.GTE, 0); }
 		public GreaterThanEqualsContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterGreaterThanEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThanEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitGreaterThanEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThanEquals(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitGreaterThanEquals(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanEquals(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class LessThanContext extends Comparison_opContext {
-		public TerminalNode LT() { return getToken(NoSqlJDBCParser.LT, 0); }
+		public TerminalNode LT() { return getToken(LuceneSqlParser.LT, 0); }
 		public LessThanContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterLessThan(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLessThan(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitLessThan(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLessThan(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitLessThan(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLessThan(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NotEqualContext extends Comparison_opContext {
-		public TerminalNode NE() { return getToken(NoSqlJDBCParser.NE, 0); }
+		public TerminalNode NE() { return getToken(LuceneSqlParser.NE, 0); }
 		public NotEqualContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterNotEqual(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNotEqual(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitNotEqual(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNotEqual(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitNotEqual(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNotEqual(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class GreaterThanContext extends Comparison_opContext {
-		public TerminalNode GT() { return getToken(NoSqlJDBCParser.GT, 0); }
+		public TerminalNode GT() { return getToken(LuceneSqlParser.GT, 0); }
 		public GreaterThanContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterGreaterThan(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThan(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitGreaterThan(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThan(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitGreaterThan(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThan(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class EqualsContext extends Comparison_opContext {
-		public TerminalNode EQ() { return getToken(NoSqlJDBCParser.EQ, 0); }
+		public TerminalNode EQ() { return getToken(LuceneSqlParser.EQ, 0); }
 		public EqualsContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitEquals(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitEquals(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitEquals(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class LessThanEqualsContext extends Comparison_opContext {
-		public TerminalNode LTE() { return getToken(NoSqlJDBCParser.LTE, 0); }
+		public TerminalNode LTE() { return getToken(LuceneSqlParser.LTE, 0); }
 		public LessThanEqualsContext(Comparison_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterLessThanEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLessThanEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitLessThanEquals(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLessThanEquals(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitLessThanEquals(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLessThanEquals(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -976,89 +993,89 @@ public class NoSqlJDBCParser extends Parser {
 		}
 	}
 	public static class AndNotContext extends Boolean_opContext {
-		public TerminalNode AND() { return getToken(NoSqlJDBCParser.AND, 0); }
-		public TerminalNode NOT() { return getToken(NoSqlJDBCParser.NOT, 0); }
+		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
+		public TerminalNode NOT() { return getToken(LuceneSqlParser.NOT, 0); }
 		public AndNotContext(Boolean_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterAndNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterAndNot(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitAndNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitAndNot(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitAndNot(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitAndNot(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class OrNotContext extends Boolean_opContext {
-		public TerminalNode OR() { return getToken(NoSqlJDBCParser.OR, 0); }
-		public TerminalNode NOT() { return getToken(NoSqlJDBCParser.NOT, 0); }
+		public TerminalNode OR() { return getToken(LuceneSqlParser.OR, 0); }
+		public TerminalNode NOT() { return getToken(LuceneSqlParser.NOT, 0); }
 		public OrNotContext(Boolean_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterOrNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterOrNot(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitOrNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitOrNot(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitOrNot(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitOrNot(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class OrContext extends Boolean_opContext {
-		public TerminalNode OR() { return getToken(NoSqlJDBCParser.OR, 0); }
+		public TerminalNode OR() { return getToken(LuceneSqlParser.OR, 0); }
 		public OrContext(Boolean_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterOr(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterOr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitOr(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitOr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitOr(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitOr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AndContext extends Boolean_opContext {
-		public TerminalNode AND() { return getToken(NoSqlJDBCParser.AND, 0); }
+		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
 		public AndContext(Boolean_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterAnd(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterAnd(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitAnd(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitAnd(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitAnd(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitAnd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NotContext extends Boolean_opContext {
-		public TerminalNode NOT() { return getToken(NoSqlJDBCParser.NOT, 0); }
+		public TerminalNode NOT() { return getToken(LuceneSqlParser.NOT, 0); }
 		public NotContext(Boolean_opContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNot(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitNot(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNot(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitNot(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNot(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1127,14 +1144,14 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Nested_predicateContext extends ParserRuleContext {
-		public TerminalNode RPAREN() { return getToken(NoSqlJDBCParser.RPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
 		public List<PredicateContext> predicate() {
 			return getRuleContexts(PredicateContext.class);
 		}
 		public PredicateContext predicate(int i) {
 			return getRuleContext(PredicateContext.class,i);
 		}
-		public TerminalNode LPAREN() { return getToken(NoSqlJDBCParser.LPAREN, 0); }
+		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
 		public Boolean_opContext boolean_op() {
 			return getRuleContext(Boolean_opContext.class,0);
 		}
@@ -1150,15 +1167,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_nested_predicate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterNested_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNested_predicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitNested_predicate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNested_predicate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitNested_predicate(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNested_predicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1235,87 +1252,87 @@ public class NoSqlJDBCParser extends Parser {
 		}
 	}
 	public static class MULTI_PHRASEContext extends ValueContext {
-		public TerminalNode MULTI_PHRASE() { return getToken(NoSqlJDBCParser.MULTI_PHRASE, 0); }
+		public TerminalNode MULTI_PHRASE() { return getToken(LuceneSqlParser.MULTI_PHRASE, 0); }
 		public MULTI_PHRASEContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterMULTI_PHRASE(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterMULTI_PHRASE(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitMULTI_PHRASE(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitMULTI_PHRASE(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitMULTI_PHRASE(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitMULTI_PHRASE(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class DateContext extends ValueContext {
-		public TerminalNode DATE() { return getToken(NoSqlJDBCParser.DATE, 0); }
+		public TerminalNode DATE() { return getToken(LuceneSqlParser.DATE, 0); }
 		public DateContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterDate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterDate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitDate(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitDate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitDate(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitDate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NumberContext extends ValueContext {
-		public TerminalNode NUMBER() { return getToken(NoSqlJDBCParser.NUMBER, 0); }
+		public TerminalNode NUMBER() { return getToken(LuceneSqlParser.NUMBER, 0); }
 		public NumberContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterNumber(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNumber(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitNumber(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNumber(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitNumber(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNumber(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class PhraseContext extends ValueContext {
-		public TerminalNode PHRASE() { return getToken(NoSqlJDBCParser.PHRASE, 0); }
+		public TerminalNode PHRASE() { return getToken(LuceneSqlParser.PHRASE, 0); }
 		public PhraseContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterPhrase(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterPhrase(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitPhrase(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitPhrase(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitPhrase(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitPhrase(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class TermContext extends ValueContext {
-		public TerminalNode TERM() { return getToken(NoSqlJDBCParser.TERM, 0); }
+		public TerminalNode TERM() { return getToken(LuceneSqlParser.TERM, 0); }
 		public TermContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterTerm(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterTerm(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitTerm(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitTerm(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitTerm(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitTerm(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1385,25 +1402,25 @@ public class NoSqlJDBCParser extends Parser {
 		public FieldContext field() {
 			return getRuleContext(FieldContext.class,0);
 		}
-		public TerminalNode MATCHES() { return getToken(NoSqlJDBCParser.MATCHES, 0); }
-		public TerminalNode RPAREN() { return getToken(NoSqlJDBCParser.RPAREN, 0); }
-		public TerminalNode WILD_CARD() { return getToken(NoSqlJDBCParser.WILD_CARD, 0); }
-		public TerminalNode LPAREN() { return getToken(NoSqlJDBCParser.LPAREN, 0); }
+		public TerminalNode MATCHES() { return getToken(LuceneSqlParser.MATCHES, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
+		public TerminalNode WILD_CARD() { return getToken(LuceneSqlParser.WILD_CARD, 0); }
+		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
 		public RegexpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_regexp; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterRegexp(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterRegexp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitRegexp(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitRegexp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitRegexp(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitRegexp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1450,15 +1467,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_between; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterBetween(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterBetween(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitBetween(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitBetween(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitBetween(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitBetween(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1500,27 +1517,27 @@ public class NoSqlJDBCParser extends Parser {
 		public FieldContext field() {
 			return getRuleContext(FieldContext.class,0);
 		}
-		public TerminalNode BETWEEN() { return getToken(NoSqlJDBCParser.BETWEEN, 0); }
-		public List<TerminalNode> TERM() { return getTokens(NoSqlJDBCParser.TERM); }
+		public TerminalNode BETWEEN() { return getToken(LuceneSqlParser.BETWEEN, 0); }
+		public List<TerminalNode> TERM() { return getTokens(LuceneSqlParser.TERM); }
 		public TerminalNode TERM(int i) {
-			return getToken(NoSqlJDBCParser.TERM, i);
+			return getToken(LuceneSqlParser.TERM, i);
 		}
-		public TerminalNode AND() { return getToken(NoSqlJDBCParser.AND, 0); }
+		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
 		public Between_termContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_between_term; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterBetween_term(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterBetween_term(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitBetween_term(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitBetween_term(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitBetween_term(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitBetween_term(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1558,27 +1575,27 @@ public class NoSqlJDBCParser extends Parser {
 		public FieldContext field() {
 			return getRuleContext(FieldContext.class,0);
 		}
-		public TerminalNode BETWEEN() { return getToken(NoSqlJDBCParser.BETWEEN, 0); }
-		public List<TerminalNode> NUMBER() { return getTokens(NoSqlJDBCParser.NUMBER); }
+		public TerminalNode BETWEEN() { return getToken(LuceneSqlParser.BETWEEN, 0); }
+		public List<TerminalNode> NUMBER() { return getTokens(LuceneSqlParser.NUMBER); }
 		public TerminalNode NUMBER(int i) {
-			return getToken(NoSqlJDBCParser.NUMBER, i);
+			return getToken(LuceneSqlParser.NUMBER, i);
 		}
-		public TerminalNode AND() { return getToken(NoSqlJDBCParser.AND, 0); }
+		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
 		public Between_numberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_between_number; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterBetween_number(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterBetween_number(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitBetween_number(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitBetween_number(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitBetween_number(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitBetween_number(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1616,23 +1633,23 @@ public class NoSqlJDBCParser extends Parser {
 		public FieldContext field() {
 			return getRuleContext(FieldContext.class,0);
 		}
-		public TerminalNode LIKE() { return getToken(NoSqlJDBCParser.LIKE, 0); }
-		public TerminalNode WILD_CARD() { return getToken(NoSqlJDBCParser.WILD_CARD, 0); }
+		public TerminalNode LIKE() { return getToken(LuceneSqlParser.LIKE, 0); }
+		public TerminalNode WILD_CARD() { return getToken(LuceneSqlParser.WILD_CARD, 0); }
 		public LikeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_like; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterLike(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLike(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitLike(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLike(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitLike(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLike(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1666,7 +1683,7 @@ public class NoSqlJDBCParser extends Parser {
 		public FieldContext field() {
 			return getRuleContext(FieldContext.class,0);
 		}
-		public TerminalNode IN() { return getToken(NoSqlJDBCParser.IN, 0); }
+		public TerminalNode IN() { return getToken(LuceneSqlParser.IN, 0); }
 		public Value_listContext value_list() {
 			return getRuleContext(Value_listContext.class,0);
 		}
@@ -1676,15 +1693,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_in; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterIn(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterIn(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitIn(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitIn(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitIn(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitIn(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1715,8 +1732,8 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Value_listContext extends ParserRuleContext {
-		public TerminalNode RPAREN() { return getToken(NoSqlJDBCParser.RPAREN, 0); }
-		public TerminalNode LPAREN() { return getToken(NoSqlJDBCParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
+		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
 		public QueryContext query() {
 			return getRuleContext(QueryContext.class,0);
 		}
@@ -1735,15 +1752,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_value_list; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterValue_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterValue_list(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitValue_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitValue_list(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitValue_list(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitValue_list(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1802,13 +1819,13 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Number_listContext extends ParserRuleContext {
-		public List<TerminalNode> NUMBER() { return getTokens(NoSqlJDBCParser.NUMBER); }
+		public List<TerminalNode> NUMBER() { return getTokens(LuceneSqlParser.NUMBER); }
 		public TerminalNode NUMBER(int i) {
-			return getToken(NoSqlJDBCParser.NUMBER, i);
+			return getToken(LuceneSqlParser.NUMBER, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(NoSqlJDBCParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LuceneSqlParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(NoSqlJDBCParser.COMMA, i);
+			return getToken(LuceneSqlParser.COMMA, i);
 		}
 		public Number_listContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1816,15 +1833,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_number_list; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterNumber_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNumber_list(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitNumber_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNumber_list(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitNumber_list(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNumber_list(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1868,13 +1885,13 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Date_listContext extends ParserRuleContext {
-		public List<TerminalNode> DATE() { return getTokens(NoSqlJDBCParser.DATE); }
+		public List<TerminalNode> DATE() { return getTokens(LuceneSqlParser.DATE); }
 		public TerminalNode DATE(int i) {
-			return getToken(NoSqlJDBCParser.DATE, i);
+			return getToken(LuceneSqlParser.DATE, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(NoSqlJDBCParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LuceneSqlParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(NoSqlJDBCParser.COMMA, i);
+			return getToken(LuceneSqlParser.COMMA, i);
 		}
 		public Date_listContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1882,15 +1899,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_date_list; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterDate_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterDate_list(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitDate_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitDate_list(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitDate_list(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitDate_list(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1934,13 +1951,13 @@ public class NoSqlJDBCParser extends Parser {
 	}
 
 	public static class Term_listContext extends ParserRuleContext {
-		public List<TerminalNode> TERM() { return getTokens(NoSqlJDBCParser.TERM); }
+		public List<TerminalNode> TERM() { return getTokens(LuceneSqlParser.TERM); }
 		public TerminalNode TERM(int i) {
-			return getToken(NoSqlJDBCParser.TERM, i);
+			return getToken(LuceneSqlParser.TERM, i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(NoSqlJDBCParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(LuceneSqlParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(NoSqlJDBCParser.COMMA, i);
+			return getToken(LuceneSqlParser.COMMA, i);
 		}
 		public Term_listContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1948,15 +1965,15 @@ public class NoSqlJDBCParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_term_list; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).enterTerm_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterTerm_list(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof NoSqlJDBCListener ) ((NoSqlJDBCListener)listener).exitTerm_list(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitTerm_list(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NoSqlJDBCVisitor ) return ((NoSqlJDBCVisitor<? extends T>)visitor).visitTerm_list(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitTerm_list(this);
 			else return visitor.visitChildren(this);
 		}
 	}

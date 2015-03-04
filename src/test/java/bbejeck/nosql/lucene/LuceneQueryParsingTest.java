@@ -21,6 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
+import bbejeck.nosql.antlr.AntlrFunctions;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.junit.Test;
@@ -36,7 +37,6 @@ import static org.junit.Assert.assertThat;
  */
 public class LuceneQueryParsingTest {
 
-    private AntlrFunctionsStub antlr = new AntlrFunctionsStub();
 
     @Test
     public void test_parse_term_and_phrase_query() {
@@ -334,11 +334,11 @@ public class LuceneQueryParsingTest {
 
 
     private BooleanQuery parseQuery(String luceneQuery) {
-        return antlr.doParseLuceneQuery(luceneQuery).booleanQuery;
+        return AntlrFunctions.doParseLuceneQuery(luceneQuery).booleanQuery;
     }
 
     private QueryContainer parseQueryAndFilter(String luceneQuery){
-        return antlr.doParseLuceneQuery(luceneQuery);
+        return AntlrFunctions.doParseLuceneQuery(luceneQuery);
     }
 
 
