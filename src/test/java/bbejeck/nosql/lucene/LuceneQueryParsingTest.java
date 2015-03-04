@@ -21,7 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
-import bbejeck.nosql.antlr.AntlrFunctions;
+import bbejeck.nosql.antlr.AntlrLuceneFunctions;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.junit.Test;
@@ -334,11 +334,11 @@ public class LuceneQueryParsingTest {
 
 
     private BooleanQuery parseQuery(String luceneQuery) {
-        return AntlrFunctions.doParseLuceneQuery(luceneQuery).booleanQuery;
+        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery).booleanQuery;
     }
 
     private QueryContainer parseQueryAndFilter(String luceneQuery){
-        return AntlrFunctions.doParseLuceneQuery(luceneQuery);
+        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery);
     }
 
 

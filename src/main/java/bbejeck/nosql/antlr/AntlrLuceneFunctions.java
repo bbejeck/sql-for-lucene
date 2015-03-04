@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * Date: 10/14/14
  * Time: 10:10 PM
  */
-public class AntlrFunctions {
+public class AntlrLuceneFunctions {
 
     private static Function<String, ANTLRInputStream> toAntlrInputStream = ANTLRInputStream::new;
     private static Function<ANTLRInputStream, LuceneSqlLexer> toLexer = LuceneSqlLexer::new;

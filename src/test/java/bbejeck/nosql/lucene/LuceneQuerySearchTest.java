@@ -21,7 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
-import bbejeck.nosql.antlr.AntlrFunctions;
+import bbejeck.nosql.antlr.AntlrLuceneFunctions;
 import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Lists;
 import com.google.common.base.Splitter;
 import org.apache.lucene.document.Document;
@@ -77,7 +77,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
     @Test
     public void test_search_boolean_and_terms() throws Exception{
         String query = "Select name,address from /path/to/index/ where first_name='beth' and last_name='bejeck'";
-        BooleanQuery booleanQuery = AntlrFunctions.doParseLuceneQuery(query).booleanQuery;
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
         ScoreDoc[] scoreDocs = search(booleanQuery,10);
         assertThat(scoreDocs.length, is(1));
     }
