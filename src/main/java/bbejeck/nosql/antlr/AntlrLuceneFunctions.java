@@ -48,15 +48,16 @@ public class AntlrLuceneFunctions {
     private static Supplier<ParseTreeWalker> parseTreeWalkerSupplier = ParseTreeWalker::new;
     private static Supplier<LuceneQueryListener> luceneQueryListenerSupplier = LuceneQueryListener::new;
 
-    private static Function<LuceneSqlParser, QueryContainer> parse = p -> {
+    private static Function<String, LuceneSqlParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toLuceneSqlParser);
+
+    private static Function<LuceneSqlParser, QueryContainer> parse = parser -> {
         LuceneQueryListener listener = luceneQueryListenerSupplier.get();
-        ParseTree parseTree = toParseTree.apply(p);
+        ParseTree parseTree = toParseTree.apply(parser);
         ParseTreeWalker walker = parseTreeWalkerSupplier.get();
         walker.walk(listener, parseTree);
         return new QueryContainer(listener.getQuery(), listener.getFilter());
     };
 
-    private static Function<String, LuceneSqlParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toLuceneSqlParser);
 
     public static QueryContainer doParseLuceneQuery(String query) {
         return parse.apply(toParser.apply(query));

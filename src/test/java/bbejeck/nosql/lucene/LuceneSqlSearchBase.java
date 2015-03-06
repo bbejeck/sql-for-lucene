@@ -33,6 +33,8 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
+import java.io.IOException;
+
 /**
  * User: Bill Bejeck
  * Date: 10/13/14
@@ -65,8 +67,12 @@ public abstract class LuceneSqlSearchBase {
         isearcher = new IndexSearcher(ireader);
     }
 
-    public void add(Document doc) throws Exception {
-        iwriter.addDocument(doc);
+    public void addDocumentToIndex(Document doc)  {
+        try {
+            iwriter.addDocument(doc);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void doneAdding() throws Exception {

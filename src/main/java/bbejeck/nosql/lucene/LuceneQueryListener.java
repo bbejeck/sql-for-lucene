@@ -79,6 +79,11 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     }
 
     @Override
+    public void enterAndNot(@NotNull LuceneSqlParser.AndNotContext ctx) {
+        queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
+    }
+
+    @Override
     public void enterNot(@NotNull LuceneSqlParser.NotContext ctx) {
         queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
     }

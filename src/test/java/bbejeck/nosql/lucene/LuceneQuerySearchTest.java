@@ -22,7 +22,6 @@
 package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.AntlrLuceneFunctions;
-import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Lists;
 import com.google.common.base.Splitter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -37,9 +36,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
 /**
  * User: Bill Bejeck
  * Date: 1/20/15
@@ -47,49 +49,92 @@ import static org.junit.Assert.assertThat;
  */
 public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
 
+    private Function<String, List<String>> splitDelimited = line -> Splitter.on(",").splitToList(line);
+    private Function<FieldType, Function<String, Field>> toFieldFunction = ft -> s -> new Field(s, "", ft);
+
+    private Supplier<FieldType> fieldTypeSupplier = () -> {
+        FieldType fieldType = new FieldType();
+        fieldType.setStored(true);
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+        return fieldType;
+    };
+
+    private Function<List<Field>,Function<List<String>,Document>> toFieldsToDocument = fields -> values -> {
+        Document doc = new Document();
+        int indx = 0;
+        for (Field column : fields) {
+             column.setStringValue(values.get(indx++));
+             doc.add(column);
+        }
+        return doc;
+    };
+
+    private Function<String, Field> toField = toFieldFunction.apply(fieldTypeSupplier.get());
+
     public LuceneQuerySearchTest() throws Exception {
         setUpAll();
     }
 
-    public  void setUpAll() throws Exception {
+    private void setUpAll() throws Exception {
         init();
-        Document doc = new Document();
-        FieldType fieldType = new FieldType();
-        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
-        fieldType.setStored(true);
-        doc.add(new Field("first_name", "Beth", fieldType));
-        doc.add(new Field("last_name","Bejeck",fieldType));
-        doc.add(new Field("type","Big",fieldType));
-        doc.add(new Field("type","Cutie",fieldType));
-        add(doc);
-        doc = new Document();
-
-        doc.add(new Field("first_name", "Beth", fieldType));
-        doc.add(new Field("last_name","Niemic",fieldType));
-        doc.add(new Field("type","Single",fieldType));
-        doc.add(new Field("type","Cutie",fieldType));
-        add(doc);
+        index_values_from_file("src/test/small_values.csv");
         doneAdding();
-
         openSearcher();
     }
 
     @Test
-    public void test_search_boolean_and_terms() throws Exception{
+    public void test_search_boolean_and_terms() throws Exception {
         String query = "Select name,address from /path/to/index/ where first_name='beth' and last_name='bejeck'";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
-        ScoreDoc[] scoreDocs = search(booleanQuery,10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
         assertThat(scoreDocs.length, is(1));
     }
 
-    private void index_fake_names() throws Exception {
-        Path fakeNames = Paths.get("test/FakeNameGenerator.com_d5d6d718.csv");
-        List<String> lines = Files.readAllLines(fakeNames);
-
+    @Test
+    public void test_search_between() throws Exception {
+        String query = "Select name,address from /path/to/index/ where first_name='john' and age between '30' and '40'";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(3));
     }
 
-    private Function<String,List<Field>> getColumnNames = line -> Lists.newArrayList(Splitter.on(',').split(line));
+    @Test
+    public void test_search_in_list() throws Exception {
+        String query = "Select name,address from /path/to/index/ where first_name='john' and city in ('Portsmith', 'Rockville')";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(3));
+    }
+
+    @Test
+    public void test_search_in_listII() throws Exception {
+        String query = "Select name,address from /path/to/index/ where first_name='john' and city in ('Portsmith', 'Rockville','Cleveland')";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(4));
+    }
+
+    @Test
+    public void test_search_not_in_list_nested_boolean() throws Exception {
+        String query = "Select name,address from /path/to/index/ where first_name='john' and not (city in ('Portsmith', 'Rockville','Cleveland'))";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(2));
+    }
+    private void index_values_from_file(String path) throws Exception {
+        Path fakeNames = Paths.get(path);
+        List<String> lines = Files.readAllLines(fakeNames);
+        List<Field> columnFields = splitDelimited.apply(lines.get(0)).stream().map(toField).collect(Collectors.toList());
+        lines.stream().skip(1).map(splitDelimited).map(toFieldsToDocument.apply(columnFields)).forEach(this::addDocumentToIndex);
+    }
 
 
-//    private Function<String,Void> indexLine = line ->
+
+
+
+
 }
