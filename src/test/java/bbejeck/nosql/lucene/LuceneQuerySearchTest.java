@@ -23,6 +23,7 @@ package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.AntlrLuceneFunctions;
 import com.google.common.base.Splitter;
+import com.google.common.base.Suppliers;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -51,6 +52,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
 
     private Function<String, List<String>> splitDelimited = line -> Splitter.on(",").splitToList(line);
     private Function<FieldType, Function<String, Field>> toFieldFunction = ft -> s -> new Field(s, "", ft);
+    private com.google.common.base.Supplier<Document> documentSupplier = Suppliers.memoize(Document::new);
 
     private Supplier<FieldType> fieldTypeSupplier = () -> {
         FieldType fieldType = new FieldType();
@@ -60,7 +62,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
     };
 
     private Function<List<Field>,Function<List<String>,Document>> toFieldsToDocument = fields -> values -> {
-        Document doc = new Document();
+        Document doc = documentSupplier.get();
         int indx = 0;
         for (Field column : fields) {
              column.setStringValue(values.get(indx++));
@@ -120,6 +122,15 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
     @Test
     public void test_search_not_in_list_nested_boolean() throws Exception {
         String query = "Select name,address from /path/to/index/ where first_name='john' and not (city in ('Portsmith', 'Rockville','Cleveland'))";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(2));
+    }
+
+    @Test
+    public void test_search_not_in_list() throws Exception {
+        String query = "Select name,address from /path/to/index/ where first_name='john' and city not in ('Portsmith', 'Rockville','Cleveland')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.doParseLuceneQuery(query).booleanQuery;
         System.out.println(booleanQuery);
         ScoreDoc[] scoreDocs = search(booleanQuery, 10);

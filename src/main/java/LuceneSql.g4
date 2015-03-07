@@ -72,7 +72,7 @@ between_number : field BETWEEN NUMBER AND NUMBER
 like : field LIKE WILD_CARD
      ;
 
-in : field IN value_list
+in : field NOT? IN value_list
    ;
 
 value_list : RPAREN (query | number_list | date_list | term_list) LPAREN
