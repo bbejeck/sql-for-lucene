@@ -139,8 +139,8 @@ public class LuceneQueryParsingTest {
     @Test
     public void test_parse_in_listquery() throws Exception {
         String query = "select foo from /path/index/ where name='Beth' and score in (0, 50, 55)";
-        QueryContainer qc = parseQueryAndFilter(query);
-        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        QueryParseResults qc = parseQueryAndFilter(query);
+        BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
 
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -169,8 +169,8 @@ public class LuceneQueryParsingTest {
     @Test
     public void test_parse_in_term_listquery() throws Exception {
         String query = "select foo from /path/index/ where name='Beth' and score in ('0', '50', '55')";
-        QueryContainer qc = parseQueryAndFilter(query);
-        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        QueryParseResults qc = parseQueryAndFilter(query);
+        BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
 
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -199,8 +199,8 @@ public class LuceneQueryParsingTest {
     @Test
     public void test_parse_nested_query() throws Exception{
         String query = "select foo from D:/some/path/ where a='1' and (b='2' and c='3' and d='4')";
-        QueryContainer qc = parseQueryAndFilter(query);
-        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        QueryParseResults qc = parseQueryAndFilter(query);
+        BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
 
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -228,9 +228,9 @@ public class LuceneQueryParsingTest {
     @Test
     public void test_parse_deeper_nested_query() throws Exception{
         String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e='5')))";
-        QueryContainer qc = parseQueryAndFilter(query);
+        QueryParseResults qc = parseQueryAndFilter(query);
         //Overall query
-        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
 
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -275,9 +275,9 @@ public class LuceneQueryParsingTest {
     @Test
     public void test_parse_deeper_nested_with_in_term_clause_query() throws Exception{
         String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e in (5,6,7))))";
-        QueryContainer qc = parseQueryAndFilter(query);
+        QueryParseResults qc = parseQueryAndFilter(query);
         //Overall query
-        BooleanClause[] clauses = qc.booleanQuery.getClauses();
+        BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
 
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -334,10 +334,10 @@ public class LuceneQueryParsingTest {
 
 
     private BooleanQuery parseQuery(String luceneQuery) {
-        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery).booleanQuery;
+        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery).getBooleanQuery();
     }
 
-    private QueryContainer parseQueryAndFilter(String luceneQuery){
+    private QueryParseResults parseQueryAndFilter(String luceneQuery){
         return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery);
     }
 

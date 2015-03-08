@@ -24,7 +24,7 @@ package bbejeck.nosql.antlr;
 import bbejeck.nosql.antlr.generated.LuceneSqlLexer;
 import bbejeck.nosql.antlr.generated.LuceneSqlParser;
 import bbejeck.nosql.lucene.LuceneQueryListener;
-import bbejeck.nosql.lucene.QueryContainer;
+import bbejeck.nosql.lucene.QueryParseResults;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -50,16 +50,16 @@ public class AntlrLuceneFunctions {
 
     private static Function<String, LuceneSqlParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toLuceneSqlParser);
 
-    private static Function<LuceneSqlParser, QueryContainer> parse = parser -> {
+    private static Function<LuceneSqlParser, QueryParseResults> parse = parser -> {
         LuceneQueryListener listener = luceneQueryListenerSupplier.get();
         ParseTree parseTree = toParseTree.apply(parser);
         ParseTreeWalker walker = parseTreeWalkerSupplier.get();
         walker.walk(listener, parseTree);
-        return new QueryContainer(listener.getQuery(), listener.getFilter());
+        return listener.parseResults();
     };
 
 
-    public static QueryContainer doParseLuceneQuery(String query) {
+    public static QueryParseResults doParseLuceneQuery(String query) {
         return parse.apply(toParser.apply(query));
     }
 }

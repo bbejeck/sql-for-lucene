@@ -27,10 +27,8 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 
 import java.util.List;
 import java.util.Stack;
@@ -44,11 +42,13 @@ import java.util.function.Function;
 public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     private String indexPath;
+    private List<String> selectedFields = Lists.newArrayList();
     private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
     private Function<Joiner,Function<Iterable<TerminalNode>,String>> toJoinedFunction = j -> j::join;
     private Function<Iterable<TerminalNode>,String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
+    private QueryParseResults.Builder queryResultsBuilder = QueryParseResults.newBuilder();
 
     public LuceneQueryListener() {
         booleanClausesListStack.push(Lists.newArrayList());
@@ -180,11 +180,13 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
         this.indexPath = ctx.PATH().toString();
     }
 
+    public QueryParseResults parseResults() {
+             return queryResultsBuilder.withBooleanClausesList(booleanClausesListStack.pop())
+                                       .withFilterClausesList(this.filterClauses)
+                                       .withIndexPath(this.indexPath)
+                                       .withSelectFields(this.selectedFields).build();
 
-    public BooleanQuery getQuery() {
-        return LuceneQueryFunctions.toBooleanQuery.apply(booleanClausesListStack.pop());
-    }
-    public BooleanFilter getFilter() { return LuceneQueryFunctions.toBooleanFilter.apply(filterClauses);}
+        }
 
 
 }

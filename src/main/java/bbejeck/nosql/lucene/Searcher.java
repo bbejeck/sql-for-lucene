@@ -21,23 +21,16 @@
 
 package bbejeck.nosql.lucene;
 
-import org.apache.lucene.queries.BooleanFilter;
-import org.apache.lucene.search.BooleanQuery;
+import com.google.common.collect.Table;
 
 /**
  * User: Bill Bejeck
- * Date: 2/18/15
- * Time: 10:38 PM
+ * Date: 3/8/15
+ * Time: 12:15 PM
  */
-public class QueryContainer {
+public class Searcher {
 
-    BooleanQuery booleanQuery;
-    BooleanFilter booleanFilter;
-
-    public QueryContainer(BooleanQuery booleanQuery, BooleanFilter booleanFilter) {
-        this.booleanQuery = booleanQuery;
-        this.booleanFilter = booleanFilter;
+    public Table<Integer,String,String> search (String query){
+          throw new RuntimeException("not implemented");
     }
-
-
 }
