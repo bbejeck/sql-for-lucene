@@ -78,7 +78,7 @@ public class Searcher {
     public Searcher() {
     }
 
-    public Searcher(Directory directory) {
+    protected Searcher(Directory directory) {
         this.indexSearcher = fromDirectoryToIndexSearcher.apply(directory);
     }
 

@@ -51,4 +51,16 @@ public class SearcherTest extends LuceneSqlSearchBase {
         assertThat(resultMap.get("last_name"),is("Smith"));
         assertThat(resultMap.get("city"),is("Portsmith"));
     }
+
+    @Test
+    public void test_search_single_map_no_fields_specified() throws Exception {
+        String query = "Select * from /path/to/index/ where first_name='john' and age ='50'";
+        List<Map<String,Object>> results = searcher.search(query);
+        assertThat(results.size(),is(1));
+        Map<String,Object> resultMap = results.get(0);
+        assertThat(resultMap.get("first_name"),is("John"));
+        assertThat(resultMap.get("last_name"),is("Smith"));
+        assertThat(resultMap.get("city"),is("Portsmith"));
+        assertThat(resultMap.get("age"),is("50"));
+    }
 }

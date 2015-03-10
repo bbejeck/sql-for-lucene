@@ -6,7 +6,7 @@ query : describe_stmt | ( select_stmt from_stmt? where_stmt );
 
 describe_stmt : DESCRIBE PATH ;
 
-select_stmt : SELECT FIELD (COMMA FIELD)*;
+select_stmt : SELECT (SPLAT | (FIELD (COMMA FIELD)*));
 
 from_stmt : FROM
             (RPAREN query LPAREN | PATH)*
@@ -108,6 +108,7 @@ LT : '<' ;
 GTE : '>=' ;
 LTE : '<=' ;
 IN : [Ii][Nn];
+SPLAT : '*';
 fragment
 DIGIT : [0-9] ;
 NUMBER : DIGIT(DIGIT*) ;
