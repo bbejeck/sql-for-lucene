@@ -21,10 +21,14 @@
 
 package bbejeck.nosql.lucene;
 
+import com.google.common.base.Splitter;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
@@ -34,6 +38,13 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * User: Bill Bejeck
@@ -43,11 +54,35 @@ import java.io.IOException;
 public abstract class LuceneSqlSearchBase {
 
     protected Analyzer analyzer = new StandardAnalyzer();
-    protected Directory directory = new RAMDirectory();
+    protected Directory ramDirectory = new RAMDirectory();
     protected IndexWriterConfig config = new IndexWriterConfig(analyzer);
     protected IndexWriter iwriter;
     protected DirectoryReader ireader;
     protected IndexSearcher isearcher;
+
+    private Function<String, List<String>> splitDelimited = line -> Splitter.on(",").splitToList(line);
+    private Function<FieldType, Function<String, Field>> toFieldFunction = ft -> s -> new Field(s, "", ft);
+    private com.google.common.base.Supplier<Document> documentSupplier = Document::new;
+
+    private Supplier<FieldType> fieldTypeSupplier = () -> {
+        FieldType fieldType = new FieldType();
+        fieldType.setStored(true);
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+        return fieldType;
+    };
+
+    private Function<List<Field>,Function<List<String>,Document>> toFieldsToDocument = fields -> values -> {
+        Document doc = documentSupplier.get();
+        int indx = 0;
+        for (Field column : fields) {
+            column.setStringValue(values.get(indx++));
+            doc.add(column);
+        }
+        return doc;
+    };
+
+    private Function<String, Field> toField = toFieldFunction.apply(fieldTypeSupplier.get());
+
 
 
     public ScoreDoc[] search(Query query, int limit) throws Exception {
@@ -59,11 +94,11 @@ public abstract class LuceneSqlSearchBase {
     }
 
     public void init() throws Exception {
-        iwriter = new IndexWriter(directory, config);
+        iwriter = new IndexWriter(ramDirectory, config);
     }
 
     public void openSearcher() throws Exception {
-        ireader = DirectoryReader.open(directory);
+        ireader = DirectoryReader.open(ramDirectory);
         isearcher = new IndexSearcher(ireader);
     }
 
@@ -77,5 +112,12 @@ public abstract class LuceneSqlSearchBase {
 
     public void doneAdding() throws Exception {
         iwriter.close();
+    }
+
+    protected void index_values_from_file(String path) throws Exception {
+        Path fakeNames = Paths.get(path);
+        List<String> lines = Files.readAllLines(fakeNames);
+        List<Field> columnFields = splitDelimited.apply(lines.get(0)).stream().map(toField).collect(Collectors.toList());
+        lines.stream().skip(1).map(splitDelimited).map(toFieldsToDocument.apply(columnFields)).forEach(this::addDocumentToIndex);
     }
 }

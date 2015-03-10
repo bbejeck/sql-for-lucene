@@ -21,13 +21,15 @@
 
 package bbejeck.nosql.lucene;
 
+import com.google.common.collect.Sets;
 import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * User: Bill Bejeck
@@ -37,10 +39,10 @@ import java.util.List;
 public class QueryParseResults {
 
     private String indexPath;
-    private List<String> selectFields = new ArrayList<>();
+    private Set<String> selectFields = new HashSet<>();
     private BooleanQuery booleanQuery;
     private BooleanFilter booleanFilter;
-
+    private int limit;
 
 
     private QueryParseResults(Builder builder) {
@@ -48,13 +50,14 @@ public class QueryParseResults {
         selectFields = builder.selectFields;
         booleanQuery = builder.booleanQuery;
         booleanFilter = builder.booleanFilter;
+        limit = builder.limit;
     }
 
     public String getIndexPath() {
         return indexPath;
     }
 
-    public List<String> getSelectFields() {
+    public Set<String> getSelectFields() {
         return selectFields;
     }
 
@@ -64,6 +67,10 @@ public class QueryParseResults {
 
     public BooleanFilter getBooleanFilter() {
         return booleanFilter;
+    }
+
+    public int getLimit() {
+        return limit;
     }
 
     public static Builder newBuilder() {
@@ -76,16 +83,18 @@ public class QueryParseResults {
         builder.selectFields = copy.selectFields;
         builder.booleanQuery = copy.booleanQuery;
         builder.booleanFilter = copy.booleanFilter;
+        builder.limit = copy.limit;
         return builder;
     }
 
 
     public static final class Builder implements LuceneQueryFunctions {
         private String indexPath;
-        private List<String> selectFields;
+        private Set<String> selectFields = new HashSet<>();
         private List<FilterClause> filterClausedList;
         private BooleanQuery booleanQuery;
         private BooleanFilter booleanFilter;
+        private int limit;
 
         private Builder() {
         }
@@ -95,8 +104,23 @@ public class QueryParseResults {
             return this;
         }
 
-        public Builder withSelectFields(List<String> selectFields) {
-            this.selectFields = selectFields;
+        public Builder withSelectFields(Set<String> selectFields) {
+            this.selectFields = Sets.newHashSet(selectFields);
+            return this;
+        }
+
+        public Builder withBooleanQuery(BooleanQuery booleanQuery) {
+            this.booleanQuery = booleanQuery;
+            return this;
+        }
+
+        public Builder withBooleanFilter(BooleanFilter booleanFilter) {
+            this.booleanFilter = booleanFilter;
+            return this;
+        }
+
+        public Builder withLimit(int limit) {
+            this.limit = limit;
             return this;
         }
 

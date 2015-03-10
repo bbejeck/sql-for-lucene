@@ -40,26 +40,26 @@ import java.util.function.Supplier;
  */
 public class AntlrLuceneFunctions {
 
-    private static Function<String, ANTLRInputStream> toAntlrInputStream = ANTLRInputStream::new;
-    private static Function<ANTLRInputStream, LuceneSqlLexer> toLexer = LuceneSqlLexer::new;
-    private static Function<LuceneSqlLexer, CommonTokenStream> toTokenStream = CommonTokenStream::new;
-    private static Function<CommonTokenStream, LuceneSqlParser> toLuceneSqlParser = LuceneSqlParser::new;
-    private static Function<LuceneSqlParser, LuceneSqlParser.QueryContext> toParseTree = LuceneSqlParser::query;
+    private static Function<String, ANTLRInputStream> createAntlrInputStream = ANTLRInputStream::new;
+    private static Function<ANTLRInputStream, LuceneSqlLexer> createLexer = LuceneSqlLexer::new;
+    private static Function<LuceneSqlLexer, CommonTokenStream> createTokenStream = CommonTokenStream::new;
+    private static Function<CommonTokenStream, LuceneSqlParser> createLuceneSqlParser = LuceneSqlParser::new;
+    private static Function<LuceneSqlParser, LuceneSqlParser.QueryContext> createParseTree = LuceneSqlParser::query;
     private static Supplier<ParseTreeWalker> parseTreeWalkerSupplier = ParseTreeWalker::new;
     private static Supplier<LuceneQueryListener> luceneQueryListenerSupplier = LuceneQueryListener::new;
 
-    private static Function<String, LuceneSqlParser> toParser = toAntlrInputStream.andThen(toLexer).andThen(toTokenStream).andThen(toLuceneSqlParser);
+    private static Function<String, LuceneSqlParser> createParser = createAntlrInputStream.andThen(createLexer).andThen(createTokenStream).andThen(createLuceneSqlParser);
 
     private static Function<LuceneSqlParser, QueryParseResults> parse = parser -> {
         LuceneQueryListener listener = luceneQueryListenerSupplier.get();
-        ParseTree parseTree = toParseTree.apply(parser);
+        ParseTree parseTree = createParseTree.apply(parser);
         ParseTreeWalker walker = parseTreeWalkerSupplier.get();
         walker.walk(listener, parseTree);
-        return listener.parseResults();
+        return listener.getParseResults();
     };
 
 
-    public static QueryParseResults doParseLuceneQuery(String query) {
-        return parse.apply(toParser.apply(query));
+    public static QueryParseResults parseQuery(String query) {
+        return parse.apply(createParser.apply(query));
     }
 }

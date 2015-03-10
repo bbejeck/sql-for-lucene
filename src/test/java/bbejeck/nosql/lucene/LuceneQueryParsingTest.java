@@ -334,11 +334,11 @@ public class LuceneQueryParsingTest {
 
 
     private BooleanQuery parseQuery(String luceneQuery) {
-        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery).getBooleanQuery();
+        return AntlrLuceneFunctions.parseQuery(luceneQuery).getBooleanQuery();
     }
 
     private QueryParseResults parseQueryAndFilter(String luceneQuery){
-        return AntlrLuceneFunctions.doParseLuceneQuery(luceneQuery);
+        return AntlrLuceneFunctions.parseQuery(luceneQuery);
     }
 
 

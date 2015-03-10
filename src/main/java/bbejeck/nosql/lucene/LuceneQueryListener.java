@@ -23,6 +23,7 @@ package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.generated.LuceneSqlBaseListener;
 import bbejeck.nosql.antlr.generated.LuceneSqlParser;
+import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Sets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -31,6 +32,7 @@ import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 import java.util.function.Function;
 
@@ -42,7 +44,7 @@ import java.util.function.Function;
 public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     private String indexPath;
-    private List<String> selectedFields = Lists.newArrayList();
+    private Set<String> selectedFields = Sets.newHashSet();
     private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
@@ -180,7 +182,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
         this.indexPath = ctx.PATH().toString();
     }
 
-    public QueryParseResults parseResults() {
+    public QueryParseResults getParseResults() {
              return queryResultsBuilder.withBooleanClausesList(booleanClausesListStack.pop())
                                        .withFilterClausesList(this.filterClauses)
                                        .withIndexPath(this.indexPath)

@@ -100,6 +100,7 @@ DESCRIBE : [Dd][Ee][Ss][Cc][Rr][Ii][Bb][Ee] ;
 MATCHES : [Mm][Aa][Tt][Cc][Hh][Ee][Ss] ;
 BETWEEN : [Bb][Ee][Tt][Ww][Ee][Ee][Nn] ;
 LIKE : [Ll][Ii][Kk][Ee] ;
+MEMORY : [Mm][Ee][Mm][Oo][Rr][Yy] ;
 EQ : '=' ;
 NE : '!=';
 GT : '>' ;
