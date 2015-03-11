@@ -43,12 +43,12 @@ public class SearcherTest extends LuceneSqlSearchBase {
 
     @Test
     public void test_search_single_map_in_list() throws Exception {
-        String query = "Select first_name,last_name,city from /path/to/index/ where first_name='john' and age ='50'";
+        String query = "Select age,city from /path/to/index/ where first_name='john' and age ='50'";
         List<Map<String,Object>> results = searcher.search(query);
         assertThat(results.size(),is(1));
         Map<String,Object> resultMap = results.get(0);
-        assertThat(resultMap.get("first_name"),is("John"));
-        assertThat(resultMap.get("last_name"),is("Smith"));
+        assertThat(resultMap.keySet().size(),is(2));
+        assertThat(resultMap.get("age"),is("50"));
         assertThat(resultMap.get("city"),is("Portsmith"));
     }
 
@@ -58,6 +58,7 @@ public class SearcherTest extends LuceneSqlSearchBase {
         List<Map<String,Object>> results = searcher.search(query);
         assertThat(results.size(),is(1));
         Map<String,Object> resultMap = results.get(0);
+        assertThat(resultMap.keySet().size(),is(4));
         assertThat(resultMap.get("first_name"),is("John"));
         assertThat(resultMap.get("last_name"),is("Smith"));
         assertThat(resultMap.get("city"),is("Portsmith"));

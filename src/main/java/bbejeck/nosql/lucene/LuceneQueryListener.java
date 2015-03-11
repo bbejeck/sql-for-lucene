@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * User: Bill Bejeck
@@ -57,7 +58,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     }
 
     public void exitSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) {
-
+             selectedFields = ctx.FIELD().stream().map(TerminalNode::getText).collect(Collectors.toSet());
     }
 
     @Override
