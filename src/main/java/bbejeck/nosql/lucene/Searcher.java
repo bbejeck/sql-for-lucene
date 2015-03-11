@@ -54,7 +54,7 @@ public class Searcher {
     private IndexSearcher indexSearcher;
     private static final int DEFAULT_LIMIT = 100;
 
-    private ThrowingFunction<String, Path> createPath = s -> Paths.get(s);
+    private ThrowingFunction<String, Path> createPath = Paths::get;
     private ThrowingFunction<Path, Directory> createDirectory = FSDirectory::open;
     private ThrowingFunction<Directory, DirectoryReader> createDirectoryReader = DirectoryReader::open;
     private ThrowingFunction<DirectoryReader, IndexSearcher> openIndexSearcher = IndexSearcher::new;
