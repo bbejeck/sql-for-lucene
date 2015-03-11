@@ -2,19 +2,16 @@ grammar LuceneSql;
 
 //Parser Rules Start
 
-query : describe_stmt | ( select_stmt from_stmt? where_stmt );
-
-describe_stmt : DESCRIBE PATH ;
+query :  select_stmt? from_stmt? where_stmt
+      ;
 
 select_stmt : SELECT (SPLAT | (FIELD (COMMA FIELD)*));
 
-from_stmt : FROM
-            (RPAREN query LPAREN | PATH)*
+from_stmt : FROM PATH
           ;
 
 where_stmt : WHERE search_condition+
            ;
-
 
 search_condition : predicate (predicate | nested_predicate) *
                  ;

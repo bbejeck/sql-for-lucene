@@ -106,6 +106,17 @@ public class LuceneQueryParsingTest {
     }
 
     @Test
+    public void test_parse_between_integer_query_no_select_from() {
+        String query = "where age between 33 and 48";
+        BooleanQuery bq = parseQuery(query);
+        BooleanClause[] clauses = bq.getClauses();
+        NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
+        assertThat(numericRangeQuery.getField(), is("age"));
+        assertThat(numericRangeQuery.getMin().intValue(), is(33));
+        assertThat(numericRangeQuery.getMax().intValue(), is(48));
+    }
+
+    @Test
     public void test_parse_like_wildcard_query() {
         String query = "select foo from /path/index/ where name like 'B?t?'";
         BooleanQuery bq = parseQuery(query);

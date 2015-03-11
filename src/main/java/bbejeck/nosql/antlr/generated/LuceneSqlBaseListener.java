@@ -50,18 +50,6 @@ public class LuceneSqlBaseListener implements LuceneSqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDescribe_stmt(@NotNull LuceneSqlParser.Describe_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDescribe_stmt(@NotNull LuceneSqlParser.Describe_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}

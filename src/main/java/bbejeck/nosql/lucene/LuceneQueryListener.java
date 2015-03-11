@@ -53,17 +53,14 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private Function<Iterable<TerminalNode>,String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
     private QueryParseResults.Builder queryResultsBuilder = QueryParseResults.newBuilder();
 
-    public LuceneQueryListener() {
-        booleanClausesListStack.push(Lists.newArrayList());
-    }
-
+    @Override
     public void exitSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) {
              selectedFields = ctx.FIELD().stream().map(TerminalNode::getText).collect(Collectors.toSet());
     }
 
     @Override
-    public void exitQuery(@NotNull LuceneSqlParser.QueryContext ctx) {
-        super.exitQuery(ctx);
+    public void enterQuery(@NotNull LuceneSqlParser.QueryContext ctx) {
+        booleanClausesListStack.push(Lists.newArrayList());
     }
 
     @Override

@@ -46,13 +46,6 @@ public class LuceneSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDescribe_stmt(@NotNull LuceneSqlParser.Describe_stmtContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -48,11 +48,6 @@ public class LuceneQueryVisitor extends LuceneSqlBaseVisitor<LuceneQueryAssemble
     }
 
     @Override
-    public LuceneQueryAssembler visitDescribe_stmt(@NotNull LuceneSqlParser.Describe_stmtContext ctx) {
-        return super.visitDescribe_stmt(ctx);
-    }
-
-    @Override
     public LuceneQueryAssembler visitQuery(@NotNull LuceneSqlParser.QueryContext ctx) {
         return super.visitQuery(ctx);
     }
