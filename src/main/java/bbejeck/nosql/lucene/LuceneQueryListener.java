@@ -49,13 +49,14 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
-    private Function<Joiner,Function<Iterable<TerminalNode>,String>> toJoinedFunction = j -> j::join;
-    private Function<Iterable<TerminalNode>,String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
+    private List<BooleanClause> completeBooleanClauseList = Lists.newArrayList();
+    private Function<Joiner, Function<Iterable<TerminalNode>, String>> toJoinedFunction = j -> j::join;
+    private Function<Iterable<TerminalNode>, String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
     private QueryParseResults.Builder queryResultsBuilder = QueryParseResults.newBuilder();
 
     @Override
     public void exitSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) {
-             selectedFields = ctx.FIELD().stream().map(TerminalNode::getText).collect(Collectors.toSet());
+        selectedFields = ctx.FIELD().stream().map(TerminalNode::getText).collect(Collectors.toSet());
     }
 
     @Override
@@ -64,8 +65,14 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     }
 
     @Override
+    public void exitQuery(@NotNull LuceneSqlParser.QueryContext ctx) {
+        List<BooleanClause> booleanClauses = booleanClausesListStack.pop();
+        completeBooleanClauseList = Lists.newArrayList(booleanClauses);
+    }
+
+    @Override
     public void exitPredicate(@NotNull LuceneSqlParser.PredicateContext ctx) {
-            booleanClausesListStack.peek().add(queryBuilders.pop().build());
+        booleanClausesListStack.peek().add(queryBuilders.pop().build());
     }
 
     @Override
@@ -80,7 +87,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     @Override
     public void enterIn(@NotNull LuceneSqlParser.InContext ctx) {
-        if(ctx.NOT() !=null){
+        if (ctx.NOT() != null) {
             queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
         }
     }
@@ -158,16 +165,16 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     @Override
     public void enterNested_predicate(@NotNull LuceneSqlParser.Nested_predicateContext ctx) {
-               booleanClausesListStack.push(Lists.newArrayList());
-               queryBuilders.push(new LuceneQueryBuilder());
+        booleanClausesListStack.push(Lists.newArrayList());
+        queryBuilders.push(new LuceneQueryBuilder());
     }
 
     @Override
     public void exitNested_predicate(@NotNull LuceneSqlParser.Nested_predicateContext ctx) {
-               List<BooleanClause> nestedClauses = booleanClausesListStack.pop();
-               LuceneQueryBuilder queryBuilder = queryBuilders.pop();
-               queryBuilder.setBooleanClauses(nestedClauses);
-               booleanClausesListStack.peek().add(queryBuilder.build());
+        List<BooleanClause> nestedClauses = booleanClausesListStack.pop();
+        LuceneQueryBuilder queryBuilder = queryBuilders.pop();
+        queryBuilder.setBooleanClauses(nestedClauses);
+        booleanClausesListStack.peek().add(queryBuilder.build());
     }
 
     @Override
@@ -181,12 +188,12 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     }
 
     public QueryParseResults getParseResults() {
-             return queryResultsBuilder.withBooleanClausesList(booleanClausesListStack.pop())
-                                       .withFilterClausesList(this.filterClauses)
-                                       .withIndexPath(this.indexPath)
-                                       .withSelectFields(this.selectedFields).build();
+        return queryResultsBuilder.withBooleanClausesList(this.completeBooleanClauseList)
+                .withFilterClausesList(this.filterClauses)
+                .withIndexPath(this.indexPath)
+                .withSelectFields(this.selectedFields).build();
 
-        }
+    }
 
 
 }
