@@ -52,7 +52,7 @@ import java.util.stream.Stream;
 public class Searcher {
 
     private IndexSearcher indexSearcher;
-    private static final int DEFAULT_LIMIT = 100;
+    private static final int DEFAULT_LIMIT = 10000;
 
     private ThrowingFunction<String, Path> createPath = Paths::get;
     private ThrowingFunction<Path, Directory> createDirectory = FSDirectory::open;
