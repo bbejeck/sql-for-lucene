@@ -264,4 +264,10 @@ public interface LuceneSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTerm_list(@NotNull LuceneSqlParser.Term_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LuceneSqlParser#phrase_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx);
 }

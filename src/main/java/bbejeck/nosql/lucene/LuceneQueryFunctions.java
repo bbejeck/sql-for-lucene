@@ -23,6 +23,7 @@
 package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.util.Collectors;
+import bbejeck.nosql.util.ThrowingBiFunction;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.lucene.index.Term;
@@ -47,14 +48,7 @@ public interface LuceneQueryFunctions {
 
     BiFunction<String, String, Function<QueryType, Function<BooleanClause.Occur, BooleanClause>>> toBooleanClause = (f, t) -> qt -> bco -> new BooleanClause(qt.query(f, t), bco);
 
-    BiFunction<Term, Class<? extends Query>, Query> toQuery = (t, c) -> {
-        try {
-            return c.getConstructor(Term.class).newInstance(t);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    };
-
+    ThrowingBiFunction<Term, Class<? extends Query>, Query> toQuery = (term, clazz) -> clazz.getConstructor(Term.class).newInstance(term);
 
     Function<BooleanClause.Occur,Function<Query,BooleanClause>> fromOccurToClause = occur -> query -> new BooleanClause(query,occur);
     Function<Query,BooleanClause> toOrBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.SHOULD);

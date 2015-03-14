@@ -85,6 +85,27 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
         }
     },
 
+    BOOLEAN_PHRASE_LIST {
+        @Override
+        Query query(String field, String value) {
+            List<String> phraseValues = toStreamFromDelimitedValue.apply(value).filter(matchesPhrase).collect(Collectors.toList());
+            List<String> termValues = toStreamFromDelimitedValue.apply(value).filter(notPhrase).collect(Collectors.toList());
+
+            List<BooleanClause> phraseQueries = phraseValues.stream().map(p -> toPhraseQuery.apply(field, phraseFormatter.apply(p)))
+                                                                     .map(toOrBooleanClause)
+                                                                     .collect(Collectors.toList());
+            Function<String,Term> toTerm = termFunction.apply(field);
+
+            List<BooleanClause> termQueries = termValues.stream().map(lettersNumbersTrimLowerCase)
+                                                             .map(toTerm)
+                                                             .map(toTermQuery)
+                                                             .map(toOrBooleanClause)
+                                                             .collect(Collectors.toList());
+            phraseQueries.addAll(termQueries);
+            return toBooleanQuery.apply(phraseQueries);
+        }
+    },
+
     TERM_RANGE {
         @Override
         Query query(String field, String value) {
@@ -114,5 +135,8 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
     private static Predicate<String> isPrefix = s -> s.indexOf('?') < 0 && s.endsWith("*");
     private static Function<Predicate<String>, Function<String, Class<? extends Query>>> getCorrectClass = p -> s -> p.test(s) ? PrefixQuery.class : WildcardQuery.class;
     private static Function<String,Class<? extends Query>> getWildcardOrPrefixClass = getCorrectClass.apply(isPrefix);
+    private static Predicate<String> matchesPhrase = s -> s.matches("(['A-Za-z0-9]+\\s['A-Za-z0-9]+)+");
+    private static Predicate<String> notPhrase = matchesPhrase.negate();
+
 
 }

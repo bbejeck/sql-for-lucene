@@ -421,4 +421,14 @@ public interface LuceneSqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTerm_list(@NotNull LuceneSqlParser.Term_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LuceneSqlParser#phrase_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LuceneSqlParser#phrase_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx);
 }

@@ -51,7 +51,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
     private List<BooleanClause> completeBooleanClauseList = Lists.newArrayList();
     private Function<Joiner, Function<Iterable<TerminalNode>, String>> toJoinedFunction = j -> j::join;
-    private Function<Iterable<TerminalNode>, String> toJoinedString = toJoinedFunction.apply(Joiner.on(':'));
+    private Function<Iterable<TerminalNode>, String> toJoinedString = toJoinedFunction.apply(Joiner.on(':').skipNulls());
     private QueryParseResults.Builder queryResultsBuilder = QueryParseResults.newBuilder();
 
     @Override
@@ -161,6 +161,16 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
         LuceneQueryBuilder builder = queryBuilders.peek();
         builder.setText(toJoinedString.apply(ctx.TERM()));
         builder.setQueryType(QueryType.BOOLEAN_OR_LIST);
+    }
+
+    @Override
+    public void enterPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        List<TerminalNode> inputs = Lists.newArrayList();
+        inputs.addAll(ctx.PHRASE());
+        inputs.addAll(ctx.TERM());
+        builder.setText(toJoinedString.apply(inputs));
+        builder.setQueryType(QueryType.BOOLEAN_PHRASE_LIST);
     }
 
     @Override

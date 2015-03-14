@@ -22,12 +22,9 @@
 package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.AntlrLuceneFunctions;
-import com.google.common.collect.Sets;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.junit.Test;
-
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -98,10 +95,34 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         System.out.println(booleanQuery);
         ScoreDoc[] scoreDocs = search(booleanQuery, 10);
         assertThat(scoreDocs.length, is(2));
-        Set<String> fields = Sets.newHashSet("first_name","last_name","age");
-        System.out.println(isearcher.doc(scoreDocs[0].doc,fields).getFields());
     }
 
+    @Test
+    public void test_search_in_phrase_term_list() throws Exception {
+        String query = "Select first_name from /path/to/index/ where city in ('New York', 'Silver Spring','Bedrock')";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(4));
+    }
+
+    @Test
+    public void test_search_in_phrase_list() throws Exception {
+        String query = "Select first_name from /path/to/index/ where city in ('New York', 'Silver Spring')";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(2));
+    }
+
+    @Test
+    public void test_search_not_in_phrase_list() throws Exception {
+        String query = "Select first_name from /path/to/index/ where city not in ('New York', 'Silver Spring')";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        assertThat(scoreDocs.length, is(9));
+    }
 
 
 

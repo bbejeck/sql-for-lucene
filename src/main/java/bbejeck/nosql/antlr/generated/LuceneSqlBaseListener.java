@@ -465,6 +465,18 @@ public class LuceneSqlBaseListener implements LuceneSqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTerm_list(@NotNull LuceneSqlParser.Term_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

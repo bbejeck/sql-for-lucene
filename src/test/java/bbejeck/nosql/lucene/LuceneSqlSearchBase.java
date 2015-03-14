@@ -67,7 +67,7 @@ public abstract class LuceneSqlSearchBase {
     private Supplier<FieldType> fieldTypeSupplier = () -> {
         FieldType fieldType = new FieldType();
         fieldType.setStored(true);
-        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
         return fieldType;
     };
 

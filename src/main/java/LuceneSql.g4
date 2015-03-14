@@ -72,7 +72,7 @@ like : field LIKE WILD_CARD
 in : field NOT? IN value_list
    ;
 
-value_list : RPAREN (number_list | date_list | term_list) LPAREN
+value_list : RPAREN (number_list | date_list | term_list | phrase_list ) LPAREN
            ;
 
 number_list : NUMBER (COMMA NUMBER)*
@@ -83,6 +83,9 @@ date_list : DATE (COMMA DATE)*
 
 term_list : TERM (COMMA TERM)*
           ;
+
+phrase_list : (TERM | PHRASE) ( COMMA (TERM | PHRASE) ) *
+               ;
 //Parser Rules End
 
 //Lexer Rules Start
