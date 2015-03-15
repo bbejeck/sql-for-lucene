@@ -52,7 +52,7 @@ public interface LuceneQueryFunctions {
 
     Function<BooleanClause.Occur,Function<Query,BooleanClause>> fromOccurToClause = occur -> query -> new BooleanClause(query,occur);
     Function<Query,BooleanClause> toOrBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.SHOULD);
-    Function<Query,BooleanClause> toAndBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST);
+    Function<Query,BooleanClause> toMustBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST);
     Function<Query,BooleanClause> toNotBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST_NOT);
     Function<Term,Query> toTermQuery = t -> toQuery.apply(t, TermQuery.class);
     Function<String, Function<String, Term>> termFunction = field -> text -> createTerm.apply(field, text);

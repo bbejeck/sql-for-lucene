@@ -31,6 +31,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -89,6 +90,14 @@ public abstract class LuceneSqlSearchBase {
           if(ireader == null){
               openSearcher();
           }
+
+        return isearcher.search(query,limit).scoreDocs;
+    }
+
+    public ScoreDoc[] search(Query query,Filter filter, int limit) throws Exception {
+        if(ireader == null){
+            openSearcher();
+        }
 
         return isearcher.search(query,limit).scoreDocs;
     }

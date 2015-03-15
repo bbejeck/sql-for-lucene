@@ -22,8 +22,7 @@
 package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.AntlrLuceneFunctions;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.*;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -121,7 +120,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
         ScoreDoc[] scoreDocs = search(booleanQuery, 10);
-        assertThat(scoreDocs.length, is(9));
+        assertThat(scoreDocs.length, is(10));
     }
 
 

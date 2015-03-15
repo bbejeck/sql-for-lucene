@@ -26,10 +26,13 @@ import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.MatchAllDocsQuery;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * User: Bill Bejeck
@@ -125,6 +128,10 @@ public class QueryParseResults {
         }
 
         public QueryParseResults build() {
+            if(isSingleMustNotQuery.test(booleanQuery)){
+                List<BooleanClause> booleanClauseList = Arrays.asList(toMustBooleanClause.apply(new MatchAllDocsQuery()),toNotBooleanClause.apply(booleanQuery));
+                booleanQuery = toBooleanQuery.apply(booleanClauseList);
+            }
             return new QueryParseResults(this);
         }
 
@@ -137,5 +144,7 @@ public class QueryParseResults {
             this.booleanQuery = toBooleanQuery.apply(booleanClausesList);
             return this;
         }
+
+        private Predicate<BooleanQuery> isSingleMustNotQuery = bq -> bq.clauses().size()==1 && bq.getClauses()[0].getOccur() == BooleanClause.Occur.MUST_NOT;
     }
 }
