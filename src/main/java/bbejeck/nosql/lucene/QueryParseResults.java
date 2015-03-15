@@ -27,6 +27,7 @@ import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -129,7 +130,8 @@ public class QueryParseResults {
 
         public QueryParseResults build() {
             if(isSingleMustNotQuery.test(booleanQuery)){
-                List<BooleanClause> booleanClauseList = Arrays.asList(toMustBooleanClause.apply(new MatchAllDocsQuery()),toNotBooleanClause.apply(booleanQuery));
+                Query nested = booleanQuery.getClauses()[0].getQuery();
+                List<BooleanClause> booleanClauseList = Arrays.asList(toMustBooleanClause.apply(new MatchAllDocsQuery()),toNotBooleanClause.apply(nested));
                 booleanQuery = toBooleanQuery.apply(booleanClauseList);
             }
             return new QueryParseResults(this);

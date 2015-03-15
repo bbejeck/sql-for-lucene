@@ -47,7 +47,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
     public void test_search_boolean_and_terms() throws Exception {
         String query = "Select name,address from /path/to/index/ where first_name='beth' and last_name='bejeck'";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(1));
     }
 
@@ -56,7 +56,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select first_name,last_name,address from /path/to/index/ where first_name='john' and age between '30' and '40'";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(3));
     }
 
@@ -65,7 +65,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select name,address from /path/to/index/ where first_name='john' and city in ('Portsmith', 'Rockville')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(3));
     }
 
@@ -74,7 +74,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select name,address from /path/to/index/ where first_name='john' and city in ('Portsmith', 'Rockville','Cleveland')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(4));
     }
 
@@ -83,7 +83,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select name,address from /path/to/index/ where first_name='john' and not (city in ('Portsmith', 'Rockville','Cleveland'))";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(2));
     }
 
@@ -92,7 +92,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select name,address from /path/to/index/ where first_name='john' and city not in ('Portsmith', 'Rockville','Cleveland')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(2));
     }
 
@@ -101,7 +101,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select first_name from /path/to/index/ where city in ('New York', 'Silver Spring','Bedrock')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(4));
     }
 
@@ -110,7 +110,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select first_name from /path/to/index/ where city in ('New York', 'Silver Spring')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(2));
     }
 
@@ -119,9 +119,19 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         String query = "Select first_name from /path/to/index/ where city not in ('New York', 'Silver Spring')";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
-        ScoreDoc[] scoreDocs = search(booleanQuery, 10);
+        ScoreDoc[] scoreDocs = search(booleanQuery,100);
         assertThat(scoreDocs.length, is(10));
     }
+
+    @Test
+    public void test_search_not_only_term_clause() throws Exception {
+        String query = "Select first_name from /path/to/index/ where first_name != 'Barny' ";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
+        assertThat(scoreDocs.length, is(11));
+    }
+
 
 
 
