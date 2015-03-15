@@ -51,6 +51,7 @@ public interface LuceneQueryFunctions {
     ThrowingBiFunction<Term, Class<? extends Query>, Query> toQuery = (term, clazz) -> clazz.getConstructor(Term.class).newInstance(term);
 
     Function<BooleanClause.Occur,Function<Query,BooleanClause>> fromOccurToClause = occur -> query -> new BooleanClause(query,occur);
+    Function<BooleanQuery,BooleanClause> extractBooleanClause = bq -> bq.getClauses()[0];
     Function<Query,BooleanClause> toOrBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.SHOULD);
     Function<Query,BooleanClause> toMustBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST);
     Function<Query,BooleanClause> toNotBooleanClause = fromOccurToClause.apply(BooleanClause.Occur.MUST_NOT);
