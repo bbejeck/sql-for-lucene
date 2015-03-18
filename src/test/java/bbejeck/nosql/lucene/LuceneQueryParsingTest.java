@@ -26,8 +26,10 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * User: Bill Bejeck
@@ -448,6 +450,15 @@ public class LuceneQueryParsingTest {
         assertThat(termRangeQuery.getLowerTerm().utf8ToString(), is("20150318"));
         assertThat(termRangeQuery.getUpperTerm(), is(nullValue()));
         assertThat(termRangeQuery.includesLower(), is(true));
+    }
+
+    @Test
+    public void test_search_number_field() throws Exception {
+            String query = "Select age,city from /path/to/index/ where first_name='john' and ageN=50";
+            BooleanQuery booleanQuery = parseQuery(query);
+            BooleanClause[] clauses = booleanQuery.getClauses();
+            assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermQuery"));
+            assertThat(clauses[1].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
     }
 
 

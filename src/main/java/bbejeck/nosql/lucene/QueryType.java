@@ -41,6 +41,11 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
     TERM {
         @Override
         Query query(String field, String value) {
+
+            if(value.matches("\\d+")){
+                return INTEGER_RANGE.query(field,value+":"+value);
+            }
+
             Term t = createTerm.apply(field, lettersNumbersTrimLowerCase.apply(value));
             return toQuery.apply(t, TermQuery.class);
         }
