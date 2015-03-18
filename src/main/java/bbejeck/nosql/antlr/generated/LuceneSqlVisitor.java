@@ -101,33 +101,35 @@ public interface LuceneSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNotEqual(@NotNull LuceneSqlParser.NotEqualContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LessThan}
-	 * labeled alternative in {@link LuceneSqlParser#comparison_op}.
+	 * Visit a parse tree produced by {@link LuceneSqlParser#range_op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLessThan(@NotNull LuceneSqlParser.LessThanContext ctx);
+	T visitRange_op(@NotNull LuceneSqlParser.Range_opContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code GreaterThan}
-	 * labeled alternative in {@link LuceneSqlParser#comparison_op}.
+	 * Visit a parse tree produced by {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreaterThan(@NotNull LuceneSqlParser.GreaterThanContext ctx);
+	T visitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code GreaterThanEquals}
-	 * labeled alternative in {@link LuceneSqlParser#comparison_op}.
+	 * Visit a parse tree produced by {@link LuceneSqlParser#greater_than_equals}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreaterThanEquals(@NotNull LuceneSqlParser.GreaterThanEqualsContext ctx);
+	T visitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LessThanEquals}
-	 * labeled alternative in {@link LuceneSqlParser#comparison_op}.
+	 * Visit a parse tree produced by {@link LuceneSqlParser#less_than}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLessThanEquals(@NotNull LuceneSqlParser.LessThanEqualsContext ctx);
+	T visitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code And}
 	 * labeled alternative in {@link LuceneSqlParser#boolean_op}.

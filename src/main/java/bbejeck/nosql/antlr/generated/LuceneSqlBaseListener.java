@@ -170,49 +170,61 @@ public class LuceneSqlBaseListener implements LuceneSqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLessThan(@NotNull LuceneSqlParser.LessThanContext ctx) { }
+	@Override public void enterRange_op(@NotNull LuceneSqlParser.Range_opContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLessThan(@NotNull LuceneSqlParser.LessThanContext ctx) { }
+	@Override public void exitRange_op(@NotNull LuceneSqlParser.Range_opContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGreaterThan(@NotNull LuceneSqlParser.GreaterThanContext ctx) { }
+	@Override public void enterGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGreaterThan(@NotNull LuceneSqlParser.GreaterThanContext ctx) { }
+	@Override public void exitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGreaterThanEquals(@NotNull LuceneSqlParser.GreaterThanEqualsContext ctx) { }
+	@Override public void enterGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGreaterThanEquals(@NotNull LuceneSqlParser.GreaterThanEqualsContext ctx) { }
+	@Override public void exitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLessThanEquals(@NotNull LuceneSqlParser.LessThanEqualsContext ctx) { }
+	@Override public void enterLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLessThanEquals(@NotNull LuceneSqlParser.LessThanEqualsContext ctx) { }
+	@Override public void exitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

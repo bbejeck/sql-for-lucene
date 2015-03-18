@@ -45,6 +45,7 @@ public class LuceneQueryBuilder {
     private BooleanClause.Occur occur;
     private QueryType queryType;
 
+    protected String getText(){return text;}
 
     public void setField(String field) {
         this.field = field;

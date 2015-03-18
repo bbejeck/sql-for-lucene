@@ -26,9 +26,8 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * User: Bill Bejeck
@@ -342,6 +341,115 @@ public class LuceneQueryParsingTest {
         assertThat(termQuery6.getTerm().field(), is("e"));
         assertThat(termQuery6.getTerm().text(), is("7"));
     }
+
+    @Test
+    public void test_less_than_number(){
+        String query = "Select foo from /index/path/ where age < 49";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
+        NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
+        assertThat(numericRangeQuery.getMin(), is(nullValue()));
+        assertThat(numericRangeQuery.getMax(), is(49));
+        assertThat(numericRangeQuery.includesMax(),is(false));
+    }
+
+    @Test
+    public void test_less_than_equals_number(){
+        String query = "Select foo from /index/path/ where age <= 49";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
+        NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
+        assertThat(numericRangeQuery.getMin(),is(nullValue()));
+        assertThat(numericRangeQuery.getMax(),is(49));
+        assertThat(numericRangeQuery.includesMax(),is(true));
+    }
+
+    @Test
+    public void test_greater_than_number(){
+        String query = "Select foo from /index/path/ where age > 49";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
+        NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
+        assertThat(numericRangeQuery.getMin(), is(49));
+        assertThat(numericRangeQuery.getMax(), is(nullValue()));
+        assertThat(numericRangeQuery.includesMin(),is(false));
+    }
+
+    @Test
+    public void test_greater_than_equals_number(){
+        String query = "Select foo from /index/path/ where age >= 49";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
+        NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
+        assertThat(numericRangeQuery.getMin(),is(49));
+        assertThat(numericRangeQuery.getMax(),is(nullValue()));
+        assertThat(numericRangeQuery.includesMin(),is(true));
+    }
+
+    @Test
+    public void test_less_than_term(){
+        String query = "Select foo from /index/path/ where age < '49'";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm(), is(nullValue()));
+        assertThat(termRangeQuery.getUpperTerm().utf8ToString(), is("49"));
+        assertThat(termRangeQuery.includesUpper(),is(false));
+    }
+
+    @Test
+    public void test_less_than_equals_term(){
+        String query = "Select foo from /index/path/ where age <= '49'";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm(),is(nullValue()));
+        assertThat(termRangeQuery.getUpperTerm().utf8ToString(),is("49"));
+        assertThat(termRangeQuery.includesUpper(),is(true));
+    }
+
+    @Test
+    public void test_greater_than_term(){
+        String query = "Select foo from /index/path/ where age > '49'";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm().utf8ToString(), is("49"));
+        assertThat(termRangeQuery.getUpperTerm(), is(nullValue()));
+        assertThat(termRangeQuery.includesLower(),is(false));
+    }
+
+    @Test
+    public void test_greater_than_equals_term(){
+        String query = "Select foo from /index/path/ where age >= '49'";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm().utf8ToString(), is("49"));
+        assertThat(termRangeQuery.getUpperTerm(), is(nullValue()));
+        assertThat(termRangeQuery.includesLower(), is(true));
+    }
+
+    @Test
+    public void test_greater_than_equals_date(){
+        String query = "Select foo from /index/path/ where date >= 2015-03-18";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm().utf8ToString(), is("20150318"));
+        assertThat(termRangeQuery.getUpperTerm(), is(nullValue()));
+        assertThat(termRangeQuery.includesLower(), is(true));
+    }
+
 
 
     private BooleanQuery parseQuery(String luceneQuery) {

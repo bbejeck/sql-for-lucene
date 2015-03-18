@@ -75,12 +75,12 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
     BOOLEAN_OR_LIST {
         @Override
         Query query(String field, String value) {
-            Function<String,Term> toTerm = termFunction.apply(field);
+            Function<String, Term> toTerm = termFunction.apply(field);
             List<BooleanClause> booleanClauseList = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase)
-                                                                     .map(toTerm)
-                                                                     .map(toTermQuery)
-                                                                     .map(toOrBooleanClause)
-                                                                     .collect(Collectors.toList());
+                    .map(toTerm)
+                    .map(toTermQuery)
+                    .map(toOrBooleanClause)
+                    .collect(Collectors.toList());
             return toBooleanQuery.apply(booleanClauseList);
         }
     },
@@ -92,15 +92,15 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
             List<String> termValues = toStreamFromDelimitedValue.apply(value).filter(notPhrase).collect(Collectors.toList());
 
             List<BooleanClause> phraseQueries = phraseValues.stream().map(p -> toPhraseQuery.apply(field, phraseFormatter.apply(p)))
-                                                                     .map(toOrBooleanClause)
-                                                                     .collect(Collectors.toList());
-            Function<String,Term> toTerm = termFunction.apply(field);
+                    .map(toOrBooleanClause)
+                    .collect(Collectors.toList());
+            Function<String, Term> toTerm = termFunction.apply(field);
 
             List<BooleanClause> termQueries = termValues.stream().map(lettersNumbersTrimLowerCase)
-                                                             .map(toTerm)
-                                                             .map(toTermQuery)
-                                                             .map(toOrBooleanClause)
-                                                             .collect(Collectors.toList());
+                    .map(toTerm)
+                    .map(toTermQuery)
+                    .map(toOrBooleanClause)
+                    .collect(Collectors.toList());
             phraseQueries.addAll(termQueries);
             return toBooleanQuery.apply(phraseQueries);
         }
@@ -124,19 +124,49 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
             Integer upper = terms.get(1);
             return NumericRangeQuery.newIntRange(field, lower, upper, true, true);
         }
+
+
+    },
+
+    TERM_RANGE_UNBOUNDED {
+        @Override
+        Query query(String field, String value) {
+            List<String> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).collect(Collectors.toList());
+            String lower = (terms.get(0).equals(UNBOUNDED)) ? null : terms.get(0);
+            String upper = (terms.get(1).equals(UNBOUNDED)) ? null : terms.get(1);
+            boolean included = Boolean.valueOf(terms.get(2));
+            boolean includeUpper = lower == null && included;
+            boolean includeLower = upper == null && included;
+            return TermRangeQuery.newStringRange(field, lower, upper, includeLower, includeUpper);
+        }
+    },
+
+    INTEGER_RANGE_UNBOUNDED {
+        @Override
+        Query query(String field, String value) {
+            List<String> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).collect(Collectors.toList());
+            Integer lower = (terms.get(0).equals(UNBOUNDED)) ? null : Integer.decode(terms.get(0));
+            Integer upper = (terms.get(1).equals(UNBOUNDED)) ? null : Integer.decode(terms.get(1));
+            boolean included = Boolean.valueOf(terms.get(2));
+            boolean includeUpper = lower == null && included;
+            boolean includeLower = upper == null && included;
+            return NumericRangeQuery.newIntRange(field, lower, upper, includeLower, includeUpper);
+        }
     };
+
 
     abstract Query query(String field, String value);
 
-    private static Function<String,Function<String,Stream<String>>> setDelimiter = d -> s -> Splitter.on(d).splitToList(s).stream();
-    private static Function<String,Stream<String>> toStreamFromDelimitedValue =  setDelimiter.apply(":");
+    private static Function<String, Function<String, Stream<String>>> setDelimiter = d -> s -> Splitter.on(d).splitToList(s).stream();
+    private static Function<String, Stream<String>> toStreamFromDelimitedValue = setDelimiter.apply(":");
     private static Function<String, String> phraseFormatter = removeMultipleSpace.andThen(lowerCase).andThen(lettersNumbersWhitespace).andThen(trim);
     private static Function<String, String> wildCardPrefixFormatter = lettersNumbersWildcard.andThen(lowerCase);
     private static Predicate<String> isPrefix = s -> s.indexOf('?') < 0 && s.endsWith("*");
     private static Function<Predicate<String>, Function<String, Class<? extends Query>>> getCorrectClass = p -> s -> p.test(s) ? PrefixQuery.class : WildcardQuery.class;
-    private static Function<String,Class<? extends Query>> getWildcardOrPrefixClass = getCorrectClass.apply(isPrefix);
+    private static Function<String, Class<? extends Query>> getWildcardOrPrefixClass = getCorrectClass.apply(isPrefix);
     private static Predicate<String> matchesPhrase = s -> s.matches("(['A-Za-z0-9]+\\s['A-Za-z0-9]+)+");
     private static Predicate<String> notPhrase = matchesPhrase.negate();
+    public static final String UNBOUNDED = "unbounded";
 
 
 }

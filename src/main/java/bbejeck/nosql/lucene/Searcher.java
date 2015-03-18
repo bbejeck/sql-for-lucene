@@ -23,6 +23,7 @@ package bbejeck.nosql.lucene;
 
 import bbejeck.nosql.antlr.AntlrLuceneFunctions;
 import bbejeck.nosql.util.ThrowingFunction;
+import com.google.common.base.Preconditions;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.IntField;
 import org.apache.lucene.index.DirectoryReader;
@@ -59,13 +60,14 @@ public class Searcher {
     private ThrowingFunction<Directory, DirectoryReader> createDirectoryReader = DirectoryReader::open;
     private ThrowingFunction<DirectoryReader, IndexSearcher> openIndexSearcher = IndexSearcher::new;
     private ThrowingFunction<Directory, IndexSearcher> fromDirectoryToIndexSearcher = createDirectoryReader.andThen(openIndexSearcher);
-    private ThrowingFunction<String, IndexSearcher> createIndexSearcher = createPath.andThen(createDirectory).andThen(createDirectoryReader).andThen(openIndexSearcher);
+    private ThrowingFunction<String, IndexSearcher> createIndexSearcherFromStringPath = createPath.andThen(createDirectory).andThen(createDirectoryReader).andThen(openIndexSearcher);
+    private ThrowingFunction<Path, IndexSearcher> createIndexSearcherFromPath = createDirectory.andThen(createDirectoryReader).andThen(openIndexSearcher);
 
-    private Function<Set<String>, Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>>> getSearchDocsWithFields = fields -> searcher -> scoreDoc -> searcher.doc(scoreDoc.doc, fields);
-    private Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>> getSearchDocsNoFields = searcher -> scoreDoc -> searcher.doc(scoreDoc.doc);
+    private Function<Set<String>, Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>>> getSearchDocsWithSelectedFields = fields -> searcher -> scoreDoc -> searcher.doc(scoreDoc.doc, fields);
+    private Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>> getSearchDocsWithAllFields = searcher -> scoreDoc -> searcher.doc(scoreDoc.doc);
 
 
-    private Function<List<IndexableField>, Map<String, Object>> toMapFromIndexList = list -> {
+    private Function<List<IndexableField>, Map<String, Object>> loadFieldIntoHashMap = list -> {
         Map<String, Object> valuesMap = new HashMap<>();
         list.forEach(field -> {
             Object value = (field instanceof IntField) ? field.numericValue() : field.stringValue();
@@ -78,7 +80,18 @@ public class Searcher {
     public Searcher() {
     }
 
-    protected Searcher(Directory directory) {
+    public Searcher(String indexPath){
+        Preconditions.checkArgument(indexPath != null && !indexPath.trim().isEmpty(), "Index Path is can't be null or empty");
+        this.indexSearcher = createIndexSearcherFromStringPath.apply(indexPath);
+    }
+
+    public Searcher(Path indexPath){
+        Preconditions.checkNotNull(indexPath,"Index Path can't be null");
+        this.indexSearcher = createIndexSearcherFromPath.apply(indexPath);
+    }
+
+    public Searcher(Directory directory) {
+        Preconditions.checkNotNull(directory,"Directory can't be null");
         this.indexSearcher = fromDirectoryToIndexSearcher.apply(directory);
     }
 
@@ -87,27 +100,27 @@ public class Searcher {
         QueryParseResults parseResults = AntlrLuceneFunctions.parseQuery(query);
 
         if (indexSearcher == null) {
-            indexSearcher = createIndexSearcher.apply(parseResults.getIndexPath());
+            indexSearcher = createIndexSearcherFromStringPath.apply(parseResults.getIndexPath());
         }
 
         int maxResults = parseResults.getLimit() == 0 ? DEFAULT_LIMIT : parseResults.getLimit();
 
         TopDocs topDocs = indexSearcher.search(parseResults.getBooleanQuery(), maxResults);
         Set<String> fields = parseResults.getSelectFields();
-        ThrowingFunction<ScoreDoc, Document> getDocument;
+        ThrowingFunction<ScoreDoc, Document> retrieveDocFunction;
 
         if (fields.isEmpty()) {
-            getDocument = getSearchDocsNoFields.apply(indexSearcher);
+            retrieveDocFunction = getSearchDocsWithAllFields.apply(indexSearcher);
         } else {
-            getDocument = getSearchDocsWithFields.apply(fields).apply(indexSearcher);
+            retrieveDocFunction = getSearchDocsWithSelectedFields.apply(fields).apply(indexSearcher);
 
         }
 
 
-        return Stream.of(topDocs.scoreDocs).map(getDocument)
-                .map(Document::getFields)
-                .map(toMapFromIndexList)
-                .collect(Collectors.toList());
+        return Stream.of(topDocs.scoreDocs).map(retrieveDocFunction)
+                                           .map(Document::getFields)
+                                           .map(loadFieldIntoHashMap)
+                                           .collect(Collectors.toList());
 
     }
 

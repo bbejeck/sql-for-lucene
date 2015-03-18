@@ -54,6 +54,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private Function<Iterable<TerminalNode>, String> toJoinedString = toJoinedFunction.apply(Joiner.on(':').skipNulls());
     private QueryParseResults.Builder queryResultsBuilder = QueryParseResults.newBuilder();
 
+
     @Override
     public void exitSelect_stmt(@NotNull LuceneSqlParser.Select_stmtContext ctx) {
         selectedFields = ctx.FIELD().stream().map(TerminalNode::getText).collect(Collectors.toSet());
@@ -78,6 +79,54 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     @Override
     public void enterPredicate(@NotNull LuceneSqlParser.PredicateContext ctx) {
         queryBuilders.push(new LuceneQueryBuilder());
+    }
+
+    @Override
+    public void exitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        String originalValue = builder.getText();
+        if (originalValue.matches("\\d+")) {
+            builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
+        } else {
+            builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
+        }
+        builder.setText(QueryType.UNBOUNDED + ":" + originalValue+":false");
+    }
+
+    @Override
+    public void exitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        String originalValue = builder.getText();
+        if (originalValue.matches("\\d+")) {
+            builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
+        } else {
+            builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
+        }
+        builder.setText(QueryType.UNBOUNDED + ":" + originalValue+":true");
+    }
+
+    @Override
+    public void exitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        String originalValue = builder.getText();
+        if (originalValue.matches("\\d+")) {
+            builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
+        } else {
+            builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
+        }
+        builder.setText(originalValue+":"+QueryType.UNBOUNDED+":false");
+    }
+
+    @Override
+    public void exitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        String originalValue = builder.getText();
+        if (originalValue.matches("\\d+")) {
+            builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
+        } else {
+            builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
+        }
+        builder.setText(originalValue+":"+QueryType.UNBOUNDED+":true");
     }
 
     @Override
@@ -123,6 +172,20 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     public void enterTerm(@NotNull LuceneSqlParser.TermContext ctx) {
         LuceneQueryBuilder builder = queryBuilders.peek();
         builder.setText(ctx.TERM().getText());
+        builder.setQueryType(QueryType.TERM);
+    }
+
+    @Override
+    public void enterNumber(@NotNull LuceneSqlParser.NumberContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        builder.setText(ctx.NUMBER().getText());
+        builder.setQueryType(QueryType.TERM);
+    }
+
+    @Override
+    public void enterDate(@NotNull LuceneSqlParser.DateContext ctx) {
+        LuceneQueryBuilder builder = queryBuilders.peek();
+        builder.setText(ctx.DATE().getText());
         builder.setQueryType(QueryType.TERM);
     }
 

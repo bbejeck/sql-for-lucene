@@ -19,7 +19,7 @@ search_condition : predicate (predicate | nested_predicate) *
 predicate : boolean_op? (comparison_predicate | function_predicate)
           ;
 
-comparison_predicate : field comparison_op value
+comparison_predicate : field (comparison_op value | range_op )
                      ;
 
 function_predicate : regexp | between | like | in
@@ -30,11 +30,27 @@ field : FIELD
 
 comparison_op        :  EQ       # Equals
                      |  NE       # NotEqual
-                     |  LT       # LessThan
-                     |  GT       # GreaterThan
-                     |  GTE      # GreaterThanEquals
-                     |  LTE      # LessThanEquals
                      ;
+
+range_op     : greater_than
+             | greater_than_equals
+             | less_than
+             | less_than_equals
+             ;
+
+
+greater_than : GT value
+             ;
+
+greater_than_equals : GTE value
+                    ;
+
+less_than : LT value
+          ;
+
+less_than_equals : LTE value
+                 ;
+
 
 boolean_op         :  AND         # And
                    |  OR          # Or
