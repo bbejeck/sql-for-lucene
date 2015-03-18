@@ -25,7 +25,6 @@ import bbejeck.nosql.antlr.AntlrLuceneFunctions;
 import bbejeck.nosql.util.ThrowingFunction;
 import com.google.common.base.Preconditions;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.IntField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.search.IndexSearcher;
@@ -70,7 +69,7 @@ public class Searcher {
     private Function<List<IndexableField>, Map<String, Object>> loadFieldIntoHashMap = list -> {
         Map<String, Object> valuesMap = new HashMap<>();
         list.forEach(field -> {
-            Object value = (field instanceof IntField) ? field.numericValue() : field.stringValue();
+            Object value = (field.numericValue()!=null) ? field.numericValue() : field.stringValue();
             valuesMap.put(field.name(), value);
         });
         return valuesMap;

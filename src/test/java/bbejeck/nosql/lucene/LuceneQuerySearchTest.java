@@ -53,7 +53,7 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
 
     @Test
     public void test_search_between() throws Exception {
-        String query = "Select first_name,last_name,address from /path/to/index/ where first_name='john' and age between '30' and '40'";
+        String query = "Select first_name,last_name,address from /path/to/index/ where first_name='john' and ageN between 30 and 40";
         BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
         System.out.println(booleanQuery);
         ScoreDoc[] scoreDocs = search(booleanQuery, 100);
@@ -130,6 +130,15 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
         System.out.println(booleanQuery);
         ScoreDoc[] scoreDocs = search(booleanQuery, 100);
         assertThat(scoreDocs.length, is(11));
+    }
+
+    @Test
+    public void test_search_less_than() throws Exception {
+        String query = "Select * from /path/to/index/ where ageN < 40";
+        BooleanQuery booleanQuery = AntlrLuceneFunctions.parseQuery(query).getBooleanQuery();
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
+        assertThat(scoreDocs.length, is(4));
     }
 
 

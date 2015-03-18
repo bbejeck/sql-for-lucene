@@ -27,6 +27,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.IntField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
@@ -76,7 +77,13 @@ public abstract class LuceneSqlSearchBase {
         Document doc = documentSupplier.get();
         int indx = 0;
         for (Field column : fields) {
-            column.setStringValue(values.get(indx++));
+            String val = values.get(indx++);
+            if(val.matches("\\d+")){
+                 int num = Integer.parseInt(val);
+                 IntField numberColumn  = new IntField(column.name()+"N",num, Field.Store.YES);
+                 doc.add(numberColumn);
+            }
+            column.setStringValue(val);
             doc.add(column);
         }
         return doc;
