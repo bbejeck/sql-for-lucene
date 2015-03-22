@@ -21,7 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
-import bbejeck.nosql.antlr.AntlrLuceneFunctions;
+import bbejeck.nosql.antlr.LuceneQueryParser;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_term_and_phrase_query() {
-        String query = "Select name,address from /path/to/index/ where first_name='Beth' and last_name='Bejeck' or type='Big   Cutie '";
+        String query = "Select name,address from '/path/to/index/' where first_name='Beth' and last_name='Bejeck' or type='Big   Cutie '";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses.length, is(3));
@@ -65,7 +65,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_term_correctly() {
-        String query = "select foo from /path/index/ where foo='Na,ME'";
+        String query = "select foo from '/path/index/' where foo='Na,ME'";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         TermQuery termQuery = (TermQuery) clauses[0].getQuery();
@@ -76,7 +76,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_regex_query() {
-        String query = "Select foo from /path/index/ where foo matches('[Bb].*[hH]?')";
+        String query = "Select foo from '/path/index/' where foo matches('[Bb].*[hH]?')";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         RegexpQuery regexpQuery = (RegexpQuery) clauses[0].getQuery();
@@ -86,7 +86,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_between_query() {
-        String query = "Select foo from /path/index/ where foo between 'Beth' and 'Elizabeth'";
+        String query = "Select foo from '/path/index/' where foo between 'Beth' and 'Elizabeth'";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
@@ -97,7 +97,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_between_integer_query() {
-        String query = "Select foo from /path/index/ where age between 33 and 48";
+        String query = "Select foo from '/path/index/' where age between 33 and 48";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         NumericRangeQuery numericRangeQuery = (NumericRangeQuery) clauses[0].getQuery();
@@ -119,7 +119,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_like_wildcard_query() {
-        String query = "select foo from /path/index/ where name like 'B?t?'";
+        String query = "select foo from '/path/index/' where name like 'B?t?'";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         WildcardQuery wildcardQuery = (WildcardQuery) clauses[0].getQuery();
@@ -129,7 +129,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_like_wildcard_query_with_asteric() {
-        String query = "select foo from /path/index/ where name like 'B*th'";
+        String query = "select foo from '/path/index/' where name like 'B*th'";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         WildcardQuery wildcardQuery = (WildcardQuery) clauses[0].getQuery();
@@ -139,7 +139,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_like_prefix_query() {
-        String query = "select foo from /path/index/ where name like 'Bet*'";
+        String query = "select foo from '/path/index/' where name like 'Bet*'";
         BooleanQuery bq = parseQuery(query);
         BooleanClause[] clauses = bq.getClauses();
         PrefixQuery prefixQuery = (PrefixQuery) clauses[0].getQuery();
@@ -150,7 +150,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_in_listquery() throws Exception {
-        String query = "select foo from /path/index/ where name='Beth' and score in (0, 50, 55)";
+        String query = "select foo from '/path/index/' where name='Beth' and score in (0, 50, 55)";
         QueryParseResults qc = parseQueryAndFilter(query);
         BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
@@ -180,7 +180,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_in_term_listquery() throws Exception {
-        String query = "select foo from /path/index/ where name='Beth' and score in ('0', '50', '55')";
+        String query = "select foo from '/path/index/' where name='Beth' and score in ('0', '50', '55')";
         QueryParseResults qc = parseQueryAndFilter(query);
         BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
@@ -210,7 +210,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_nested_query() throws Exception{
-        String query = "select foo from D:/some/path/ where a='1' and (b='2' and c='3' and d='4')";
+        String query = "select foo from 'D:/some/path/' where a='1' and (b='2' and c='3' and d='4')";
         QueryParseResults qc = parseQueryAndFilter(query);
         BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
         assertThat(clauses.length,is(2));
@@ -239,7 +239,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_deeper_nested_query() throws Exception{
-        String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e='5')))";
+        String query = "select foo from '/some/path/' where a='1' and (b='2' and (c='3' and (d='4' and e='5')))";
         QueryParseResults qc = parseQueryAndFilter(query);
         //Overall query
         BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
@@ -286,7 +286,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_parse_deeper_nested_with_in_term_clause_query() throws Exception{
-        String query = "select foo from /some/path/ where a='1' and (b='2' and (c='3' and (d='4' and e in (5,6,7))))";
+        String query = "select foo from '/some/path/' where a='1' and (b='2' and (c='3' and (d='4' and e in (5,6,7))))";
         QueryParseResults qc = parseQueryAndFilter(query);
         //Overall query
         BooleanClause[] clauses = qc.getBooleanQuery().getClauses();
@@ -346,7 +346,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_less_than_number(){
-        String query = "Select foo from /index/path/ where age < 49";
+        String query = "Select foo from '/index/path/' where age < 49";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
@@ -358,7 +358,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_less_than_equals_number(){
-        String query = "Select foo from /index/path/ where age <= 49";
+        String query = "Select foo from '/index/path/' where age <= 49";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
@@ -370,7 +370,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_greater_than_number(){
-        String query = "Select foo from /index/path/ where age > 49";
+        String query = "Select foo from '/index/path/' where age > 49";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
@@ -382,7 +382,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_greater_than_equals_number(){
-        String query = "Select foo from /index/path/ where age >= 49";
+        String query = "Select foo from '/index/path/' where age >= 49";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("NumericRangeQuery"));
@@ -394,7 +394,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_less_than_term(){
-        String query = "Select foo from /index/path/ where age < '49'";
+        String query = "Select foo from '/index/path/' where age < '49'";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
@@ -406,7 +406,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_less_than_equals_term(){
-        String query = "Select foo from /index/path/ where age <= '49'";
+        String query = "Select foo from '/index/path/' where age <= '49'";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
@@ -418,7 +418,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_greater_than_term(){
-        String query = "Select foo from /index/path/ where age > '49'";
+        String query = "Select foo from '/index/path/' where age > '49'";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
@@ -430,7 +430,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_greater_than_equals_term(){
-        String query = "Select foo from /index/path/ where age >= '49'";
+        String query = "Select foo from '/index/path/' where age >= '49'";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
@@ -442,7 +442,19 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_greater_than_equals_date(){
-        String query = "Select foo from /index/path/ where date >= 2015-03-18";
+        String query = "Select foo from '/index/path/' where date >= 2015/03/18";
+        BooleanQuery booleanQuery = parseQuery(query);
+        BooleanClause[] clauses = booleanQuery.getClauses();
+        assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
+        TermRangeQuery termRangeQuery = (TermRangeQuery) clauses[0].getQuery();
+        assertThat(termRangeQuery.getLowerTerm().utf8ToString(), is("20150318"));
+        assertThat(termRangeQuery.getUpperTerm(), is(nullValue()));
+        assertThat(termRangeQuery.includesLower(), is(true));
+    }
+
+    @Test
+    public void test_greater_than_equals_date_dash_separators(){
+        String query = "Select foo from '/index/path/' where date >= 2015-03-18";
         BooleanQuery booleanQuery = parseQuery(query);
         BooleanClause[] clauses = booleanQuery.getClauses();
         assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermRangeQuery"));
@@ -454,7 +466,7 @@ public class LuceneQueryParsingTest {
 
     @Test
     public void test_search_number_field() throws Exception {
-            String query = "Select age,city from /path/to/index/ where first_name='john' and ageN=50";
+            String query = "Select age,city from '/path/to/index/' where first_name='john' and ageN=50";
             BooleanQuery booleanQuery = parseQuery(query);
             BooleanClause[] clauses = booleanQuery.getClauses();
             assertThat(clauses[0].getQuery().getClass().getSimpleName(),is("TermQuery"));
@@ -464,11 +476,11 @@ public class LuceneQueryParsingTest {
 
 
     private BooleanQuery parseQuery(String luceneQuery) {
-        return AntlrLuceneFunctions.parseQuery(luceneQuery).getBooleanQuery();
+        return LuceneQueryParser.parseToBooleanQuery(luceneQuery);
     }
 
     private QueryParseResults parseQueryAndFilter(String luceneQuery){
-        return AntlrLuceneFunctions.parseQuery(luceneQuery);
+        return LuceneQueryParser.parseQuery(luceneQuery);
     }
 
 

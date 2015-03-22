@@ -21,7 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
-import bbejeck.nosql.antlr.AntlrLuceneFunctions;
+import bbejeck.nosql.antlr.LuceneQueryParser;
 import bbejeck.nosql.util.ThrowingFunction;
 import com.google.common.base.Preconditions;
 import org.apache.lucene.document.Document;
@@ -96,7 +96,7 @@ public class Searcher {
 
     public List<Map<String, Object>> search(String query) throws IOException {
 
-        QueryParseResults parseResults = AntlrLuceneFunctions.parseQuery(query);
+        QueryParseResults parseResults = LuceneQueryParser.parseQuery(query);
 
         if (indexSearcher == null) {
             indexSearcher = createIndexSearcherFromStringPath.apply(parseResults.getIndexPath());

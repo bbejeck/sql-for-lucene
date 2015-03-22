@@ -179,7 +179,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     public void enterNumber(@NotNull LuceneSqlParser.NumberContext ctx) {
         LuceneQueryBuilder builder = queryBuilders.peek();
         builder.setText(ctx.NUMBER().getText());
-        builder.setQueryType(QueryType.TERM);
+        builder.setQueryType(QueryType.TERM   );
     }
 
     @Override

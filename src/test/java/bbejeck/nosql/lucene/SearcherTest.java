@@ -43,7 +43,7 @@ public class SearcherTest extends LuceneSqlSearchBase {
 
     @Test
     public void test_search_single_map_in_list() throws Exception {
-        String query = "Select age,city from /path/to/index/ where first_name='john' and age='50'";
+        String query = "Select age,city from '/path/to/index/' where first_name='john' and age='50'";
         List<Map<String,Object>> results = searcher.search(query);
         assertThat(results.size(),is(1));
         Map<String,Object> resultMap = results.get(0);
@@ -54,7 +54,7 @@ public class SearcherTest extends LuceneSqlSearchBase {
 
     @Test
     public void test_search_number_field() throws Exception {
-        String query = "Select ageN,city from /path/to/index/ where first_name='john' and ageN=50";
+        String query = "Select ageN,city from '/path/to/index/' where first_name='john' and ageN=50";
         List<Map<String,Object>> results = searcher.search(query);
         assertThat(results.size(),is(1));
         Map<String,Object> resultMap = results.get(0);
@@ -65,7 +65,7 @@ public class SearcherTest extends LuceneSqlSearchBase {
 
     @Test
     public void test_search_single_map_no_fields_specified() throws Exception {
-        String query = "Select * from /path/to/index/ where first_name='john' and age ='50'";
+        String query = "Select * from '/path/to/index/' where first_name='john' and age ='50'";
         List<Map<String,Object>> results = searcher.search(query);
         assertThat(results.size(),is(1));
         Map<String,Object> resultMap = results.get(0);
