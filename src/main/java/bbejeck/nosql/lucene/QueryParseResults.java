@@ -21,6 +21,7 @@
 
 package bbejeck.nosql.lucene;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.Sets;
 import org.apache.lucene.queries.BooleanFilter;
 import org.apache.lucene.queries.FilterClause;
@@ -98,12 +99,15 @@ public class QueryParseResults {
         private BooleanQuery booleanQuery;
         private BooleanFilter booleanFilter;
         private int limit;
+        private CharMatcher singleQuoteMatcher = CharMatcher.is('\'');
 
         private Builder() {
         }
 
         public Builder withIndexPath(String indexPath) {
-            this.indexPath = indexPath;
+            if (indexPath != null) {
+              this.indexPath = singleQuoteMatcher.removeFrom(indexPath);
+            }
             return this;
         }
 
