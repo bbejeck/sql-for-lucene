@@ -182,49 +182,145 @@ public class LuceneSqlBaseListener implements LuceneSqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) { }
+	@Override public void enterGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) { }
+	@Override public void exitGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) { }
+	@Override public void enterGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) { }
+	@Override public void exitGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) { }
+	@Override public void enterGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) { }
+	@Override public void exitGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) { }
+	@Override public void enterGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) { }
+	@Override public void exitGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

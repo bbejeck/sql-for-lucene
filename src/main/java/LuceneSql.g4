@@ -39,16 +39,24 @@ range_op     : greater_than
              ;
 
 
-greater_than : GT value
-             ;
+greater_than   :   GT NUMBER    #greaterThanNumber
+               |   GT TERM      #greaterThanTerm
+               |   GT DATE      #greaterThanDate
+               ;
 
-greater_than_equals : GTE value
+greater_than_equals : GTE NUMBER   #greaterThanEqNumber
+                    | GTE TERM     #greaterThanEqTerm
+                    | GTE DATE     #greaterThanEqDate
                     ;
 
-less_than : LT value
+less_than : LT NUMBER    #lessThanNumber
+          | LT TERM      #lessThanTerm
+          | LT DATE      #lessThanDate
           ;
 
-less_than_equals : LTE value
+less_than_equals : LTE NUMBER    #lessThanEqNumber
+                 | LTE TERM      #lessThanEqTerm
+                 | LTE DATE      #lessThanEqDate
                  ;
 
 

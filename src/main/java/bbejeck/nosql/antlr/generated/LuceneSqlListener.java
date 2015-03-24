@@ -154,45 +154,149 @@ public interface LuceneSqlListener extends ParseTreeListener {
 	 */
 	void exitRange_op(@NotNull LuceneSqlParser.Range_opContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LuceneSqlParser#greater_than}.
+	 * Enter a parse tree produced by the {@code greaterThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void enterGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx);
+	void enterGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LuceneSqlParser#greater_than}.
+	 * Exit a parse tree produced by the {@code greaterThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void exitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx);
+	void exitGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LuceneSqlParser#greater_than_equals}.
+	 * Enter a parse tree produced by the {@code greaterThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void enterGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx);
+	void enterGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LuceneSqlParser#greater_than_equals}.
+	 * Exit a parse tree produced by the {@code greaterThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void exitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx);
+	void exitGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LuceneSqlParser#less_than}.
+	 * Enter a parse tree produced by the {@code greaterThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void enterLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx);
+	void enterGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LuceneSqlParser#less_than}.
+	 * Exit a parse tree produced by the {@code greaterThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 */
-	void exitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx);
+	void exitGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link LuceneSqlParser#less_than_equals}.
+	 * Enter a parse tree produced by the {@code greaterThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
 	 * @param ctx the parse tree
 	 */
-	void enterLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx);
+	void enterGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link LuceneSqlParser#less_than_equals}.
+	 * Exit a parse tree produced by the {@code greaterThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
 	 * @param ctx the parse tree
 	 */
-	void exitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx);
+	void exitGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code greaterThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code greaterThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lessThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lessThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code And}
 	 * labeled alternative in {@link LuceneSqlParser#boolean_op}.

@@ -107,29 +107,89 @@ public interface LuceneSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRange_op(@NotNull LuceneSqlParser.Range_opContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LuceneSqlParser#greater_than}.
+	 * Visit a parse tree produced by the {@code greaterThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx);
+	T visitGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LuceneSqlParser#greater_than_equals}.
+	 * Visit a parse tree produced by the {@code greaterThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx);
+	T visitGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LuceneSqlParser#less_than}.
+	 * Visit a parse tree produced by the {@code greaterThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx);
+	T visitGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LuceneSqlParser#less_than_equals}.
+	 * Visit a parse tree produced by the {@code greaterThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx);
+	T visitGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code greaterThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code greaterThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#greater_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanEqNumber}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanEqTerm}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code lessThanEqDate}
+	 * labeled alternative in {@link LuceneSqlParser#less_than_equals}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code And}
 	 * labeled alternative in {@link LuceneSqlParser#boolean_op}.

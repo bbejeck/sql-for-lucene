@@ -123,28 +123,84 @@ public class LuceneSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreater_than(@NotNull LuceneSqlParser.Greater_thanContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreater_than_equals(@NotNull LuceneSqlParser.Greater_than_equalsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLess_than(@NotNull LuceneSqlParser.Less_thanContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLess_than_equals(@NotNull LuceneSqlParser.Less_than_equalsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
