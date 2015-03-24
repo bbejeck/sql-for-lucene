@@ -39,21 +39,22 @@ public class LuceneSqlParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		SELECT=1, FROM=2, WHERE=3, AND=4, OR=5, NOT=6, DESCRIBE=7, MATCHES=8, 
-		BETWEEN=9, LIKE=10, MEMORY=11, EQ=12, NE=13, GT=14, LT=15, GTE=16, LTE=17, 
-		IN=18, SPLAT=19, NUMBER=20, DATE=21, FIELD=22, PATH=23, TERM=24, PHRASE=25, 
-		WILD_CARD=26, MULTI_PHRASE=27, DB_QUOTE_STRING_LIT=28, COMMA=29, RPAREN=30, 
-		LPAREN=31, WS=32;
+		BETWEEN=9, LIKE=10, LIMIT=11, MEMORY=12, EQ=13, NE=14, GT=15, LT=16, GTE=17, 
+		LTE=18, IN=19, SPLAT=20, NUMBER=21, DATE=22, FIELD=23, PATH=24, TERM=25, 
+		PHRASE=26, WILD_CARD=27, MULTI_PHRASE=28, DB_QUOTE_STRING_LIT=29, COMMA=30, 
+		RPAREN=31, LPAREN=32, WS=33;
 	public static final int
 		RULE_query = 0, RULE_select_stmt = 1, RULE_from_stmt = 2, RULE_where_stmt = 3, 
-		RULE_search_condition = 4, RULE_predicate = 5, RULE_comparison_predicate = 6, 
-		RULE_function_predicate = 7, RULE_field = 8, RULE_comparison_op = 9, RULE_range_op = 10, 
-		RULE_greater_than = 11, RULE_greater_than_equals = 12, RULE_less_than = 13, 
-		RULE_less_than_equals = 14, RULE_boolean_op = 15, RULE_nested_predicate = 16, 
-		RULE_value = 17, RULE_regexp = 18, RULE_between = 19, RULE_between_term = 20, 
-		RULE_between_number = 21, RULE_like = 22, RULE_in = 23, RULE_value_list = 24, 
-		RULE_number_list = 25, RULE_date_list = 26, RULE_term_list = 27, RULE_phrase_list = 28;
+		RULE_limit_stmt = 4, RULE_search_condition = 5, RULE_predicate = 6, RULE_comparison_predicate = 7, 
+		RULE_function_predicate = 8, RULE_field = 9, RULE_comparison_op = 10, 
+		RULE_range_op = 11, RULE_greater_than = 12, RULE_greater_than_equals = 13, 
+		RULE_less_than = 14, RULE_less_than_equals = 15, RULE_boolean_op = 16, 
+		RULE_nested_predicate = 17, RULE_value = 18, RULE_regexp = 19, RULE_between = 20, 
+		RULE_between_term = 21, RULE_between_number = 22, RULE_like = 23, RULE_in = 24, 
+		RULE_value_list = 25, RULE_number_list = 26, RULE_date_list = 27, RULE_term_list = 28, 
+		RULE_phrase_list = 29;
 	public static final String[] ruleNames = {
-		"query", "select_stmt", "from_stmt", "where_stmt", "search_condition", 
+		"query", "select_stmt", "from_stmt", "where_stmt", "limit_stmt", "search_condition", 
 		"predicate", "comparison_predicate", "function_predicate", "field", "comparison_op", 
 		"range_op", "greater_than", "greater_than_equals", "less_than", "less_than_equals", 
 		"boolean_op", "nested_predicate", "value", "regexp", "between", "between_term", 
@@ -63,13 +64,13 @@ public class LuceneSqlParser extends Parser {
 
 	private static final String[] _LITERAL_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"'='", "'!='", "'>'", "'<'", "'>='", "'<='", null, "'*'", null, null, 
-		null, null, null, null, null, null, null, "','", "'('", "')'"
+		null, "'='", "'!='", "'>'", "'<'", "'>='", "'<='", null, "'*'", null, 
+		null, null, null, null, null, null, null, null, "','", "'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "DESCRIBE", "MATCHES", 
-		"BETWEEN", "LIKE", "MEMORY", "EQ", "NE", "GT", "LT", "GTE", "LTE", "IN", 
-		"SPLAT", "NUMBER", "DATE", "FIELD", "PATH", "TERM", "PHRASE", "WILD_CARD", 
+		"BETWEEN", "LIKE", "LIMIT", "MEMORY", "EQ", "NE", "GT", "LT", "GTE", "LTE", 
+		"IN", "SPLAT", "NUMBER", "DATE", "FIELD", "PATH", "TERM", "PHRASE", "WILD_CARD", 
 		"MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", "RPAREN", "LPAREN", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
@@ -131,6 +132,9 @@ public class LuceneSqlParser extends Parser {
 		public From_stmtContext from_stmt() {
 			return getRuleContext(From_stmtContext.class,0);
 		}
+		public Limit_stmtContext limit_stmt() {
+			return getRuleContext(Limit_stmtContext.class,0);
+		}
 		public QueryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -157,26 +161,35 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(59);
+			setState(61);
 			_la = _input.LA(1);
 			if (_la==SELECT) {
 				{
-				setState(58); 
+				setState(60); 
 				select_stmt();
 				}
 			}
 
-			setState(62);
+			setState(64);
 			_la = _input.LA(1);
 			if (_la==FROM) {
 				{
-				setState(61); 
+				setState(63); 
 				from_stmt();
 				}
 			}
 
-			setState(64); 
+			setState(66); 
 			where_stmt();
+			setState(68);
+			_la = _input.LA(1);
+			if (_la==LIMIT) {
+				{
+				setState(67); 
+				limit_stmt();
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -227,34 +240,34 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66); 
+			setState(70); 
 			match(SELECT);
-			setState(76);
+			setState(80);
 			switch (_input.LA(1)) {
 			case SPLAT:
 				{
-				setState(67); 
+				setState(71); 
 				match(SPLAT);
 				}
 				break;
 			case FIELD:
 				{
 				{
-				setState(68); 
+				setState(72); 
 				match(FIELD);
-				setState(73);
+				setState(77);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(69); 
+					setState(73); 
 					match(COMMA);
-					setState(70); 
+					setState(74); 
 					match(FIELD);
 					}
 					}
-					setState(75);
+					setState(79);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -305,9 +318,9 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78); 
+			setState(82); 
 			match(FROM);
-			setState(79); 
+			setState(83); 
 			match(PATH);
 			}
 		}
@@ -328,7 +341,7 @@ public class LuceneSqlParser extends Parser {
 			return getRuleContexts(Search_conditionContext.class);
 		}
 		public Search_conditionContext search_condition(int i) {
-			return getRuleContext(Search_conditionContext.class,i);
+			return getRuleContext(Search_conditionContext.class, i);
 		}
 		public Where_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -356,22 +369,67 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81); 
+			setState(85); 
 			match(WHERE);
-			setState(83); 
+			setState(87); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(82); 
+				setState(86); 
 				search_condition();
 				}
 				}
-				setState(85); 
+				setState(89); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT) | (1L << FIELD))) != 0) );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Limit_stmtContext extends ParserRuleContext {
+		public TerminalNode LIMIT() { return getToken(LuceneSqlParser.LIMIT, 0); }
+		public TerminalNode NUMBER() { return getToken(LuceneSqlParser.NUMBER, 0); }
+		public Limit_stmtContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_limit_stmt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLimit_stmt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLimit_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLimit_stmt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Limit_stmtContext limit_stmt() throws RecognitionException {
+		Limit_stmtContext _localctx = new Limit_stmtContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_limit_stmt);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(91); 
+			match(LIMIT);
+			setState(92); 
+			match(NUMBER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -419,39 +477,39 @@ public class LuceneSqlParser extends Parser {
 
 	public final Search_conditionContext search_condition() throws RecognitionException {
 		Search_conditionContext _localctx = new Search_conditionContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_search_condition);
+		enterRule(_localctx, 10, RULE_search_condition);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(87); 
+			setState(94); 
 			predicate();
-			setState(92);
+			setState(99);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					setState(90);
-					switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+					setState(97);
+					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						setState(88); 
+						setState(95); 
 						predicate();
 						}
 						break;
 					case 2:
 						{
-						setState(89); 
+						setState(96); 
 						nested_predicate();
 						}
 						break;
 					}
 					} 
 				}
-				setState(94);
+				setState(101);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
 			}
 		}
@@ -497,31 +555,31 @@ public class LuceneSqlParser extends Parser {
 
 	public final PredicateContext predicate() throws RecognitionException {
 		PredicateContext _localctx = new PredicateContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_predicate);
+		enterRule(_localctx, 12, RULE_predicate);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(96);
+			setState(103);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT))) != 0)) {
 				{
-				setState(95); 
+				setState(102); 
 				boolean_op();
 				}
 			}
 
-			setState(100);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			setState(107);
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(98); 
+				setState(105); 
 				comparison_predicate();
 				}
 				break;
 			case 2:
 				{
-				setState(99); 
+				setState(106); 
 				function_predicate();
 				}
 				break;
@@ -573,20 +631,20 @@ public class LuceneSqlParser extends Parser {
 
 	public final Comparison_predicateContext comparison_predicate() throws RecognitionException {
 		Comparison_predicateContext _localctx = new Comparison_predicateContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_comparison_predicate);
+		enterRule(_localctx, 14, RULE_comparison_predicate);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102); 
+			setState(109); 
 			field();
-			setState(107);
+			setState(114);
 			switch (_input.LA(1)) {
 			case EQ:
 			case NE:
 				{
-				setState(103); 
+				setState(110); 
 				comparison_op();
-				setState(104); 
+				setState(111); 
 				value();
 				}
 				break;
@@ -595,7 +653,7 @@ public class LuceneSqlParser extends Parser {
 			case GTE:
 			case LTE:
 				{
-				setState(106); 
+				setState(113); 
 				range_op();
 				}
 				break;
@@ -649,35 +707,35 @@ public class LuceneSqlParser extends Parser {
 
 	public final Function_predicateContext function_predicate() throws RecognitionException {
 		Function_predicateContext _localctx = new Function_predicateContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_function_predicate);
+		enterRule(_localctx, 16, RULE_function_predicate);
 		try {
-			setState(113);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			setState(120);
+			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(109); 
+				setState(116); 
 				regexp();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(110); 
+				setState(117); 
 				between();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(111); 
+				setState(118); 
 				like();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(112); 
+				setState(119); 
 				in();
 				}
 				break;
@@ -717,11 +775,11 @@ public class LuceneSqlParser extends Parser {
 
 	public final FieldContext field() throws RecognitionException {
 		FieldContext _localctx = new FieldContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_field);
+		enterRule(_localctx, 18, RULE_field);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115); 
+			setState(122); 
 			match(FIELD);
 			}
 		}
@@ -784,15 +842,15 @@ public class LuceneSqlParser extends Parser {
 
 	public final Comparison_opContext comparison_op() throws RecognitionException {
 		Comparison_opContext _localctx = new Comparison_opContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_comparison_op);
+		enterRule(_localctx, 20, RULE_comparison_op);
 		try {
-			setState(119);
+			setState(126);
 			switch (_input.LA(1)) {
 			case EQ:
 				_localctx = new EqualsContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(117); 
+				setState(124); 
 				match(EQ);
 				}
 				break;
@@ -800,7 +858,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new NotEqualContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(118); 
+				setState(125); 
 				match(NE);
 				}
 				break;
@@ -853,35 +911,35 @@ public class LuceneSqlParser extends Parser {
 
 	public final Range_opContext range_op() throws RecognitionException {
 		Range_opContext _localctx = new Range_opContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_range_op);
+		enterRule(_localctx, 22, RULE_range_op);
 		try {
-			setState(125);
+			setState(132);
 			switch (_input.LA(1)) {
 			case GT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(121); 
+				setState(128); 
 				greater_than();
 				}
 				break;
 			case GTE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(122); 
+				setState(129); 
 				greater_than_equals();
 				}
 				break;
 			case LT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(123); 
+				setState(130); 
 				less_than();
 				}
 				break;
 			case LTE:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(124); 
+				setState(131); 
 				less_than_equals();
 				}
 				break;
@@ -968,17 +1026,17 @@ public class LuceneSqlParser extends Parser {
 
 	public final Greater_thanContext greater_than() throws RecognitionException {
 		Greater_thanContext _localctx = new Greater_thanContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_greater_than);
+		enterRule(_localctx, 24, RULE_greater_than);
 		try {
-			setState(133);
-			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
+			setState(140);
+			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				_localctx = new GreaterThanNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(127); 
+				setState(134); 
 				match(GT);
-				setState(128); 
+				setState(135); 
 				match(NUMBER);
 				}
 				break;
@@ -986,9 +1044,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(129); 
+				setState(136); 
 				match(GT);
-				setState(130); 
+				setState(137); 
 				match(TERM);
 				}
 				break;
@@ -996,9 +1054,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(131); 
+				setState(138); 
 				match(GT);
-				setState(132); 
+				setState(139); 
 				match(DATE);
 				}
 				break;
@@ -1083,17 +1141,17 @@ public class LuceneSqlParser extends Parser {
 
 	public final Greater_than_equalsContext greater_than_equals() throws RecognitionException {
 		Greater_than_equalsContext _localctx = new Greater_than_equalsContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_greater_than_equals);
+		enterRule(_localctx, 26, RULE_greater_than_equals);
 		try {
-			setState(141);
-			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
+			setState(148);
+			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				_localctx = new GreaterThanEqNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(135); 
+				setState(142); 
 				match(GTE);
-				setState(136); 
+				setState(143); 
 				match(NUMBER);
 				}
 				break;
@@ -1101,9 +1159,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanEqTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(137); 
+				setState(144); 
 				match(GTE);
-				setState(138); 
+				setState(145); 
 				match(TERM);
 				}
 				break;
@@ -1111,9 +1169,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanEqDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(139); 
+				setState(146); 
 				match(GTE);
-				setState(140); 
+				setState(147); 
 				match(DATE);
 				}
 				break;
@@ -1198,17 +1256,17 @@ public class LuceneSqlParser extends Parser {
 
 	public final Less_thanContext less_than() throws RecognitionException {
 		Less_thanContext _localctx = new Less_thanContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_less_than);
+		enterRule(_localctx, 28, RULE_less_than);
 		try {
-			setState(149);
-			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
+			setState(156);
+			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				_localctx = new LessThanNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(143); 
+				setState(150); 
 				match(LT);
-				setState(144); 
+				setState(151); 
 				match(NUMBER);
 				}
 				break;
@@ -1216,9 +1274,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(145); 
+				setState(152); 
 				match(LT);
-				setState(146); 
+				setState(153); 
 				match(TERM);
 				}
 				break;
@@ -1226,9 +1284,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(147); 
+				setState(154); 
 				match(LT);
-				setState(148); 
+				setState(155); 
 				match(DATE);
 				}
 				break;
@@ -1313,17 +1371,17 @@ public class LuceneSqlParser extends Parser {
 
 	public final Less_than_equalsContext less_than_equals() throws RecognitionException {
 		Less_than_equalsContext _localctx = new Less_than_equalsContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_less_than_equals);
+		enterRule(_localctx, 30, RULE_less_than_equals);
 		try {
-			setState(157);
-			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
+			setState(164);
+			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				_localctx = new LessThanEqNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(151); 
+				setState(158); 
 				match(LTE);
-				setState(152); 
+				setState(159); 
 				match(NUMBER);
 				}
 				break;
@@ -1331,9 +1389,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanEqTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(153); 
+				setState(160); 
 				match(LTE);
-				setState(154); 
+				setState(161); 
 				match(TERM);
 				}
 				break;
@@ -1341,9 +1399,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanEqDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(155); 
+				setState(162); 
 				match(LTE);
-				setState(156); 
+				setState(163); 
 				match(DATE);
 				}
 				break;
@@ -1461,15 +1519,15 @@ public class LuceneSqlParser extends Parser {
 
 	public final Boolean_opContext boolean_op() throws RecognitionException {
 		Boolean_opContext _localctx = new Boolean_opContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_boolean_op);
+		enterRule(_localctx, 32, RULE_boolean_op);
 		try {
-			setState(166);
-			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
+			setState(173);
+			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 			case 1:
 				_localctx = new AndContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(159); 
+				setState(166); 
 				match(AND);
 				}
 				break;
@@ -1477,7 +1535,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new OrContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(160); 
+				setState(167); 
 				match(OR);
 				}
 				break;
@@ -1485,7 +1543,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new NotContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(161); 
+				setState(168); 
 				match(NOT);
 				}
 				break;
@@ -1493,9 +1551,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new AndNotContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(162); 
+				setState(169); 
 				match(AND);
-				setState(163); 
+				setState(170); 
 				match(NOT);
 				}
 				break;
@@ -1503,9 +1561,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new OrNotContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(164); 
+				setState(171); 
 				match(OR);
-				setState(165); 
+				setState(172); 
 				match(NOT);
 				}
 				break;
@@ -1561,50 +1619,50 @@ public class LuceneSqlParser extends Parser {
 
 	public final Nested_predicateContext nested_predicate() throws RecognitionException {
 		Nested_predicateContext _localctx = new Nested_predicateContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_nested_predicate);
+		enterRule(_localctx, 34, RULE_nested_predicate);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(169);
+			setState(176);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT))) != 0)) {
 				{
-				setState(168); 
+				setState(175); 
 				boolean_op();
 				}
 			}
 
-			setState(171); 
+			setState(178); 
 			match(RPAREN);
-			setState(172); 
+			setState(179); 
 			predicate();
-			setState(177);
+			setState(184);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT) | (1L << FIELD) | (1L << RPAREN))) != 0)) {
 				{
-				setState(175);
-				switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
+				setState(182);
+				switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 				case 1:
 					{
-					setState(173); 
+					setState(180); 
 					predicate();
 					}
 					break;
 				case 2:
 					{
-					setState(174); 
+					setState(181); 
 					nested_predicate();
 					}
 					break;
 				}
 				}
-				setState(179);
+				setState(186);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(180); 
+			setState(187); 
 			match(LPAREN);
 			}
 		}
@@ -1718,15 +1776,15 @@ public class LuceneSqlParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_value);
+		enterRule(_localctx, 36, RULE_value);
 		try {
-			setState(187);
+			setState(194);
 			switch (_input.LA(1)) {
 			case NUMBER:
 				_localctx = new NumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(182); 
+				setState(189); 
 				match(NUMBER);
 				}
 				break;
@@ -1734,7 +1792,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new TermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(183); 
+				setState(190); 
 				match(TERM);
 				}
 				break;
@@ -1742,7 +1800,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new PhraseContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(184); 
+				setState(191); 
 				match(PHRASE);
 				}
 				break;
@@ -1750,7 +1808,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new DateContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(185); 
+				setState(192); 
 				match(DATE);
 				}
 				break;
@@ -1758,7 +1816,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new MULTI_PHRASEContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(186); 
+				setState(193); 
 				match(MULTI_PHRASE);
 				}
 				break;
@@ -1806,19 +1864,19 @@ public class LuceneSqlParser extends Parser {
 
 	public final RegexpContext regexp() throws RecognitionException {
 		RegexpContext _localctx = new RegexpContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_regexp);
+		enterRule(_localctx, 38, RULE_regexp);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(189); 
+			setState(196); 
 			field();
-			setState(190); 
+			setState(197); 
 			match(MATCHES);
-			setState(191); 
+			setState(198); 
 			match(RPAREN);
-			setState(192); 
+			setState(199); 
 			match(WILD_CARD);
-			setState(193); 
+			setState(200); 
 			match(LPAREN);
 			}
 		}
@@ -1861,21 +1919,21 @@ public class LuceneSqlParser extends Parser {
 
 	public final BetweenContext between() throws RecognitionException {
 		BetweenContext _localctx = new BetweenContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_between);
+		enterRule(_localctx, 40, RULE_between);
 		try {
-			setState(197);
-			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
+			setState(204);
+			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(195); 
+				setState(202); 
 				between_number();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(196); 
+				setState(203); 
 				between_term();
 				}
 				break;
@@ -1923,19 +1981,19 @@ public class LuceneSqlParser extends Parser {
 
 	public final Between_termContext between_term() throws RecognitionException {
 		Between_termContext _localctx = new Between_termContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_between_term);
+		enterRule(_localctx, 42, RULE_between_term);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(199); 
+			setState(206); 
 			field();
-			setState(200); 
+			setState(207); 
 			match(BETWEEN);
-			setState(201); 
+			setState(208); 
 			match(TERM);
-			setState(202); 
+			setState(209); 
 			match(AND);
-			setState(203); 
+			setState(210); 
 			match(TERM);
 			}
 		}
@@ -1981,19 +2039,19 @@ public class LuceneSqlParser extends Parser {
 
 	public final Between_numberContext between_number() throws RecognitionException {
 		Between_numberContext _localctx = new Between_numberContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_between_number);
+		enterRule(_localctx, 44, RULE_between_number);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(205); 
+			setState(212); 
 			field();
-			setState(206); 
+			setState(213); 
 			match(BETWEEN);
-			setState(207); 
+			setState(214); 
 			match(NUMBER);
-			setState(208); 
+			setState(215); 
 			match(AND);
-			setState(209); 
+			setState(216); 
 			match(NUMBER);
 			}
 		}
@@ -2035,15 +2093,15 @@ public class LuceneSqlParser extends Parser {
 
 	public final LikeContext like() throws RecognitionException {
 		LikeContext _localctx = new LikeContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_like);
+		enterRule(_localctx, 46, RULE_like);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(211); 
+			setState(218); 
 			field();
-			setState(212); 
+			setState(219); 
 			match(LIKE);
-			setState(213); 
+			setState(220); 
 			match(WILD_CARD);
 			}
 		}
@@ -2088,25 +2146,25 @@ public class LuceneSqlParser extends Parser {
 
 	public final InContext in() throws RecognitionException {
 		InContext _localctx = new InContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_in);
+		enterRule(_localctx, 48, RULE_in);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(215); 
+			setState(222); 
 			field();
-			setState(217);
+			setState(224);
 			_la = _input.LA(1);
 			if (_la==NOT) {
 				{
-				setState(216); 
+				setState(223); 
 				match(NOT);
 				}
 			}
 
-			setState(219); 
+			setState(226); 
 			match(IN);
-			setState(220); 
+			setState(227); 
 			value_list();
 			}
 		}
@@ -2157,40 +2215,40 @@ public class LuceneSqlParser extends Parser {
 
 	public final Value_listContext value_list() throws RecognitionException {
 		Value_listContext _localctx = new Value_listContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_value_list);
+		enterRule(_localctx, 50, RULE_value_list);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(222); 
+			setState(229); 
 			match(RPAREN);
-			setState(227);
-			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
+			setState(234);
+			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
 				{
-				setState(223); 
+				setState(230); 
 				number_list();
 				}
 				break;
 			case 2:
 				{
-				setState(224); 
+				setState(231); 
 				date_list();
 				}
 				break;
 			case 3:
 				{
-				setState(225); 
+				setState(232); 
 				term_list();
 				}
 				break;
 			case 4:
 				{
-				setState(226); 
+				setState(233); 
 				phrase_list();
 				}
 				break;
 			}
-			setState(229); 
+			setState(236); 
 			match(LPAREN);
 			}
 		}
@@ -2235,26 +2293,26 @@ public class LuceneSqlParser extends Parser {
 
 	public final Number_listContext number_list() throws RecognitionException {
 		Number_listContext _localctx = new Number_listContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_number_list);
+		enterRule(_localctx, 52, RULE_number_list);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(231); 
+			setState(238); 
 			match(NUMBER);
-			setState(236);
+			setState(243);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(232); 
+				setState(239); 
 				match(COMMA);
-				setState(233); 
+				setState(240); 
 				match(NUMBER);
 				}
 				}
-				setState(238);
+				setState(245);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2301,26 +2359,26 @@ public class LuceneSqlParser extends Parser {
 
 	public final Date_listContext date_list() throws RecognitionException {
 		Date_listContext _localctx = new Date_listContext(_ctx, getState());
-		enterRule(_localctx, 52, RULE_date_list);
+		enterRule(_localctx, 54, RULE_date_list);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(239); 
+			setState(246); 
 			match(DATE);
-			setState(244);
+			setState(251);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(240); 
+				setState(247); 
 				match(COMMA);
-				setState(241); 
+				setState(248); 
 				match(DATE);
 				}
 				}
-				setState(246);
+				setState(253);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2367,26 +2425,26 @@ public class LuceneSqlParser extends Parser {
 
 	public final Term_listContext term_list() throws RecognitionException {
 		Term_listContext _localctx = new Term_listContext(_ctx, getState());
-		enterRule(_localctx, 54, RULE_term_list);
+		enterRule(_localctx, 56, RULE_term_list);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(247); 
+			setState(254); 
 			match(TERM);
-			setState(252);
+			setState(259);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(248); 
+				setState(255); 
 				match(COMMA);
-				setState(249); 
+				setState(256); 
 				match(TERM);
 				}
 				}
-				setState(254);
+				setState(261);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2437,26 +2495,26 @@ public class LuceneSqlParser extends Parser {
 
 	public final Phrase_listContext phrase_list() throws RecognitionException {
 		Phrase_listContext _localctx = new Phrase_listContext(_ctx, getState());
-		enterRule(_localctx, 56, RULE_phrase_list);
+		enterRule(_localctx, 58, RULE_phrase_list);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(255);
+			setState(262);
 			_la = _input.LA(1);
 			if ( !(_la==TERM || _la==PHRASE) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
-			setState(260);
+			setState(267);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(256); 
+				setState(263); 
 				match(COMMA);
-				setState(257);
+				setState(264);
 				_la = _input.LA(1);
 				if ( !(_la==TERM || _la==PHRASE) ) {
 				_errHandler.recoverInline(this);
@@ -2464,7 +2522,7 @@ public class LuceneSqlParser extends Parser {
 				consume();
 				}
 				}
-				setState(262);
+				setState(269);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -2482,96 +2540,98 @@ public class LuceneSqlParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"\u010a\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3#\u0111\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\3\2\5\2>\n\2\3\2\5"+
-		"\2A\n\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\7\3J\n\3\f\3\16\3M\13\3\5\3O\n\3\3"+
-		"\4\3\4\3\4\3\5\3\5\6\5V\n\5\r\5\16\5W\3\6\3\6\3\6\7\6]\n\6\f\6\16\6`\13"+
-		"\6\3\7\5\7c\n\7\3\7\3\7\5\7g\n\7\3\b\3\b\3\b\3\b\3\b\5\bn\n\b\3\t\3\t"+
-		"\3\t\3\t\5\tt\n\t\3\n\3\n\3\13\3\13\5\13z\n\13\3\f\3\f\3\f\3\f\5\f\u0080"+
-		"\n\f\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u0088\n\r\3\16\3\16\3\16\3\16\3\16\3"+
-		"\16\5\16\u0090\n\16\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u0098\n\17\3\20"+
-		"\3\20\3\20\3\20\3\20\3\20\5\20\u00a0\n\20\3\21\3\21\3\21\3\21\3\21\3\21"+
-		"\3\21\5\21\u00a9\n\21\3\22\5\22\u00ac\n\22\3\22\3\22\3\22\3\22\7\22\u00b2"+
-		"\n\22\f\22\16\22\u00b5\13\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\5\23\u00be"+
-		"\n\23\3\24\3\24\3\24\3\24\3\24\3\24\3\25\3\25\5\25\u00c8\n\25\3\26\3\26"+
-		"\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30"+
-		"\3\31\3\31\5\31\u00dc\n\31\3\31\3\31\3\31\3\32\3\32\3\32\3\32\3\32\5\32"+
-		"\u00e6\n\32\3\32\3\32\3\33\3\33\3\33\7\33\u00ed\n\33\f\33\16\33\u00f0"+
-		"\13\33\3\34\3\34\3\34\7\34\u00f5\n\34\f\34\16\34\u00f8\13\34\3\35\3\35"+
-		"\3\35\7\35\u00fd\n\35\f\35\16\35\u0100\13\35\3\36\3\36\3\36\7\36\u0105"+
-		"\n\36\f\36\16\36\u0108\13\36\3\36\2\2\37\2\4\6\b\n\f\16\20\22\24\26\30"+
-		"\32\34\36 \"$&(*,.\60\62\64\668:\2\3\3\2\32\33\u0119\2=\3\2\2\2\4D\3\2"+
-		"\2\2\6P\3\2\2\2\bS\3\2\2\2\nY\3\2\2\2\fb\3\2\2\2\16h\3\2\2\2\20s\3\2\2"+
-		"\2\22u\3\2\2\2\24y\3\2\2\2\26\177\3\2\2\2\30\u0087\3\2\2\2\32\u008f\3"+
-		"\2\2\2\34\u0097\3\2\2\2\36\u009f\3\2\2\2 \u00a8\3\2\2\2\"\u00ab\3\2\2"+
-		"\2$\u00bd\3\2\2\2&\u00bf\3\2\2\2(\u00c7\3\2\2\2*\u00c9\3\2\2\2,\u00cf"+
-		"\3\2\2\2.\u00d5\3\2\2\2\60\u00d9\3\2\2\2\62\u00e0\3\2\2\2\64\u00e9\3\2"+
-		"\2\2\66\u00f1\3\2\2\28\u00f9\3\2\2\2:\u0101\3\2\2\2<>\5\4\3\2=<\3\2\2"+
-		"\2=>\3\2\2\2>@\3\2\2\2?A\5\6\4\2@?\3\2\2\2@A\3\2\2\2AB\3\2\2\2BC\5\b\5"+
-		"\2C\3\3\2\2\2DN\7\3\2\2EO\7\25\2\2FK\7\30\2\2GH\7\37\2\2HJ\7\30\2\2IG"+
-		"\3\2\2\2JM\3\2\2\2KI\3\2\2\2KL\3\2\2\2LO\3\2\2\2MK\3\2\2\2NE\3\2\2\2N"+
-		"F\3\2\2\2O\5\3\2\2\2PQ\7\4\2\2QR\7\31\2\2R\7\3\2\2\2SU\7\5\2\2TV\5\n\6"+
-		"\2UT\3\2\2\2VW\3\2\2\2WU\3\2\2\2WX\3\2\2\2X\t\3\2\2\2Y^\5\f\7\2Z]\5\f"+
-		"\7\2[]\5\"\22\2\\Z\3\2\2\2\\[\3\2\2\2]`\3\2\2\2^\\\3\2\2\2^_\3\2\2\2_"+
-		"\13\3\2\2\2`^\3\2\2\2ac\5 \21\2ba\3\2\2\2bc\3\2\2\2cf\3\2\2\2dg\5\16\b"+
-		"\2eg\5\20\t\2fd\3\2\2\2fe\3\2\2\2g\r\3\2\2\2hm\5\22\n\2ij\5\24\13\2jk"+
-		"\5$\23\2kn\3\2\2\2ln\5\26\f\2mi\3\2\2\2ml\3\2\2\2n\17\3\2\2\2ot\5&\24"+
-		"\2pt\5(\25\2qt\5.\30\2rt\5\60\31\2so\3\2\2\2sp\3\2\2\2sq\3\2\2\2sr\3\2"+
-		"\2\2t\21\3\2\2\2uv\7\30\2\2v\23\3\2\2\2wz\7\16\2\2xz\7\17\2\2yw\3\2\2"+
-		"\2yx\3\2\2\2z\25\3\2\2\2{\u0080\5\30\r\2|\u0080\5\32\16\2}\u0080\5\34"+
-		"\17\2~\u0080\5\36\20\2\177{\3\2\2\2\177|\3\2\2\2\177}\3\2\2\2\177~\3\2"+
-		"\2\2\u0080\27\3\2\2\2\u0081\u0082\7\20\2\2\u0082\u0088\7\26\2\2\u0083"+
-		"\u0084\7\20\2\2\u0084\u0088\7\32\2\2\u0085\u0086\7\20\2\2\u0086\u0088"+
-		"\7\27\2\2\u0087\u0081\3\2\2\2\u0087\u0083\3\2\2\2\u0087\u0085\3\2\2\2"+
-		"\u0088\31\3\2\2\2\u0089\u008a\7\22\2\2\u008a\u0090\7\26\2\2\u008b\u008c"+
-		"\7\22\2\2\u008c\u0090\7\32\2\2\u008d\u008e\7\22\2\2\u008e\u0090\7\27\2"+
-		"\2\u008f\u0089\3\2\2\2\u008f\u008b\3\2\2\2\u008f\u008d\3\2\2\2\u0090\33"+
-		"\3\2\2\2\u0091\u0092\7\21\2\2\u0092\u0098\7\26\2\2\u0093\u0094\7\21\2"+
-		"\2\u0094\u0098\7\32\2\2\u0095\u0096\7\21\2\2\u0096\u0098\7\27\2\2\u0097"+
-		"\u0091\3\2\2\2\u0097\u0093\3\2\2\2\u0097\u0095\3\2\2\2\u0098\35\3\2\2"+
-		"\2\u0099\u009a\7\23\2\2\u009a\u00a0\7\26\2\2\u009b\u009c\7\23\2\2\u009c"+
-		"\u00a0\7\32\2\2\u009d\u009e\7\23\2\2\u009e\u00a0\7\27\2\2\u009f\u0099"+
-		"\3\2\2\2\u009f\u009b\3\2\2\2\u009f\u009d\3\2\2\2\u00a0\37\3\2\2\2\u00a1"+
-		"\u00a9\7\6\2\2\u00a2\u00a9\7\7\2\2\u00a3\u00a9\7\b\2\2\u00a4\u00a5\7\6"+
-		"\2\2\u00a5\u00a9\7\b\2\2\u00a6\u00a7\7\7\2\2\u00a7\u00a9\7\b\2\2\u00a8"+
-		"\u00a1\3\2\2\2\u00a8\u00a2\3\2\2\2\u00a8\u00a3\3\2\2\2\u00a8\u00a4\3\2"+
-		"\2\2\u00a8\u00a6\3\2\2\2\u00a9!\3\2\2\2\u00aa\u00ac\5 \21\2\u00ab\u00aa"+
-		"\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ad\3\2\2\2\u00ad\u00ae\7 \2\2\u00ae"+
-		"\u00b3\5\f\7\2\u00af\u00b2\5\f\7\2\u00b0\u00b2\5\"\22\2\u00b1\u00af\3"+
-		"\2\2\2\u00b1\u00b0\3\2\2\2\u00b2\u00b5\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b3"+
-		"\u00b4\3\2\2\2\u00b4\u00b6\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b6\u00b7\7!"+
-		"\2\2\u00b7#\3\2\2\2\u00b8\u00be\7\26\2\2\u00b9\u00be\7\32\2\2\u00ba\u00be"+
-		"\7\33\2\2\u00bb\u00be\7\27\2\2\u00bc\u00be\7\35\2\2\u00bd\u00b8\3\2\2"+
-		"\2\u00bd\u00b9\3\2\2\2\u00bd\u00ba\3\2\2\2\u00bd\u00bb\3\2\2\2\u00bd\u00bc"+
-		"\3\2\2\2\u00be%\3\2\2\2\u00bf\u00c0\5\22\n\2\u00c0\u00c1\7\n\2\2\u00c1"+
-		"\u00c2\7 \2\2\u00c2\u00c3\7\34\2\2\u00c3\u00c4\7!\2\2\u00c4\'\3\2\2\2"+
-		"\u00c5\u00c8\5,\27\2\u00c6\u00c8\5*\26\2\u00c7\u00c5\3\2\2\2\u00c7\u00c6"+
-		"\3\2\2\2\u00c8)\3\2\2\2\u00c9\u00ca\5\22\n\2\u00ca\u00cb\7\13\2\2\u00cb"+
-		"\u00cc\7\32\2\2\u00cc\u00cd\7\6\2\2\u00cd\u00ce\7\32\2\2\u00ce+\3\2\2"+
-		"\2\u00cf\u00d0\5\22\n\2\u00d0\u00d1\7\13\2\2\u00d1\u00d2\7\26\2\2\u00d2"+
-		"\u00d3\7\6\2\2\u00d3\u00d4\7\26\2\2\u00d4-\3\2\2\2\u00d5\u00d6\5\22\n"+
-		"\2\u00d6\u00d7\7\f\2\2\u00d7\u00d8\7\34\2\2\u00d8/\3\2\2\2\u00d9\u00db"+
-		"\5\22\n\2\u00da\u00dc\7\b\2\2\u00db\u00da\3\2\2\2\u00db\u00dc\3\2\2\2"+
-		"\u00dc\u00dd\3\2\2\2\u00dd\u00de\7\24\2\2\u00de\u00df\5\62\32\2\u00df"+
-		"\61\3\2\2\2\u00e0\u00e5\7 \2\2\u00e1\u00e6\5\64\33\2\u00e2\u00e6\5\66"+
-		"\34\2\u00e3\u00e6\58\35\2\u00e4\u00e6\5:\36\2\u00e5\u00e1\3\2\2\2\u00e5"+
-		"\u00e2\3\2\2\2\u00e5\u00e3\3\2\2\2\u00e5\u00e4\3\2\2\2\u00e6\u00e7\3\2"+
-		"\2\2\u00e7\u00e8\7!\2\2\u00e8\63\3\2\2\2\u00e9\u00ee\7\26\2\2\u00ea\u00eb"+
-		"\7\37\2\2\u00eb\u00ed\7\26\2\2\u00ec\u00ea\3\2\2\2\u00ed\u00f0\3\2\2\2"+
-		"\u00ee\u00ec\3\2\2\2\u00ee\u00ef\3\2\2\2\u00ef\65\3\2\2\2\u00f0\u00ee"+
-		"\3\2\2\2\u00f1\u00f6\7\27\2\2\u00f2\u00f3\7\37\2\2\u00f3\u00f5\7\27\2"+
-		"\2\u00f4\u00f2\3\2\2\2\u00f5\u00f8\3\2\2\2\u00f6\u00f4\3\2\2\2\u00f6\u00f7"+
-		"\3\2\2\2\u00f7\67\3\2\2\2\u00f8\u00f6\3\2\2\2\u00f9\u00fe\7\32\2\2\u00fa"+
-		"\u00fb\7\37\2\2\u00fb\u00fd\7\32\2\2\u00fc\u00fa\3\2\2\2\u00fd\u0100\3"+
-		"\2\2\2\u00fe\u00fc\3\2\2\2\u00fe\u00ff\3\2\2\2\u00ff9\3\2\2\2\u0100\u00fe"+
-		"\3\2\2\2\u0101\u0106\t\2\2\2\u0102\u0103\7\37\2\2\u0103\u0105\t\2\2\2"+
-		"\u0104\u0102\3\2\2\2\u0105\u0108\3\2\2\2\u0106\u0104\3\2\2\2\u0106\u0107"+
-		"\3\2\2\2\u0107;\3\2\2\2\u0108\u0106\3\2\2\2\37=@KNW\\^bfmsy\177\u0087"+
-		"\u008f\u0097\u009f\u00a8\u00ab\u00b1\u00b3\u00bd\u00c7\u00db\u00e5\u00ee"+
-		"\u00f6\u00fe\u0106";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\3\2\5\2@"+
+		"\n\2\3\2\5\2C\n\2\3\2\3\2\5\2G\n\2\3\3\3\3\3\3\3\3\3\3\7\3N\n\3\f\3\16"+
+		"\3Q\13\3\5\3S\n\3\3\4\3\4\3\4\3\5\3\5\6\5Z\n\5\r\5\16\5[\3\6\3\6\3\6\3"+
+		"\7\3\7\3\7\7\7d\n\7\f\7\16\7g\13\7\3\b\5\bj\n\b\3\b\3\b\5\bn\n\b\3\t\3"+
+		"\t\3\t\3\t\3\t\5\tu\n\t\3\n\3\n\3\n\3\n\5\n{\n\n\3\13\3\13\3\f\3\f\5\f"+
+		"\u0081\n\f\3\r\3\r\3\r\3\r\5\r\u0087\n\r\3\16\3\16\3\16\3\16\3\16\3\16"+
+		"\5\16\u008f\n\16\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u0097\n\17\3\20\3"+
+		"\20\3\20\3\20\3\20\3\20\5\20\u009f\n\20\3\21\3\21\3\21\3\21\3\21\3\21"+
+		"\5\21\u00a7\n\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00b0\n\22\3"+
+		"\23\5\23\u00b3\n\23\3\23\3\23\3\23\3\23\7\23\u00b9\n\23\f\23\16\23\u00bc"+
+		"\13\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24\5\24\u00c5\n\24\3\25\3\25\3"+
+		"\25\3\25\3\25\3\25\3\26\3\26\5\26\u00cf\n\26\3\27\3\27\3\27\3\27\3\27"+
+		"\3\27\3\30\3\30\3\30\3\30\3\30\3\30\3\31\3\31\3\31\3\31\3\32\3\32\5\32"+
+		"\u00e3\n\32\3\32\3\32\3\32\3\33\3\33\3\33\3\33\3\33\5\33\u00ed\n\33\3"+
+		"\33\3\33\3\34\3\34\3\34\7\34\u00f4\n\34\f\34\16\34\u00f7\13\34\3\35\3"+
+		"\35\3\35\7\35\u00fc\n\35\f\35\16\35\u00ff\13\35\3\36\3\36\3\36\7\36\u0104"+
+		"\n\36\f\36\16\36\u0107\13\36\3\37\3\37\3\37\7\37\u010c\n\37\f\37\16\37"+
+		"\u010f\13\37\3\37\2\2 \2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,"+
+		".\60\62\64\668:<\2\3\3\2\33\34\u0120\2?\3\2\2\2\4H\3\2\2\2\6T\3\2\2\2"+
+		"\bW\3\2\2\2\n]\3\2\2\2\f`\3\2\2\2\16i\3\2\2\2\20o\3\2\2\2\22z\3\2\2\2"+
+		"\24|\3\2\2\2\26\u0080\3\2\2\2\30\u0086\3\2\2\2\32\u008e\3\2\2\2\34\u0096"+
+		"\3\2\2\2\36\u009e\3\2\2\2 \u00a6\3\2\2\2\"\u00af\3\2\2\2$\u00b2\3\2\2"+
+		"\2&\u00c4\3\2\2\2(\u00c6\3\2\2\2*\u00ce\3\2\2\2,\u00d0\3\2\2\2.\u00d6"+
+		"\3\2\2\2\60\u00dc\3\2\2\2\62\u00e0\3\2\2\2\64\u00e7\3\2\2\2\66\u00f0\3"+
+		"\2\2\28\u00f8\3\2\2\2:\u0100\3\2\2\2<\u0108\3\2\2\2>@\5\4\3\2?>\3\2\2"+
+		"\2?@\3\2\2\2@B\3\2\2\2AC\5\6\4\2BA\3\2\2\2BC\3\2\2\2CD\3\2\2\2DF\5\b\5"+
+		"\2EG\5\n\6\2FE\3\2\2\2FG\3\2\2\2G\3\3\2\2\2HR\7\3\2\2IS\7\26\2\2JO\7\31"+
+		"\2\2KL\7 \2\2LN\7\31\2\2MK\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2PS\3\2"+
+		"\2\2QO\3\2\2\2RI\3\2\2\2RJ\3\2\2\2S\5\3\2\2\2TU\7\4\2\2UV\7\32\2\2V\7"+
+		"\3\2\2\2WY\7\5\2\2XZ\5\f\7\2YX\3\2\2\2Z[\3\2\2\2[Y\3\2\2\2[\\\3\2\2\2"+
+		"\\\t\3\2\2\2]^\7\r\2\2^_\7\27\2\2_\13\3\2\2\2`e\5\16\b\2ad\5\16\b\2bd"+
+		"\5$\23\2ca\3\2\2\2cb\3\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2f\r\3\2\2\2"+
+		"ge\3\2\2\2hj\5\"\22\2ih\3\2\2\2ij\3\2\2\2jm\3\2\2\2kn\5\20\t\2ln\5\22"+
+		"\n\2mk\3\2\2\2ml\3\2\2\2n\17\3\2\2\2ot\5\24\13\2pq\5\26\f\2qr\5&\24\2"+
+		"ru\3\2\2\2su\5\30\r\2tp\3\2\2\2ts\3\2\2\2u\21\3\2\2\2v{\5(\25\2w{\5*\26"+
+		"\2x{\5\60\31\2y{\5\62\32\2zv\3\2\2\2zw\3\2\2\2zx\3\2\2\2zy\3\2\2\2{\23"+
+		"\3\2\2\2|}\7\31\2\2}\25\3\2\2\2~\u0081\7\17\2\2\177\u0081\7\20\2\2\u0080"+
+		"~\3\2\2\2\u0080\177\3\2\2\2\u0081\27\3\2\2\2\u0082\u0087\5\32\16\2\u0083"+
+		"\u0087\5\34\17\2\u0084\u0087\5\36\20\2\u0085\u0087\5 \21\2\u0086\u0082"+
+		"\3\2\2\2\u0086\u0083\3\2\2\2\u0086\u0084\3\2\2\2\u0086\u0085\3\2\2\2\u0087"+
+		"\31\3\2\2\2\u0088\u0089\7\21\2\2\u0089\u008f\7\27\2\2\u008a\u008b\7\21"+
+		"\2\2\u008b\u008f\7\33\2\2\u008c\u008d\7\21\2\2\u008d\u008f\7\30\2\2\u008e"+
+		"\u0088\3\2\2\2\u008e\u008a\3\2\2\2\u008e\u008c\3\2\2\2\u008f\33\3\2\2"+
+		"\2\u0090\u0091\7\23\2\2\u0091\u0097\7\27\2\2\u0092\u0093\7\23\2\2\u0093"+
+		"\u0097\7\33\2\2\u0094\u0095\7\23\2\2\u0095\u0097\7\30\2\2\u0096\u0090"+
+		"\3\2\2\2\u0096\u0092\3\2\2\2\u0096\u0094\3\2\2\2\u0097\35\3\2\2\2\u0098"+
+		"\u0099\7\22\2\2\u0099\u009f\7\27\2\2\u009a\u009b\7\22\2\2\u009b\u009f"+
+		"\7\33\2\2\u009c\u009d\7\22\2\2\u009d\u009f\7\30\2\2\u009e\u0098\3\2\2"+
+		"\2\u009e\u009a\3\2\2\2\u009e\u009c\3\2\2\2\u009f\37\3\2\2\2\u00a0\u00a1"+
+		"\7\24\2\2\u00a1\u00a7\7\27\2\2\u00a2\u00a3\7\24\2\2\u00a3\u00a7\7\33\2"+
+		"\2\u00a4\u00a5\7\24\2\2\u00a5\u00a7\7\30\2\2\u00a6\u00a0\3\2\2\2\u00a6"+
+		"\u00a2\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a7!\3\2\2\2\u00a8\u00b0\7\6\2\2"+
+		"\u00a9\u00b0\7\7\2\2\u00aa\u00b0\7\b\2\2\u00ab\u00ac\7\6\2\2\u00ac\u00b0"+
+		"\7\b\2\2\u00ad\u00ae\7\7\2\2\u00ae\u00b0\7\b\2\2\u00af\u00a8\3\2\2\2\u00af"+
+		"\u00a9\3\2\2\2\u00af\u00aa\3\2\2\2\u00af\u00ab\3\2\2\2\u00af\u00ad\3\2"+
+		"\2\2\u00b0#\3\2\2\2\u00b1\u00b3\5\"\22\2\u00b2\u00b1\3\2\2\2\u00b2\u00b3"+
+		"\3\2\2\2\u00b3\u00b4\3\2\2\2\u00b4\u00b5\7!\2\2\u00b5\u00ba\5\16\b\2\u00b6"+
+		"\u00b9\5\16\b\2\u00b7\u00b9\5$\23\2\u00b8\u00b6\3\2\2\2\u00b8\u00b7\3"+
+		"\2\2\2\u00b9\u00bc\3\2\2\2\u00ba\u00b8\3\2\2\2\u00ba\u00bb\3\2\2\2\u00bb"+
+		"\u00bd\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bd\u00be\7\"\2\2\u00be%\3\2\2\2"+
+		"\u00bf\u00c5\7\27\2\2\u00c0\u00c5\7\33\2\2\u00c1\u00c5\7\34\2\2\u00c2"+
+		"\u00c5\7\30\2\2\u00c3\u00c5\7\36\2\2\u00c4\u00bf\3\2\2\2\u00c4\u00c0\3"+
+		"\2\2\2\u00c4\u00c1\3\2\2\2\u00c4\u00c2\3\2\2\2\u00c4\u00c3\3\2\2\2\u00c5"+
+		"\'\3\2\2\2\u00c6\u00c7\5\24\13\2\u00c7\u00c8\7\n\2\2\u00c8\u00c9\7!\2"+
+		"\2\u00c9\u00ca\7\35\2\2\u00ca\u00cb\7\"\2\2\u00cb)\3\2\2\2\u00cc\u00cf"+
+		"\5.\30\2\u00cd\u00cf\5,\27\2\u00ce\u00cc\3\2\2\2\u00ce\u00cd\3\2\2\2\u00cf"+
+		"+\3\2\2\2\u00d0\u00d1\5\24\13\2\u00d1\u00d2\7\13\2\2\u00d2\u00d3\7\33"+
+		"\2\2\u00d3\u00d4\7\6\2\2\u00d4\u00d5\7\33\2\2\u00d5-\3\2\2\2\u00d6\u00d7"+
+		"\5\24\13\2\u00d7\u00d8\7\13\2\2\u00d8\u00d9\7\27\2\2\u00d9\u00da\7\6\2"+
+		"\2\u00da\u00db\7\27\2\2\u00db/\3\2\2\2\u00dc\u00dd\5\24\13\2\u00dd\u00de"+
+		"\7\f\2\2\u00de\u00df\7\35\2\2\u00df\61\3\2\2\2\u00e0\u00e2\5\24\13\2\u00e1"+
+		"\u00e3\7\b\2\2\u00e2\u00e1\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3\u00e4\3\2"+
+		"\2\2\u00e4\u00e5\7\25\2\2\u00e5\u00e6\5\64\33\2\u00e6\63\3\2\2\2\u00e7"+
+		"\u00ec\7!\2\2\u00e8\u00ed\5\66\34\2\u00e9\u00ed\58\35\2\u00ea\u00ed\5"+
+		":\36\2\u00eb\u00ed\5<\37\2\u00ec\u00e8\3\2\2\2\u00ec\u00e9\3\2\2\2\u00ec"+
+		"\u00ea\3\2\2\2\u00ec\u00eb\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00ef\7\""+
+		"\2\2\u00ef\65\3\2\2\2\u00f0\u00f5\7\27\2\2\u00f1\u00f2\7 \2\2\u00f2\u00f4"+
+		"\7\27\2\2\u00f3\u00f1\3\2\2\2\u00f4\u00f7\3\2\2\2\u00f5\u00f3\3\2\2\2"+
+		"\u00f5\u00f6\3\2\2\2\u00f6\67\3\2\2\2\u00f7\u00f5\3\2\2\2\u00f8\u00fd"+
+		"\7\30\2\2\u00f9\u00fa\7 \2\2\u00fa\u00fc\7\30\2\2\u00fb\u00f9\3\2\2\2"+
+		"\u00fc\u00ff\3\2\2\2\u00fd\u00fb\3\2\2\2\u00fd\u00fe\3\2\2\2\u00fe9\3"+
+		"\2\2\2\u00ff\u00fd\3\2\2\2\u0100\u0105\7\33\2\2\u0101\u0102\7 \2\2\u0102"+
+		"\u0104\7\33\2\2\u0103\u0101\3\2\2\2\u0104\u0107\3\2\2\2\u0105\u0103\3"+
+		"\2\2\2\u0105\u0106\3\2\2\2\u0106;\3\2\2\2\u0107\u0105\3\2\2\2\u0108\u010d"+
+		"\t\2\2\2\u0109\u010a\7 \2\2\u010a\u010c\t\2\2\2\u010b\u0109\3\2\2\2\u010c"+
+		"\u010f\3\2\2\2\u010d\u010b\3\2\2\2\u010d\u010e\3\2\2\2\u010e=\3\2\2\2"+
+		"\u010f\u010d\3\2\2\2 ?BFOR[ceimtz\u0080\u0086\u008e\u0096\u009e\u00a6"+
+		"\u00af\u00b2\u00b8\u00ba\u00c4\u00ce\u00e2\u00ec\u00f5\u00fd\u0105\u010d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

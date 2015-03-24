@@ -57,6 +57,12 @@ public interface LuceneSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitWhere_stmt(@NotNull LuceneSqlParser.Where_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LuceneSqlParser#limit_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLimit_stmt(@NotNull LuceneSqlParser.Limit_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LuceneSqlParser#search_condition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

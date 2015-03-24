@@ -76,4 +76,16 @@ public class SearcherTest extends LuceneSqlSearchBase {
         assertThat(resultMap.get("age"),is("50"));
         assertThat(resultMap.get("ageN"),is(50));
     }
+
+    @Test
+    public void test_search_single_map_no_fields_specified_limit() throws Exception {
+        String query = "Select * from '/path/to/index/' where first_name='john'";
+        List<Map<String, Object>> results = searcher.search(query);
+        assertThat(results.size(), is(6));
+
+        query = "Select * from '/path/to/index/' where first_name='john' limit 2";
+        results = searcher.search(query);
+        assertThat(results.size(), is(2));
+
+    }
 }

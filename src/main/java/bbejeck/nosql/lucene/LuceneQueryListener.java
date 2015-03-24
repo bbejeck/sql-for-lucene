@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     private String indexPath;
+    private int limit;
     private Set<String> selectedFields = Sets.newHashSet();
     private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
@@ -298,6 +299,11 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     }
 
     @Override
+    public void enterLimit_stmt(@NotNull LuceneSqlParser.Limit_stmtContext ctx) {
+        this.limit = Integer.parseInt(ctx.NUMBER().getText());
+    }
+
+    @Override
     public void exitFrom_stmt(@NotNull LuceneSqlParser.From_stmtContext ctx) {
         this.indexPath = ctx.PATH().toString();
     }
@@ -306,6 +312,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
         return queryResultsBuilder.withBooleanClausesList(this.completeBooleanClauseList)
                 .withFilterClausesList(this.filterClauses)
                 .withIndexPath(this.indexPath)
+                .withLimit(this.limit)
                 .withSelectFields(this.selectedFields).build();
 
     }

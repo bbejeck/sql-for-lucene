@@ -70,6 +70,16 @@ public interface LuceneSqlListener extends ParseTreeListener {
 	 */
 	void exitWhere_stmt(@NotNull LuceneSqlParser.Where_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LuceneSqlParser#limit_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterLimit_stmt(@NotNull LuceneSqlParser.Limit_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LuceneSqlParser#limit_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitLimit_stmt(@NotNull LuceneSqlParser.Limit_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LuceneSqlParser#search_condition}.
 	 * @param ctx the parse tree
 	 */

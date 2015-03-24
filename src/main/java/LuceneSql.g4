@@ -2,7 +2,7 @@ grammar LuceneSql;
 
 //Parser Rules Start
 
-query :  select_stmt? from_stmt? where_stmt
+query :  select_stmt? from_stmt? where_stmt limit_stmt?
       ;
 
 select_stmt : SELECT (SPLAT | (FIELD (COMMA FIELD)*));
@@ -11,6 +11,9 @@ from_stmt : FROM PATH
           ;
 
 where_stmt : WHERE search_condition+
+           ;
+
+limit_stmt : LIMIT NUMBER
            ;
 
 search_condition : predicate (predicate | nested_predicate) *
@@ -124,6 +127,7 @@ DESCRIBE : [Dd][Ee][Ss][Cc][Rr][Ii][Bb][Ee] ;
 MATCHES : [Mm][Aa][Tt][Cc][Hh][Ee][Ss] ;
 BETWEEN : [Bb][Ee][Tt][Ww][Ee][Ee][Nn] ;
 LIKE : [Ll][Ii][Kk][Ee] ;
+LIMIT : [Ll][Ii][Mm][Ii][Tt] ;
 MEMORY : [Mm][Ee][Mm][Oo][Rr][Yy] ;
 EQ : '=' ;
 NE : '!=';
