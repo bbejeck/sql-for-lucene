@@ -59,9 +59,9 @@ public interface LuceneQueryFunctions {
     Function<String, Function<String, Term>> termFunction = field -> text -> createTerm.apply(field, text);
     Function<String, Stream<String>> toWordStream = s -> Lists.newArrayList(Splitter.on(" ").split(s)).stream();
     BiFunction<String, String, PhraseQuery> toPhraseQuery = (field, text) ->
-            toWordStream.apply(text).map(termFunction.apply(field)).collect(Collectors.of(PhraseQuery::new, PhraseQuery::add));
+            toWordStream.apply(text).map(termFunction.apply(field)).collect(Collectors.nonParallelCollect(PhraseQuery::new, PhraseQuery::add));
 
-    Function<List<BooleanClause>, BooleanQuery> toBooleanQuery = l -> l.stream().collect(Collectors.of(BooleanQuery::new, BooleanQuery::add));
-    Function<List<FilterClause>,BooleanFilter> toBooleanFilter = filters -> filters.stream().collect(Collectors.of(BooleanFilter::new,BooleanFilter::add));
+    Function<List<BooleanClause>, BooleanQuery> toBooleanQuery = l -> l.stream().collect(Collectors.nonParallelCollect(BooleanQuery::new, BooleanQuery::add));
+    Function<List<FilterClause>,BooleanFilter> toBooleanFilter = filters -> filters.stream().collect(Collectors.nonParallelCollect(BooleanFilter::new, BooleanFilter::add));
 
 }

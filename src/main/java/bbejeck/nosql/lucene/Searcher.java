@@ -24,6 +24,8 @@ package bbejeck.nosql.lucene;
 import bbejeck.nosql.antlr.LuceneQueryParser;
 import bbejeck.nosql.util.ThrowingFunction;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexableField;
@@ -36,7 +38,6 @@ import org.apache.lucene.store.FSDirectory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,13 +67,13 @@ public class Searcher {
     private Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>> getSearchDocsWithAllFields = searcher -> scoreDoc -> searcher.doc(scoreDoc.doc);
 
 
-    private Function<List<IndexableField>, Map<String, Object>> loadFieldIntoHashMap = list -> {
-        Map<String, Object> valuesMap = new HashMap<>();
+    private Function<List<IndexableField>, ImmutableMap<String, Object>> loadFieldIntoHashMap = list -> {
+        ImmutableMap.Builder<String,Object> mapBuilder = ImmutableMap.builder();
         list.forEach(field -> {
             Object value = (field.numericValue()!=null) ? field.numericValue() : field.stringValue();
-            valuesMap.put(field.name(), value);
+            mapBuilder.put(field.name(), value);
         });
-        return valuesMap;
+        return mapBuilder.build();
     };
 
 
@@ -116,10 +117,12 @@ public class Searcher {
         }
 
 
-        return Stream.of(topDocs.scoreDocs).map(retrieveDocFunction)
-                                           .map(Document::getFields)
-                                           .map(loadFieldIntoHashMap)
-                                           .collect(Collectors.toList());
+        List<Map<String,Object>> resultsListMutable = Stream.of(topDocs.scoreDocs).map(retrieveDocFunction)
+                                                            .map(Document::getFields)
+                                                            .map(loadFieldIntoHashMap)
+                                                            .collect(Collectors.toList());
+
+        return new ImmutableList.Builder<Map<String,Object>>().addAll(resultsListMutable).build();
 
     }
 
