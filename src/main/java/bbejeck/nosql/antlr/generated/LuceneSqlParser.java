@@ -341,7 +341,7 @@ public class LuceneSqlParser extends Parser {
 			return getRuleContexts(Search_conditionContext.class);
 		}
 		public Search_conditionContext search_condition(int i) {
-			return getRuleContext(Search_conditionContext.class, i);
+			return getRuleContext(Search_conditionContext.class,i);
 		}
 		public Where_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);

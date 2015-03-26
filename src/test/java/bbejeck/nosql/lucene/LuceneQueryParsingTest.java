@@ -75,6 +75,17 @@ public class LuceneQueryParsingTest {
     }
 
     @Test
+    public void test_parse_with_no_leading_slash() {
+        String query = "select foo from 'path/index/' where foo='Na,ME'";
+        BooleanQuery bq = parseQuery(query);
+        BooleanClause[] clauses = bq.getClauses();
+        TermQuery termQuery = (TermQuery) clauses[0].getQuery();
+        assertThat(termQuery.getTerm().field(), is("foo"));
+        assertThat(termQuery.getTerm().text(), is("name"));
+
+    }
+
+    @Test
     public void test_parse_regex_query() {
         String query = "Select foo from '/path/index/' where foo matches('[Bb].*[hH]?')";
         BooleanQuery bq = parseQuery(query);
