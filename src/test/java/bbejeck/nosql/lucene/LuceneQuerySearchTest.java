@@ -133,6 +133,15 @@ public class LuceneQuerySearchTest extends LuceneSqlSearchBase {
     }
 
     @Test
+    public void test_search_numbers_in_list() throws Exception {
+        String query = "Select * from 'path/index/' where age in (31, 30, 50)";
+        BooleanQuery booleanQuery = LuceneQueryParser.parseToBooleanQuery(query);
+        System.out.println(booleanQuery);
+        ScoreDoc[] scoreDocs = search(booleanQuery, 100);
+        assertThat(scoreDocs.length, is(3));
+    }
+
+    @Test
     public void test_search_less_than() throws Exception {
         String query = "Select * from '/path/to/index/' where ageN < 40";
         BooleanQuery booleanQuery = LuceneQueryParser.parseQuery(query).getBooleanQuery();
