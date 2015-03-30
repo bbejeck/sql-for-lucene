@@ -1,3 +1,8 @@
+##Sql for Lucene
+
+Originally a side project, I've decided to put this out there in case someone else
+may find this useful.
+
 ###Introduction
 The `LuceneSqlParser` supports a subset of standard sql.  Here are some examples:
 ```sql Sample sql query handled
