@@ -55,13 +55,13 @@ The AND,OR & NOT operators are mappped in the following manner.
 ###Optimizations
 In two cases the query is converted to something different from the mappings shown previously.  The first case is a query that contains a single predicate that *must not* match.  For example:
 
-``` sql Single predicate query with must not match
+```
 Select * from /index/path/ where last_name != 'Smith'
 Select first_name, last_name where city not in ('Foo', 'Bar')
 ```
 A query submitted in this format will not work in lucene.  This fix for this query is simple.  The parser takes the original `BooleanQuery` and adds an addtional clause.  The underlying query object in the new clause is a [MatchAllDocsQuery](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/MatchAllDocsQuery.html).  The `MatchAllDocsQuery` returns all documents in the index and the orginal predicate will fiter out the unwanted results.  The second case is when searching for a numeric field in the `TermQuery` format.  For example:
 
-```sql Numeric TermQuery
+```
 Select * from '/index/path' where age = 49
 ```
 
@@ -78,12 +78,14 @@ There are a several limitations at this point.
 ###Searcher  
 
 The second component of sql for lucene is the `Searcher`class.  The `Searcher` could be thought of as a convenience method for performing a lucene search and extracting the results.  The `Searcher` has one method `search` that takes a sql query and returns a `List<Map<String,Object>>` containing the search results.  Each map in the list represents a document with the keys being the field names and the values are the values stored in the retrieved fields.  
-```java Searcher example usage
+
+```
 String query = "Select age,city from '/path/to/index/' where first_name='john' and age='50'";
 List<Map<String,Object>> results = searcher.search(query);
 ```
 It's worth noting the list and map returned from the searcher are of type [ImmutableList](http://docs.guava-libraries.googlecode.com/git-history/release/javadoc/com/google/common/collect/ImmutableList.html) and [ImmutableMap](http://docs.guava-libraries.googlecode.com/git-history/release/javadoc/com/google/common/collect/ImmutableMap.html) respectively. The `Searcher` has 4 constructors:
-```java Searcher Constructor
+
+```
 
     public Searcher() {}
 
