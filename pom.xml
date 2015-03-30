@@ -23,12 +23,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>bbejeck.nosql</groupId>
-    <artifactId>nosql.jdbc.driver</artifactId>
+    <groupId>bbejeck.sql</groupId>
+    <artifactId>sql-for-lucene</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>nosql.jdbc.driver</name>
+    <name>sql-for-lucene</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -40,18 +40,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm-all</artifactId>
-            <version>5.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm-analysis</artifactId>
-            <version>5.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>

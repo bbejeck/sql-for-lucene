@@ -116,7 +116,6 @@ phrase_list : (TERM | PHRASE) ( COMMA (TERM | PHRASE) ) *
 //Parser Rules End
 
 //Lexer Rules Start
-
 SELECT : [Ss][Ee][Ll][Ee][Cc][Tt] ;
 FROM : [Ff][Rr][Oo][Mm] ;
 WHERE : [Ww][Hh][Ee][Rr][Ee] ;
