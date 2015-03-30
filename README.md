@@ -5,7 +5,8 @@ may find this useful.
 
 ###Introduction
 The `LuceneSqlParser` supports a subset of standard sql.  Here are some examples:
-```sql Sample sql query handled
+
+```
 Select last_name from '/path/to/index/' where first_name='Foo' and age <=30 and city='Boston' limit 25
 
 Select * from 'path/index/' where age in (31, 30, 50)
@@ -16,6 +17,7 @@ Select first_name from '/path/index/' where age between 35 and 50 and first_name
 -- Also takes paths from Windows OS
 Select first_name from 'C:/path/index/' where first_name='John' and (age<=45 and city not in ('New York', 'Boston', 'Atlanta'))
 ```
+
 The `LuceneSqlParser` returns a [BooleanQuery](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/BooleanQuery.html). The `BooleanQuery` will contain different types of lucene query objects depending on the predicates used. There is a class `Searcher` avaiable for use with the `LuceneSqlParser`.  The `Searcher` abstracts away the opening of a lucene [IndexSearcher](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/IndexSearcher.html), iterating over the [ScoreDoc](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/ScoreDoc.html) array and extracting results.    Next, we'll take a look at the rules used to parse the sql.
 
 ###LuceneSqlParser Functionality 
