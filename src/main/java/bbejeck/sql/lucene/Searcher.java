@@ -54,6 +54,7 @@ public class Searcher {
 
     private volatile IndexSearcher indexSearcher;
     private static final int DEFAULT_LIMIT = 10000;
+    private static final Object lock = new Object();
 
     private ThrowingFunction<String, Path> createPath = Paths::get;
     private ThrowingFunction<Path, Directory> createDirectory = FSDirectory::open;
@@ -99,8 +100,12 @@ public class Searcher {
 
         QueryParseResults parseResults = LuceneQueryParser.parseQuery(query);
 
-        if (indexSearcher == null) {
-            indexSearcher = createIndexSearcherFromStringPath.apply(parseResults.getIndexPath());
+        if ( indexSearcher == null ) {
+            synchronized (lock) {
+                if( indexSearcher == null ) {
+                    indexSearcher = createIndexSearcherFromStringPath.apply(parseResults.getIndexPath());
+                }
+            }
         }
 
         int maxResults = parseResults.getLimit() == 0 ? DEFAULT_LIMIT : parseResults.getLimit();
