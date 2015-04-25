@@ -34,7 +34,7 @@ import org.apache.lucene.search.BooleanQuery;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
+/**                                                                     `
  * User: Bill Bejeck
  * Date: 10/14/14
  * Time: 10:10 PM
@@ -49,7 +49,10 @@ public class LuceneQueryParser {
     private static Supplier<ParseTreeWalker> parseTreeWalkerSupplier = ParseTreeWalker::new;
     private static Supplier<LuceneQueryListener> luceneQueryListenerSupplier = LuceneQueryListener::new;
 
-    private static Function<String, LuceneSqlParser> createParser = createAntlrInputStream.andThen(createLexer).andThen(createTokenStream).andThen(createLuceneSqlParser);
+    private static Function<String, LuceneSqlParser> createParser = createAntlrInputStream
+                                                                    .andThen(createLexer)
+                                                                    .andThen(createTokenStream)
+                                                                    .andThen(createLuceneSqlParser);
 
     private static Function<LuceneSqlParser, QueryParseResults> parse = parser -> {
         LuceneQueryListener listener = luceneQueryListenerSupplier.get();

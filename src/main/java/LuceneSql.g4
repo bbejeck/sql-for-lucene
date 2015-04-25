@@ -1,7 +1,5 @@
 grammar LuceneSql;
 
-//Parser Rules Start
-
 query :  select_stmt? from_stmt? where_stmt limit_stmt?
       ;
 
@@ -127,7 +125,6 @@ MATCHES : [Mm][Aa][Tt][Cc][Hh][Ee][Ss] ;
 BETWEEN : [Bb][Ee][Tt][Ww][Ee][Ee][Nn] ;
 LIKE : [Ll][Ii][Kk][Ee] ;
 LIMIT : [Ll][Ii][Mm][Ii][Tt] ;
-MEMORY : [Mm][Ee][Mm][Oo][Rr][Yy] ;
 EQ : '=' ;
 NE : '!=';
 GT : '>' ;
