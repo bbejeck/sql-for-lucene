@@ -48,7 +48,7 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private int limit;
     private Set<String> selectedFields = Sets.newHashSet();
     private List<FilterClause> filterClauses = Lists.newArrayList();
-    private Stack<LuceneQueryBuilder> queryBuilders = new Stack<>();
+    private Stack<BooleanClauseBuilder> booleanClauseBuilders = new Stack<>();
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
     private List<BooleanClause> completeBooleanClauseList = Lists.newArrayList();
     private Function<Joiner, Function<Iterable<TerminalNode>, String>> toJoinedFunction = j -> j::join;
@@ -74,204 +74,204 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     @Override
     public void exitPredicate(@NotNull LuceneSqlParser.PredicateContext ctx) {
-        booleanClausesListStack.peek().add(queryBuilders.pop().build());
+        booleanClausesListStack.peek().add(booleanClauseBuilders.pop().build());
     }
 
     @Override
     public void enterPredicate(@NotNull LuceneSqlParser.PredicateContext ctx) {
-        queryBuilders.push(new LuceneQueryBuilder());
+        booleanClauseBuilders.push(new BooleanClauseBuilder());
     }
 
 
     @Override
     public void enterLessThanNumber(@NotNull LuceneSqlParser.LessThanNumberContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.NUMBER()+":false");
         builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterLessThanTerm(@NotNull LuceneSqlParser.LessThanTermContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.TERM()+":false");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterLessThanDate(@NotNull LuceneSqlParser.LessThanDateContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.DATE()+":false");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterLessThanEqNumber(@NotNull LuceneSqlParser.LessThanEqNumberContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.NUMBER()+":true");
         builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterLessThanEqTerm(@NotNull LuceneSqlParser.LessThanEqTermContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.TERM()+":true");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterLessThanEqDate(@NotNull LuceneSqlParser.LessThanEqDateContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(QueryType.UNBOUNDED + ":" + ctx.DATE()+":true");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanNumber(@NotNull LuceneSqlParser.GreaterThanNumberContext ctx) {
-           LuceneQueryBuilder builder = queryBuilders.peek();
+           BooleanClauseBuilder builder = booleanClauseBuilders.peek();
            builder.setText(ctx.NUMBER().getText()+":"+QueryType.UNBOUNDED+":false");
            builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanTerm(@NotNull LuceneSqlParser.GreaterThanTermContext ctx) {
-          LuceneQueryBuilder builder = queryBuilders.peek();
+          BooleanClauseBuilder builder = booleanClauseBuilders.peek();
           builder.setText(ctx.TERM()+":"+QueryType.UNBOUNDED+":false");
           builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanDate(@NotNull LuceneSqlParser.GreaterThanDateContext ctx) {
-          LuceneQueryBuilder builder = queryBuilders.peek();
+          BooleanClauseBuilder builder = booleanClauseBuilders.peek();
           builder.setText(ctx.DATE().getText()+":"+QueryType.UNBOUNDED+":false");
           builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanEqNumber(@NotNull LuceneSqlParser.GreaterThanEqNumberContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.NUMBER().getText()+":"+QueryType.UNBOUNDED+":true");
         builder.setQueryType(QueryType.INTEGER_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanEqTerm(@NotNull LuceneSqlParser.GreaterThanEqTermContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.TERM()+":"+QueryType.UNBOUNDED+":true");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterGreaterThanEqDate(@NotNull LuceneSqlParser.GreaterThanEqDateContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.DATE().getText()+":"+QueryType.UNBOUNDED+":true");
         builder.setQueryType(QueryType.TERM_RANGE_UNBOUNDED);
     }
 
     @Override
     public void enterAnd(@NotNull LuceneSqlParser.AndContext ctx) {
-        queryBuilders.peek().setOccur(BooleanClause.Occur.MUST);
+        booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.MUST);
     }
 
     @Override
     public void enterIn(@NotNull LuceneSqlParser.InContext ctx) {
         if (ctx.NOT() != null) {
-            queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
+            booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
         }
     }
 
     @Override
     public void enterNotEqual(@NotNull LuceneSqlParser.NotEqualContext ctx) {
-        queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
+        booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
     }
 
     @Override
     public void enterAndNot(@NotNull LuceneSqlParser.AndNotContext ctx) {
-        queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
+        booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
     }
 
     @Override
     public void enterNot(@NotNull LuceneSqlParser.NotContext ctx) {
-        queryBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
+        booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.MUST_NOT);
     }
 
     @Override
     public void enterOr(@NotNull LuceneSqlParser.OrContext ctx) {
-        queryBuilders.peek().setOccur(BooleanClause.Occur.SHOULD);
+        booleanClauseBuilders.peek().setOccur(BooleanClause.Occur.SHOULD);
     }
 
     @Override
     public void enterRegexp(@NotNull LuceneSqlParser.RegexpContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.WILD_CARD().getText());
         builder.setQueryType(QueryType.REGEXP);
     }
 
     @Override
     public void enterTerm(@NotNull LuceneSqlParser.TermContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.TERM().getText());
         builder.setQueryType(QueryType.TERM);
     }
 
     @Override
     public void enterNumber(@NotNull LuceneSqlParser.NumberContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.NUMBER().getText());
         builder.setQueryType(QueryType.TERM   );
     }
 
     @Override
     public void enterDate(@NotNull LuceneSqlParser.DateContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.DATE().getText());
         builder.setQueryType(QueryType.TERM);
     }
 
     @Override
     public void enterPhrase(@NotNull LuceneSqlParser.PhraseContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.PHRASE().getText());
         builder.setQueryType(QueryType.PHRASE);
     }
 
     @Override
     public void enterBetween_term(@NotNull LuceneSqlParser.Between_termContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(toJoinedString.apply(ctx.TERM()));
         builder.setQueryType(QueryType.TERM_RANGE);
     }
 
     @Override
     public void enterBetween_number(@NotNull LuceneSqlParser.Between_numberContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(toJoinedString.apply(ctx.NUMBER()));
         builder.setQueryType(QueryType.INTEGER_RANGE);
     }
 
     @Override
     public void enterLike(@NotNull LuceneSqlParser.LikeContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(ctx.WILD_CARD().getText());
         builder.setQueryType(QueryType.WILDCARD);
     }
 
     @Override
     public void enterNumber_list(@NotNull LuceneSqlParser.Number_listContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(toJoinedString.apply(ctx.NUMBER()));
         builder.setQueryType(QueryType.BOOLEAN_OR_LIST);
     }
 
     @Override
     public void enterTerm_list(@NotNull LuceneSqlParser.Term_listContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         builder.setText(toJoinedString.apply(ctx.TERM()));
         builder.setQueryType(QueryType.BOOLEAN_OR_LIST);
     }
 
     @Override
     public void enterPhrase_list(@NotNull LuceneSqlParser.Phrase_listContext ctx) {
-        LuceneQueryBuilder builder = queryBuilders.peek();
+        BooleanClauseBuilder builder = booleanClauseBuilders.peek();
         List<TerminalNode> inputs = Lists.newArrayList();
         inputs.addAll(ctx.PHRASE());
         inputs.addAll(ctx.TERM());
@@ -282,20 +282,20 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     @Override
     public void enterNested_predicate(@NotNull LuceneSqlParser.Nested_predicateContext ctx) {
         booleanClausesListStack.push(Lists.newArrayList());
-        queryBuilders.push(new LuceneQueryBuilder());
+        booleanClauseBuilders.push(new BooleanClauseBuilder());
     }
 
     @Override
     public void exitNested_predicate(@NotNull LuceneSqlParser.Nested_predicateContext ctx) {
         List<BooleanClause> nestedClauses = booleanClausesListStack.pop();
-        LuceneQueryBuilder queryBuilder = queryBuilders.pop();
+        BooleanClauseBuilder queryBuilder = booleanClauseBuilders.pop();
         queryBuilder.setBooleanClauses(nestedClauses);
         booleanClausesListStack.peek().add(queryBuilder.build());
     }
 
     @Override
     public void enterField(@NotNull LuceneSqlParser.FieldContext ctx) {
-        queryBuilders.peek().setField(ctx.FIELD().getText());
+        booleanClauseBuilders.peek().setField(ctx.FIELD().getText());
     }
 
     @Override

@@ -31,7 +31,7 @@ import java.util.List;
  * Date: 8/11/14
  * Time: 9:40 PM
  */
-public class LuceneQueryBuilder {
+public class BooleanClauseBuilder {
 
     private String field;
     private String text;
