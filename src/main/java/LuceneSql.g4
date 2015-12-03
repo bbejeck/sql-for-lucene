@@ -68,7 +68,7 @@ boolean_op         :  AND         # And
                    |  OR NOT      # OrNot
                    ;
 
-nested_predicate : boolean_op? RPAREN predicate (predicate | nested_predicate)* LPAREN
+nested_predicate : boolean_op? LPAREN predicate (predicate | nested_predicate)* RPAREN
                  ;
 
 
@@ -79,7 +79,7 @@ value      : NUMBER               # Number
            | MULTI_PHRASE         # MULTI_PHRASE
            ;
 
-regexp  : field MATCHES RPAREN WILD_CARD LPAREN
+regexp  : field MATCHES LPAREN WILD_CARD RPAREN
         ;
 
 between : between_number | between_term
@@ -97,7 +97,7 @@ like : field LIKE WILD_CARD
 in : field NOT? IN value_list
    ;
 
-value_list : RPAREN (number_list | date_list | term_list | phrase_list ) LPAREN
+value_list : LPAREN (number_list | date_list | term_list | phrase_list ) RPAREN
            ;
 
 number_list : NUMBER (COMMA NUMBER)*
@@ -149,8 +149,8 @@ DB_QUOTE_STRING_LIT : ('"'(~["])*'"');
 //STRING_LIT : ('\''(~['])*'\'') ;
 
 COMMA : ',' ;
-RPAREN : '(' ;
-LPAREN : ')' ;
+LPAREN : '(' ;
+RPAREN : ')' ;
 WS : [ \t\r\n]+ -> skip;
 
 

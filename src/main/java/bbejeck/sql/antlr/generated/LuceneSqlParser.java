@@ -1,21 +1,17 @@
-// Generated from /Users/bbejeck/dev/github_clones/sql-for-lucene/src/main/java/LuceneSql.g4 by ANTLR 4.5
+// Generated from /Users/bbejeck/dev/github_clones/sql-for-lucene/src/main/java/LuceneSql.g4 by ANTLR 4.5.1
 package bbejeck.sql.antlr.generated;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class LuceneSqlParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -24,8 +20,8 @@ public class LuceneSqlParser extends Parser {
 		SELECT=1, FROM=2, WHERE=3, AND=4, OR=5, NOT=6, DESCRIBE=7, MATCHES=8, 
 		BETWEEN=9, LIKE=10, LIMIT=11, EQ=12, NE=13, GT=14, LT=15, GTE=16, LTE=17, 
 		IN=18, SPLAT=19, NUMBER=20, DATE=21, FIELD=22, PATH=23, TERM=24, PHRASE=25, 
-		WILD_CARD=26, MULTI_PHRASE=27, DB_QUOTE_STRING_LIT=28, COMMA=29, RPAREN=30, 
-		LPAREN=31, WS=32;
+		WILD_CARD=26, MULTI_PHRASE=27, DB_QUOTE_STRING_LIT=28, COMMA=29, LPAREN=30, 
+		RPAREN=31, WS=32;
 	public static final int
 		RULE_query = 0, RULE_select_stmt = 1, RULE_from_stmt = 2, RULE_where_stmt = 3, 
 		RULE_limit_stmt = 4, RULE_search_condition = 5, RULE_predicate = 6, RULE_comparison_predicate = 7, 
@@ -54,7 +50,7 @@ public class LuceneSqlParser extends Parser {
 		null, "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "DESCRIBE", "MATCHES", 
 		"BETWEEN", "LIKE", "LIMIT", "EQ", "NE", "GT", "LT", "GTE", "LTE", "IN", 
 		"SPLAT", "NUMBER", "DATE", "FIELD", "PATH", "TERM", "PHRASE", "WILD_CARD", 
-		"MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", "RPAREN", "LPAREN", "WS"
+		"MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", "LPAREN", "RPAREN", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -84,7 +80,7 @@ public class LuceneSqlParser extends Parser {
 	}
 
 	@Override
-	@NotNull
+
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
@@ -148,7 +144,7 @@ public class LuceneSqlParser extends Parser {
 			_la = _input.LA(1);
 			if (_la==SELECT) {
 				{
-				setState(60); 
+				setState(60);
 				select_stmt();
 				}
 			}
@@ -157,18 +153,18 @@ public class LuceneSqlParser extends Parser {
 			_la = _input.LA(1);
 			if (_la==FROM) {
 				{
-				setState(63); 
+				setState(63);
 				from_stmt();
 				}
 			}
 
-			setState(66); 
+			setState(66);
 			where_stmt();
 			setState(68);
 			_la = _input.LA(1);
 			if (_la==LIMIT) {
 				{
-				setState(67); 
+				setState(67);
 				limit_stmt();
 				}
 			}
@@ -223,20 +219,20 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(70); 
+			setState(70);
 			match(SELECT);
 			setState(80);
 			switch (_input.LA(1)) {
 			case SPLAT:
 				{
-				setState(71); 
+				setState(71);
 				match(SPLAT);
 				}
 				break;
 			case FIELD:
 				{
 				{
-				setState(72); 
+				setState(72);
 				match(FIELD);
 				setState(77);
 				_errHandler.sync(this);
@@ -244,9 +240,9 @@ public class LuceneSqlParser extends Parser {
 				while (_la==COMMA) {
 					{
 					{
-					setState(73); 
+					setState(73);
 					match(COMMA);
-					setState(74); 
+					setState(74);
 					match(FIELD);
 					}
 					}
@@ -301,9 +297,9 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82); 
+			setState(82);
 			match(FROM);
-			setState(83); 
+			setState(83);
 			match(PATH);
 			}
 		}
@@ -352,7 +348,7 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(85); 
+			setState(85);
 			match(WHERE);
 			setState(87); 
 			_errHandler.sync(this);
@@ -360,7 +356,7 @@ public class LuceneSqlParser extends Parser {
 			do {
 				{
 				{
-				setState(86); 
+				setState(86);
 				search_condition();
 				}
 				}
@@ -409,9 +405,9 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91); 
+			setState(91);
 			match(LIMIT);
-			setState(92); 
+			setState(92);
 			match(NUMBER);
 			}
 		}
@@ -465,7 +461,7 @@ public class LuceneSqlParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(94); 
+			setState(94);
 			predicate();
 			setState(99);
 			_errHandler.sync(this);
@@ -477,13 +473,13 @@ public class LuceneSqlParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						setState(95); 
+						setState(95);
 						predicate();
 						}
 						break;
 					case 2:
 						{
-						setState(96); 
+						setState(96);
 						nested_predicate();
 						}
 						break;
@@ -547,7 +543,7 @@ public class LuceneSqlParser extends Parser {
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT))) != 0)) {
 				{
-				setState(102); 
+				setState(102);
 				boolean_op();
 				}
 			}
@@ -556,13 +552,13 @@ public class LuceneSqlParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(105); 
+				setState(105);
 				comparison_predicate();
 				}
 				break;
 			case 2:
 				{
-				setState(106); 
+				setState(106);
 				function_predicate();
 				}
 				break;
@@ -618,16 +614,16 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109); 
+			setState(109);
 			field();
 			setState(114);
 			switch (_input.LA(1)) {
 			case EQ:
 			case NE:
 				{
-				setState(110); 
+				setState(110);
 				comparison_op();
-				setState(111); 
+				setState(111);
 				value();
 				}
 				break;
@@ -636,7 +632,7 @@ public class LuceneSqlParser extends Parser {
 			case GTE:
 			case LTE:
 				{
-				setState(113); 
+				setState(113);
 				range_op();
 				}
 				break;
@@ -697,28 +693,28 @@ public class LuceneSqlParser extends Parser {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(116); 
+				setState(116);
 				regexp();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(117); 
+				setState(117);
 				between();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(118); 
+				setState(118);
 				like();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(119); 
+				setState(119);
 				in();
 				}
 				break;
@@ -762,7 +758,7 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122); 
+			setState(122);
 			match(FIELD);
 			}
 		}
@@ -788,23 +784,6 @@ public class LuceneSqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class NotEqualContext extends Comparison_opContext {
-		public TerminalNode NE() { return getToken(LuceneSqlParser.NE, 0); }
-		public NotEqualContext(Comparison_opContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNotEqual(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNotEqual(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNotEqual(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class EqualsContext extends Comparison_opContext {
 		public TerminalNode EQ() { return getToken(LuceneSqlParser.EQ, 0); }
 		public EqualsContext(Comparison_opContext ctx) { copyFrom(ctx); }
@@ -822,6 +801,23 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class NotEqualContext extends Comparison_opContext {
+		public TerminalNode NE() { return getToken(LuceneSqlParser.NE, 0); }
+		public NotEqualContext(Comparison_opContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNotEqual(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNotEqual(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNotEqual(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final Comparison_opContext comparison_op() throws RecognitionException {
 		Comparison_opContext _localctx = new Comparison_opContext(_ctx, getState());
@@ -833,7 +829,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new EqualsContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(124); 
+				setState(124);
 				match(EQ);
 				}
 				break;
@@ -841,7 +837,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new NotEqualContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(125); 
+				setState(125);
 				match(NE);
 				}
 				break;
@@ -901,28 +897,28 @@ public class LuceneSqlParser extends Parser {
 			case GT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(128); 
+				setState(128);
 				greater_than();
 				}
 				break;
 			case GTE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(129); 
+				setState(129);
 				greater_than_equals();
 				}
 				break;
 			case LT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(130); 
+				setState(130);
 				less_than();
 				}
 				break;
 			case LTE:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(131); 
+				setState(131);
 				less_than_equals();
 				}
 				break;
@@ -952,24 +948,6 @@ public class LuceneSqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class GreaterThanNumberContext extends Greater_thanContext {
-		public TerminalNode GT() { return getToken(LuceneSqlParser.GT, 0); }
-		public TerminalNode NUMBER() { return getToken(LuceneSqlParser.NUMBER, 0); }
-		public GreaterThanNumberContext(Greater_thanContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThanNumber(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThanNumber(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanNumber(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class GreaterThanTermContext extends Greater_thanContext {
 		public TerminalNode GT() { return getToken(LuceneSqlParser.GT, 0); }
 		public TerminalNode TERM() { return getToken(LuceneSqlParser.TERM, 0); }
@@ -985,6 +963,24 @@ public class LuceneSqlParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanTerm(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GreaterThanNumberContext extends Greater_thanContext {
+		public TerminalNode GT() { return getToken(LuceneSqlParser.GT, 0); }
+		public TerminalNode NUMBER() { return getToken(LuceneSqlParser.NUMBER, 0); }
+		public GreaterThanNumberContext(Greater_thanContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThanNumber(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThanNumber(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanNumber(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1017,9 +1013,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(134); 
+				setState(134);
 				match(GT);
-				setState(135); 
+				setState(135);
 				match(NUMBER);
 				}
 				break;
@@ -1027,9 +1023,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(136); 
+				setState(136);
 				match(GT);
-				setState(137); 
+				setState(137);
 				match(TERM);
 				}
 				break;
@@ -1037,9 +1033,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(138); 
+				setState(138);
 				match(GT);
-				setState(139); 
+				setState(139);
 				match(DATE);
 				}
 				break;
@@ -1065,24 +1061,6 @@ public class LuceneSqlParser extends Parser {
 		public Greater_than_equalsContext() { }
 		public void copyFrom(Greater_than_equalsContext ctx) {
 			super.copyFrom(ctx);
-		}
-	}
-	public static class GreaterThanEqTermContext extends Greater_than_equalsContext {
-		public TerminalNode GTE() { return getToken(LuceneSqlParser.GTE, 0); }
-		public TerminalNode TERM() { return getToken(LuceneSqlParser.TERM, 0); }
-		public GreaterThanEqTermContext(Greater_than_equalsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThanEqTerm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThanEqTerm(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanEqTerm(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	public static class GreaterThanEqNumberContext extends Greater_than_equalsContext {
@@ -1121,6 +1099,24 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class GreaterThanEqTermContext extends Greater_than_equalsContext {
+		public TerminalNode GTE() { return getToken(LuceneSqlParser.GTE, 0); }
+		public TerminalNode TERM() { return getToken(LuceneSqlParser.TERM, 0); }
+		public GreaterThanEqTermContext(Greater_than_equalsContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterGreaterThanEqTerm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitGreaterThanEqTerm(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitGreaterThanEqTerm(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final Greater_than_equalsContext greater_than_equals() throws RecognitionException {
 		Greater_than_equalsContext _localctx = new Greater_than_equalsContext(_ctx, getState());
@@ -1132,9 +1128,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanEqNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(142); 
+				setState(142);
 				match(GTE);
-				setState(143); 
+				setState(143);
 				match(NUMBER);
 				}
 				break;
@@ -1142,9 +1138,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanEqTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(144); 
+				setState(144);
 				match(GTE);
-				setState(145); 
+				setState(145);
 				match(TERM);
 				}
 				break;
@@ -1152,9 +1148,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new GreaterThanEqDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(146); 
+				setState(146);
 				match(GTE);
-				setState(147); 
+				setState(147);
 				match(DATE);
 				}
 				break;
@@ -1247,9 +1243,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(150); 
+				setState(150);
 				match(LT);
-				setState(151); 
+				setState(151);
 				match(NUMBER);
 				}
 				break;
@@ -1257,9 +1253,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(152); 
+				setState(152);
 				match(LT);
-				setState(153); 
+				setState(153);
 				match(TERM);
 				}
 				break;
@@ -1267,9 +1263,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(154); 
+				setState(154);
 				match(LT);
-				setState(155); 
+				setState(155);
 				match(DATE);
 				}
 				break;
@@ -1295,24 +1291,6 @@ public class LuceneSqlParser extends Parser {
 		public Less_than_equalsContext() { }
 		public void copyFrom(Less_than_equalsContext ctx) {
 			super.copyFrom(ctx);
-		}
-	}
-	public static class LessThanEqDateContext extends Less_than_equalsContext {
-		public TerminalNode LTE() { return getToken(LuceneSqlParser.LTE, 0); }
-		public TerminalNode DATE() { return getToken(LuceneSqlParser.DATE, 0); }
-		public LessThanEqDateContext(Less_than_equalsContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLessThanEqDate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLessThanEqDate(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLessThanEqDate(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	public static class LessThanEqTermContext extends Less_than_equalsContext {
@@ -1351,6 +1329,24 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class LessThanEqDateContext extends Less_than_equalsContext {
+		public TerminalNode LTE() { return getToken(LuceneSqlParser.LTE, 0); }
+		public TerminalNode DATE() { return getToken(LuceneSqlParser.DATE, 0); }
+		public LessThanEqDateContext(Less_than_equalsContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterLessThanEqDate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitLessThanEqDate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitLessThanEqDate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final Less_than_equalsContext less_than_equals() throws RecognitionException {
 		Less_than_equalsContext _localctx = new Less_than_equalsContext(_ctx, getState());
@@ -1362,9 +1358,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanEqNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(158); 
+				setState(158);
 				match(LTE);
-				setState(159); 
+				setState(159);
 				match(NUMBER);
 				}
 				break;
@@ -1372,9 +1368,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanEqTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(160); 
+				setState(160);
 				match(LTE);
-				setState(161); 
+				setState(161);
 				match(TERM);
 				}
 				break;
@@ -1382,9 +1378,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new LessThanEqDateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(162); 
+				setState(162);
 				match(LTE);
-				setState(163); 
+				setState(163);
 				match(DATE);
 				}
 				break;
@@ -1410,6 +1406,57 @@ public class LuceneSqlParser extends Parser {
 		public Boolean_opContext() { }
 		public void copyFrom(Boolean_opContext ctx) {
 			super.copyFrom(ctx);
+		}
+	}
+	public static class NotContext extends Boolean_opContext {
+		public TerminalNode NOT() { return getToken(LuceneSqlParser.NOT, 0); }
+		public NotContext(Boolean_opContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNot(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNot(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNot(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrContext extends Boolean_opContext {
+		public TerminalNode OR() { return getToken(LuceneSqlParser.OR, 0); }
+		public OrContext(Boolean_opContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterOr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitOr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitOr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AndContext extends Boolean_opContext {
+		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
+		public AndContext(Boolean_opContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterAnd(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitAnd(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitAnd(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AndNotContext extends Boolean_opContext {
@@ -1448,57 +1495,6 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class OrContext extends Boolean_opContext {
-		public TerminalNode OR() { return getToken(LuceneSqlParser.OR, 0); }
-		public OrContext(Boolean_opContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterOr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitOr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitOr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class AndContext extends Boolean_opContext {
-		public TerminalNode AND() { return getToken(LuceneSqlParser.AND, 0); }
-		public AndContext(Boolean_opContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterAnd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitAnd(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitAnd(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class NotContext extends Boolean_opContext {
-		public TerminalNode NOT() { return getToken(LuceneSqlParser.NOT, 0); }
-		public NotContext(Boolean_opContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterNot(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitNot(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitNot(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final Boolean_opContext boolean_op() throws RecognitionException {
 		Boolean_opContext _localctx = new Boolean_opContext(_ctx, getState());
@@ -1510,7 +1506,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new AndContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(166); 
+				setState(166);
 				match(AND);
 				}
 				break;
@@ -1518,7 +1514,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new OrContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(167); 
+				setState(167);
 				match(OR);
 				}
 				break;
@@ -1526,7 +1522,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new NotContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(168); 
+				setState(168);
 				match(NOT);
 				}
 				break;
@@ -1534,9 +1530,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new AndNotContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(169); 
+				setState(169);
 				match(AND);
-				setState(170); 
+				setState(170);
 				match(NOT);
 				}
 				break;
@@ -1544,9 +1540,9 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new OrNotContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(171); 
+				setState(171);
 				match(OR);
-				setState(172); 
+				setState(172);
 				match(NOT);
 				}
 				break;
@@ -1564,14 +1560,14 @@ public class LuceneSqlParser extends Parser {
 	}
 
 	public static class Nested_predicateContext extends ParserRuleContext {
-		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
+		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
 		public List<PredicateContext> predicate() {
 			return getRuleContexts(PredicateContext.class);
 		}
 		public PredicateContext predicate(int i) {
 			return getRuleContext(PredicateContext.class,i);
 		}
-		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
 		public Boolean_opContext boolean_op() {
 			return getRuleContext(Boolean_opContext.class,0);
 		}
@@ -1611,31 +1607,31 @@ public class LuceneSqlParser extends Parser {
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT))) != 0)) {
 				{
-				setState(175); 
+				setState(175);
 				boolean_op();
 				}
 			}
 
-			setState(178); 
-			match(RPAREN);
-			setState(179); 
+			setState(178);
+			match(LPAREN);
+			setState(179);
 			predicate();
 			setState(184);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT) | (1L << FIELD) | (1L << RPAREN))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << NOT) | (1L << FIELD) | (1L << LPAREN))) != 0)) {
 				{
 				setState(182);
 				switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 				case 1:
 					{
-					setState(180); 
+					setState(180);
 					predicate();
 					}
 					break;
 				case 2:
 					{
-					setState(181); 
+					setState(181);
 					nested_predicate();
 					}
 					break;
@@ -1645,8 +1641,8 @@ public class LuceneSqlParser extends Parser {
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(187); 
-			match(LPAREN);
+			setState(187);
+			match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1671,40 +1667,6 @@ public class LuceneSqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class MULTI_PHRASEContext extends ValueContext {
-		public TerminalNode MULTI_PHRASE() { return getToken(LuceneSqlParser.MULTI_PHRASE, 0); }
-		public MULTI_PHRASEContext(ValueContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterMULTI_PHRASE(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitMULTI_PHRASE(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitMULTI_PHRASE(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class DateContext extends ValueContext {
-		public TerminalNode DATE() { return getToken(LuceneSqlParser.DATE, 0); }
-		public DateContext(ValueContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterDate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitDate(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitDate(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class NumberContext extends ValueContext {
 		public TerminalNode NUMBER() { return getToken(LuceneSqlParser.NUMBER, 0); }
 		public NumberContext(ValueContext ctx) { copyFrom(ctx); }
@@ -1722,20 +1684,20 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class PhraseContext extends ValueContext {
-		public TerminalNode PHRASE() { return getToken(LuceneSqlParser.PHRASE, 0); }
-		public PhraseContext(ValueContext ctx) { copyFrom(ctx); }
+	public static class MULTI_PHRASEContext extends ValueContext {
+		public TerminalNode MULTI_PHRASE() { return getToken(LuceneSqlParser.MULTI_PHRASE, 0); }
+		public MULTI_PHRASEContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterPhrase(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterMULTI_PHRASE(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitPhrase(this);
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitMULTI_PHRASE(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitPhrase(this);
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitMULTI_PHRASE(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1756,6 +1718,40 @@ public class LuceneSqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class PhraseContext extends ValueContext {
+		public TerminalNode PHRASE() { return getToken(LuceneSqlParser.PHRASE, 0); }
+		public PhraseContext(ValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterPhrase(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitPhrase(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitPhrase(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DateContext extends ValueContext {
+		public TerminalNode DATE() { return getToken(LuceneSqlParser.DATE, 0); }
+		public DateContext(ValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).enterDate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof LuceneSqlListener ) ((LuceneSqlListener)listener).exitDate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof LuceneSqlVisitor ) return ((LuceneSqlVisitor<? extends T>)visitor).visitDate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
@@ -1767,7 +1763,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new NumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(189); 
+				setState(189);
 				match(NUMBER);
 				}
 				break;
@@ -1775,7 +1771,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new TermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(190); 
+				setState(190);
 				match(TERM);
 				}
 				break;
@@ -1783,7 +1779,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new PhraseContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(191); 
+				setState(191);
 				match(PHRASE);
 				}
 				break;
@@ -1791,7 +1787,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new DateContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(192); 
+				setState(192);
 				match(DATE);
 				}
 				break;
@@ -1799,7 +1795,7 @@ public class LuceneSqlParser extends Parser {
 				_localctx = new MULTI_PHRASEContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(193); 
+				setState(193);
 				match(MULTI_PHRASE);
 				}
 				break;
@@ -1823,9 +1819,9 @@ public class LuceneSqlParser extends Parser {
 			return getRuleContext(FieldContext.class,0);
 		}
 		public TerminalNode MATCHES() { return getToken(LuceneSqlParser.MATCHES, 0); }
-		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
-		public TerminalNode WILD_CARD() { return getToken(LuceneSqlParser.WILD_CARD, 0); }
 		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
+		public TerminalNode WILD_CARD() { return getToken(LuceneSqlParser.WILD_CARD, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
 		public RegexpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1851,16 +1847,16 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(196); 
+			setState(196);
 			field();
-			setState(197); 
+			setState(197);
 			match(MATCHES);
-			setState(198); 
-			match(RPAREN);
-			setState(199); 
-			match(WILD_CARD);
-			setState(200); 
+			setState(198);
 			match(LPAREN);
+			setState(199);
+			match(WILD_CARD);
+			setState(200);
+			match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1909,14 +1905,14 @@ public class LuceneSqlParser extends Parser {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(202); 
+				setState(202);
 				between_number();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(203); 
+				setState(203);
 				between_term();
 				}
 				break;
@@ -1968,15 +1964,15 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(206); 
+			setState(206);
 			field();
-			setState(207); 
+			setState(207);
 			match(BETWEEN);
-			setState(208); 
+			setState(208);
 			match(TERM);
-			setState(209); 
+			setState(209);
 			match(AND);
-			setState(210); 
+			setState(210);
 			match(TERM);
 			}
 		}
@@ -2026,15 +2022,15 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(212); 
+			setState(212);
 			field();
-			setState(213); 
+			setState(213);
 			match(BETWEEN);
-			setState(214); 
+			setState(214);
 			match(NUMBER);
-			setState(215); 
+			setState(215);
 			match(AND);
-			setState(216); 
+			setState(216);
 			match(NUMBER);
 			}
 		}
@@ -2080,11 +2076,11 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(218); 
+			setState(218);
 			field();
-			setState(219); 
+			setState(219);
 			match(LIKE);
-			setState(220); 
+			setState(220);
 			match(WILD_CARD);
 			}
 		}
@@ -2134,20 +2130,20 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(222); 
+			setState(222);
 			field();
 			setState(224);
 			_la = _input.LA(1);
 			if (_la==NOT) {
 				{
-				setState(223); 
+				setState(223);
 				match(NOT);
 				}
 			}
 
-			setState(226); 
+			setState(226);
 			match(IN);
-			setState(227); 
+			setState(227);
 			value_list();
 			}
 		}
@@ -2163,8 +2159,8 @@ public class LuceneSqlParser extends Parser {
 	}
 
 	public static class Value_listContext extends ParserRuleContext {
-		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
 		public TerminalNode LPAREN() { return getToken(LuceneSqlParser.LPAREN, 0); }
+		public TerminalNode RPAREN() { return getToken(LuceneSqlParser.RPAREN, 0); }
 		public Number_listContext number_list() {
 			return getRuleContext(Number_listContext.class,0);
 		}
@@ -2202,37 +2198,37 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(229); 
-			match(RPAREN);
+			setState(229);
+			match(LPAREN);
 			setState(234);
 			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
 				{
-				setState(230); 
+				setState(230);
 				number_list();
 				}
 				break;
 			case 2:
 				{
-				setState(231); 
+				setState(231);
 				date_list();
 				}
 				break;
 			case 3:
 				{
-				setState(232); 
+				setState(232);
 				term_list();
 				}
 				break;
 			case 4:
 				{
-				setState(233); 
+				setState(233);
 				phrase_list();
 				}
 				break;
 			}
-			setState(236); 
-			match(LPAREN);
+			setState(236);
+			match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2281,7 +2277,7 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(238); 
+			setState(238);
 			match(NUMBER);
 			setState(243);
 			_errHandler.sync(this);
@@ -2289,9 +2285,9 @@ public class LuceneSqlParser extends Parser {
 			while (_la==COMMA) {
 				{
 				{
-				setState(239); 
+				setState(239);
 				match(COMMA);
-				setState(240); 
+				setState(240);
 				match(NUMBER);
 				}
 				}
@@ -2347,7 +2343,7 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(246); 
+			setState(246);
 			match(DATE);
 			setState(251);
 			_errHandler.sync(this);
@@ -2355,9 +2351,9 @@ public class LuceneSqlParser extends Parser {
 			while (_la==COMMA) {
 				{
 				{
-				setState(247); 
+				setState(247);
 				match(COMMA);
-				setState(248); 
+				setState(248);
 				match(DATE);
 				}
 				}
@@ -2413,7 +2409,7 @@ public class LuceneSqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(254); 
+			setState(254);
 			match(TERM);
 			setState(259);
 			_errHandler.sync(this);
@@ -2421,9 +2417,9 @@ public class LuceneSqlParser extends Parser {
 			while (_la==COMMA) {
 				{
 				{
-				setState(255); 
+				setState(255);
 				match(COMMA);
-				setState(256); 
+				setState(256);
 				match(TERM);
 				}
 				}
@@ -2487,22 +2483,24 @@ public class LuceneSqlParser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==TERM || _la==PHRASE) ) {
 			_errHandler.recoverInline(this);
+			} else {
+				consume();
 			}
-			consume();
 			setState(267);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(263); 
+				setState(263);
 				match(COMMA);
 				setState(264);
 				_la = _input.LA(1);
 				if ( !(_la==TERM || _la==PHRASE) ) {
 				_errHandler.recoverInline(this);
+				} else {
+					consume();
 				}
-				consume();
 				}
 				}
 				setState(269);

@@ -1,4 +1,4 @@
-// Generated from /Users/bbejeck/dev/github_clones/sql-for-lucene/src/main/java/LuceneSql.g4 by ANTLR 4.5
+// Generated from /Users/bbejeck/dev/github_clones/sql-for-lucene/src/main/java/LuceneSql.g4 by ANTLR 4.5.1
 package bbejeck.sql.antlr.generated;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class LuceneSqlLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -20,8 +20,8 @@ public class LuceneSqlLexer extends Lexer {
 		SELECT=1, FROM=2, WHERE=3, AND=4, OR=5, NOT=6, DESCRIBE=7, MATCHES=8, 
 		BETWEEN=9, LIKE=10, LIMIT=11, EQ=12, NE=13, GT=14, LT=15, GTE=16, LTE=17, 
 		IN=18, SPLAT=19, NUMBER=20, DATE=21, FIELD=22, PATH=23, TERM=24, PHRASE=25, 
-		WILD_CARD=26, MULTI_PHRASE=27, DB_QUOTE_STRING_LIT=28, COMMA=29, RPAREN=30, 
-		LPAREN=31, WS=32;
+		WILD_CARD=26, MULTI_PHRASE=27, DB_QUOTE_STRING_LIT=28, COMMA=29, LPAREN=30, 
+		RPAREN=31, WS=32;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
@@ -31,7 +31,7 @@ public class LuceneSqlLexer extends Lexer {
 		"BETWEEN", "LIKE", "LIMIT", "EQ", "NE", "GT", "LT", "GTE", "LTE", "IN", 
 		"SPLAT", "DIGIT", "NUMBER", "DATE_SEP", "DATE", "FIELD", "PATH", "TERM", 
 		"PHRASE", "WILD_CARD", "MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", 
-		"RPAREN", "LPAREN", "WS"
+		"LPAREN", "RPAREN", "WS"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -43,7 +43,7 @@ public class LuceneSqlLexer extends Lexer {
 		null, "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "DESCRIBE", "MATCHES", 
 		"BETWEEN", "LIKE", "LIMIT", "EQ", "NE", "GT", "LT", "GTE", "LTE", "IN", 
 		"SPLAT", "NUMBER", "DATE", "FIELD", "PATH", "TERM", "PHRASE", "WILD_CARD", 
-		"MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", "RPAREN", "LPAREN", "WS"
+		"MULTI_PHRASE", "DB_QUOTE_STRING_LIT", "COMMA", "LPAREN", "RPAREN", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -73,7 +73,7 @@ public class LuceneSqlLexer extends Lexer {
 	}
 
 	@Override
-	@NotNull
+
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
