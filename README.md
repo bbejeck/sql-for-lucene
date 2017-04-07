@@ -1,9 +1,9 @@
-##Sql for Lucene
+## Sql for Lucene ##
 
 Originally a side project, I've decided to put this out there in case someone else
 may find this useful.
 
-###Introduction
+### Introduction
 The `LuceneSqlParser` supports a subset of standard sql.  Here are some examples:
 
 ```
@@ -20,7 +20,7 @@ Select first_name from 'C:/path/index/' where first_name='John' and (age<=45 and
 
 The `LuceneSqlParser` returns a [BooleanQuery](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/BooleanQuery.html). The `BooleanQuery` will contain different types of lucene query objects depending on the predicates used. There is a class `Searcher` avaiable for use with the `LuceneSqlParser`.  The `Searcher` abstracts away the opening of a lucene [IndexSearcher](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/IndexSearcher.html), iterating over the [ScoreDoc](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/ScoreDoc.html) array and extracting results.    Next, we'll take a look at the rules used to parse the sql.
 
-###LuceneSqlParser Functionality 
+### LuceneSqlParser Functionality 
 At high level a sql statement is broken down and parsed in the following manner:
 
 1.  The 'Select' statement contains a comma sparated list of fields stored in a Lucene index.  The parser stores fields in a `Set<String>` for use by the `Searcher`. To retreive all fields we can specify a '*' operator, or omit the 'select' clause altogether.
@@ -32,7 +32,7 @@ At high level a sql statement is broken down and parsed in the following manner:
 
 The `LuceneQueryParser` defines two static methods `toParse` and `toParseBooleanQuery`.  The `toParse` method is intended to be used in conjuction with the `Searcher`.  The `toParse` returns a `QueryParseResults` object that contains the path for the index, the set of fields to retrieve and the `BooleanQuery` to execute.  The `toParseBooleanQuery` is intended to be used for parsing only and returns a `BooleanQuery`.
 
-###SQL to Lucene Query Functionality Mapping
+### SQL to Lucene Query Functionality Mapping
 We now will list the supported Lucene query objects and how they are mapped from the input sql.
 
 *  `<field name> ='Foo'` converts to a [TermQuery](http://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/TermQuery.html). 
@@ -52,7 +52,7 @@ The AND,OR & NOT operators are mappped in the following manner.
 *  OR  converts to `BooleanClause.Occur.SHOULD` 
 *  NOT converts to `BooleanClause.Occur.MUST_NOT`
 
-###Optimizations
+### Optimizations
 In two cases the query is converted to something different from the mappings shown previously.  The first case is a query that contains a single predicate that *must not* match.  For example:
 
 ```
@@ -67,7 +67,7 @@ Select * from '/index/path' where age = 49
 
 Normally a 'field=value' or 'field != value' predicate is converted to a `TermQuery`. But the way lucene searches for values it will not find a field if it is searching for a number versus a string.  In this case the parser constructs a `NumericRangeQuery` where the low and high value are equal and inclusive.
 
-###Limitations
+### Limitations
 There are a several limitations at this point.
 
 *   Converting to a `PhraseQuery` does not allow for specifying any [slop](http://lucene.apache.org/core/4_10_2/core/org/apache/lucene/search/PhraseQuery.html#setSlop\(int\)).  For a match with a `PhraseQuery` all terms must be located adjacent to each other.
@@ -75,7 +75,7 @@ There are a several limitations at this point.
 *   Range querries are inclusive when both a high and low value are specified.
 *   If no limit clause is specified in the query, a default limit of 10,000 records is used.
 
-###Searcher  
+### Searcher  
 
 The second component of sql for lucene is the `Searcher`class.  The `Searcher` could be thought of as a convenience method for performing a lucene search and extracting the results.  The `Searcher` has one method `search` that takes a sql query and returns a `List<Map<String,Object>>` containing the search results.  Each map in the list represents a document with the keys being the field names and the values are the values stored in the retrieved fields.  
 
@@ -107,7 +107,7 @@ It's worth noting the list and map returned from the searcher are of type [Immut
 ```
 If the searcher is instantiated with the no-arg constructor, then the path for the index will be extracted from the query and used to open the `IndexSearcher`.  All subsequent queries can safely omit the from clause.  If the searcher is instantiated with any of the other 3 constructors, the 'from' clause will be ignored and can be omitted from the query.
 
-###Features To Be Added
+### Features To Be Added
 
 *   A JDBC Driver.
 *   Insert, Update and Delete support.
