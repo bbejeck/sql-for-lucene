@@ -30,7 +30,7 @@ At high level a sql statement is broken down and parsed in the following manner:
 5. Predicates can be nested to an arbitrary depth. For example:  `where field='1' and (field2='2' and field3='3' and (field4='4' and (field5='5' and field='6')))`
 6. The 'Select' and 'From' clauses are optional.
 
-The `LuceneQueryParser` defines two static methods `toParse` and `toParseBooleanQuery`.  The `toParse` method is intended to be used in conjuction with the `Searcher`.  The `toParse` returns a `QueryParseResults` object that contains the path for the index, the set of fields to retrieve and the `BooleanQuery` to execute.  The `toParseBooleanQuery` is intended to be used for parsing only and returns a `BooleanQuery`.
+The `LuceneQueryParser` defines two static methods `parseQuery` and `parseToBooleanQuery`.  The `parseQuery` method is intended to be used in conjuction with the `Searcher`.  The `parseQuery` returns a `QueryParseResults` object that contains the path for the index, the set of fields to retrieve and the `BooleanQuery` to execute.  The `parseToBooleanQuery` is intended to be used for parsing only and returns a `BooleanQuery`.
 
 ### SQL to Lucene Query Functionality Mapping
 We now will list the supported Lucene query objects and how they are mapped from the input sql.
