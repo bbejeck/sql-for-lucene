@@ -85,25 +85,24 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.antlr</groupId>-->
-                <!--<artifactId>antlr4-maven-plugin</artifactId>-->
-                <!--<version>4.2.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>antlr</id>-->
-                        <!--<goals>-->
-                            <!--<goal>antlr4</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
     <build>
         <plugins>
+            <!-- uncomment this plugin  for building -->
+            <!--
+               <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>4.2.2</version>
+                  <executions>
+                    <execution>
+                        <id>antlr</id>
+                        <goals>
+                            <goal>antlr4</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
