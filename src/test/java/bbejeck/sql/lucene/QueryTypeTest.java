@@ -5,11 +5,12 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.RegexpQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static bbejeck.sql.lucene.QueryType.REGEXP;
 import static bbejeck.sql.lucene.QueryType.WILDCARD;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
 import static bbejeck.sql.lucene.QueryType.TERM;

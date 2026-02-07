@@ -27,17 +27,17 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.IntPoint;
+import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
 public abstract class LuceneSqlSearchBase {
 
     protected Analyzer analyzer = new StandardAnalyzer();
-    protected Directory ramDirectory = new RAMDirectory();
+    protected Directory ramDirectory = new ByteBuffersDirectory();
     protected IndexWriterConfig config = new IndexWriterConfig(analyzer);
     protected IndexWriter iwriter;
     protected DirectoryReader ireader;
@@ -80,8 +80,8 @@ public abstract class LuceneSqlSearchBase {
             String val = values.get(indx++);
             if(val.matches("\\d+")){
                  int num = Integer.parseInt(val);
-                 IntField numberColumn  = new IntField(column.name()+"N",num, Field.Store.YES);
-                 doc.add(numberColumn);
+                 doc.add(new IntPoint(column.name()+"N", num));
+                 doc.add(new StoredField(column.name()+"N", num));
             }
             column.setStringValue(val);
             doc.add(column);
@@ -101,7 +101,7 @@ public abstract class LuceneSqlSearchBase {
         return isearcher.search(query,limit).scoreDocs;
     }
 
-    public ScoreDoc[] search(Query query,Filter filter, int limit) throws Exception {
+    public ScoreDoc[] search(Query query, Query filter, int limit) throws Exception {
         if(ireader == null){
             openSearcher();
         }

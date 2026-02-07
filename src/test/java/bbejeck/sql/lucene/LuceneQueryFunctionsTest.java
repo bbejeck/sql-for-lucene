@@ -3,10 +3,10 @@ package bbejeck.sql.lucene;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.PhraseQuery;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static bbejeck.sql.lucene.LuceneQueryFunctions.*;
 
 public class LuceneQueryFunctionsTest {

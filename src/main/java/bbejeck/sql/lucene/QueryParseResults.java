@@ -23,8 +23,6 @@ package bbejeck.sql.lucene;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Sets;
-import org.apache.lucene.queries.BooleanFilter;
-import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -45,7 +43,6 @@ public class QueryParseResults {
     private String indexPath;
     private Set<String> selectFields = new HashSet<>();
     private BooleanQuery booleanQuery;
-    private BooleanFilter booleanFilter;
     private int limit;
 
 
@@ -53,7 +50,6 @@ public class QueryParseResults {
         indexPath = builder.indexPath;
         selectFields = builder.selectFields;
         booleanQuery = builder.booleanQuery;
-        booleanFilter = builder.booleanFilter;
         limit = builder.limit;
     }
 
@@ -69,10 +65,6 @@ public class QueryParseResults {
         return booleanQuery;
     }
 
-    public BooleanFilter getBooleanFilter() {
-        return booleanFilter;
-    }
-
     public int getLimit() {
         return limit;
     }
@@ -86,7 +78,6 @@ public class QueryParseResults {
         builder.indexPath = copy.indexPath;
         builder.selectFields = copy.selectFields;
         builder.booleanQuery = copy.booleanQuery;
-        builder.booleanFilter = copy.booleanFilter;
         builder.limit = copy.limit;
         return builder;
     }
@@ -95,9 +86,7 @@ public class QueryParseResults {
     public static final class Builder implements LuceneQueryFunctions {
         private String indexPath;
         private Set<String> selectFields = new HashSet<>();
-        private List<FilterClause> filterClausedList;
         private BooleanQuery booleanQuery;
-        private BooleanFilter booleanFilter;
         private int limit;
         private CharMatcher singleQuoteMatcher = CharMatcher.is('\'');
 
@@ -121,11 +110,6 @@ public class QueryParseResults {
             return this;
         }
 
-        public Builder withBooleanFilter(BooleanFilter booleanFilter) {
-            this.booleanFilter = booleanFilter;
-            return this;
-        }
-
         public Builder withLimit(int limit) {
             this.limit = limit;
             return this;
@@ -140,16 +124,11 @@ public class QueryParseResults {
             return new QueryParseResults(this);
         }
 
-        public Builder withFilterClausesList(List<FilterClause> filterClausesList) {
-            this.filterClausedList = filterClausesList;
-            return this;
-        }
-
         public Builder withBooleanClausesList(List<BooleanClause> booleanClausesList) {
             this.booleanQuery = toBooleanQuery.apply(booleanClausesList);
             return this;
         }
 
-        private Predicate<BooleanQuery> isSingleMustNotQuery = bq -> bq.clauses().size()==1 && bq.getClauses()[0].getOccur() == BooleanClause.Occur.MUST_NOT;
+        private Predicate<BooleanQuery> isSingleMustNotQuery = bq -> bq.clauses().size()==1 && bq.clauses().iterator().next().occur() == BooleanClause.Occur.MUST_NOT;
     }
 }

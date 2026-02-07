@@ -1,0 +1,67 @@
+/*
+ * Copyright 2015 Bill Bejeck
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+plugins {
+    id 'java'
+    id 'antlr'
+    id 'groovy'
+}
+
+group = 'bbejeck.sql'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Guava
+    implementation 'com.google.guava:guava:33.4.0-jre'
+
+    // Apache Lucene
+    implementation 'org.apache.lucene:lucene-core:10.3.2'
+    implementation 'org.apache.lucene:lucene-queryparser:10.3.2'
+    implementation 'org.apache.lucene:lucene-analysis-common:10.3.2'
+    testImplementation 'org.apache.lucene:lucene-test-framework:10.3.2'
+
+    // ANTLR
+    antlr 'org.antlr:antlr4:4.13.2'
+    implementation 'org.antlr:antlr4-runtime:4.13.2'
+
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.1'
+    testImplementation 'org.hamcrest:hamcrest:3.0'
+    testImplementation 'org.apache.groovy:groovy:4.0.24'
+    testImplementation 'org.spockframework:spock-core:2.4-M4-groovy-4.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('generateGrammarSource', AntlrTask) {
+    arguments += ['-visitor', '-long-messages', '-package', 'bbejeck.sql.antlr.generated']
+    outputDirectory = file("${project.buildDir}/generated-src/antlr/main/bbejeck/sql/antlr/generated")
+}

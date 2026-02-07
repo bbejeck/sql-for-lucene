@@ -22,6 +22,7 @@
 package bbejeck.sql.lucene;
 
 import com.google.common.base.Splitter;
+import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 
@@ -127,7 +128,7 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
             List<Integer> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).map(Integer::decode).collect(Collectors.toList());
             Integer lower = terms.get(0);
             Integer upper = terms.get(1);
-            return NumericRangeQuery.newIntRange(field, lower, upper, true, true);
+            return IntPoint.newRangeQuery(field, lower, upper);
         }
 
 
@@ -150,12 +151,9 @@ public enum QueryType implements LuceneQueryFunctions, LuceneAnalyzingFunctions 
         @Override
         Query query(String field, String value) {
             List<String> terms = toStreamFromDelimitedValue.apply(value).map(lettersNumbersTrimLowerCase).collect(Collectors.toList());
-            Integer lower = (terms.get(0).equals(UNBOUNDED)) ? null : Integer.decode(terms.get(0));
-            Integer upper = (terms.get(1).equals(UNBOUNDED)) ? null : Integer.decode(terms.get(1));
-            boolean included = Boolean.valueOf(terms.get(2));
-            boolean includeUpper = lower == null && included;
-            boolean includeLower = upper == null && included;
-            return NumericRangeQuery.newIntRange(field, lower, upper, includeLower, includeUpper);
+            Integer lower = (terms.get(0).equals(UNBOUNDED)) ? Integer.MIN_VALUE : Integer.decode(terms.get(0));
+            Integer upper = (terms.get(1).equals(UNBOUNDED)) ? Integer.MAX_VALUE : Integer.decode(terms.get(1));
+            return IntPoint.newRangeQuery(field, lower, upper);
         }
     };
 

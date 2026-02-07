@@ -21,9 +21,9 @@
 
 package bbejeck.sql.lucene;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * User: Bill Bejeck
@@ -43,14 +43,14 @@ public class SearcherFileSystemIndexTest extends LuceneSqlFileSystemSearchBase {
 
     private String indexPath = "src/test/testindex";
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         init(indexPath);
         index_values_from_file("src/test/small_values.csv");
         doneAdding();
     }
 
-    @After
+    @AfterEach
     public void teardown() throws Exception {
         File file = new File(indexPath);
         Stream.of(file.listFiles()).forEach(File::delete);

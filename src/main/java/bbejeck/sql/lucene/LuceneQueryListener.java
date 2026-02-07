@@ -23,12 +23,11 @@ package bbejeck.sql.lucene;
 
 import bbejeck.sql.antlr.generated.LuceneSqlBaseListener;
 import bbejeck.sql.antlr.generated.LuceneSqlParser;
-import com.carrotsearch.ant.tasks.junit4.dependencies.com.google.common.collect.Sets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.lucene.queries.FilterClause;
 import org.apache.lucene.search.BooleanClause;
 
 import java.util.List;
@@ -47,7 +46,6 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
     private String indexPath;
     private int limit;
     private Set<String> selectedFields = Sets.newHashSet();
-    private List<FilterClause> filterClauses = Lists.newArrayList();
     private Stack<BooleanClauseBuilder> booleanClauseBuilders = new Stack<>();
     private Stack<List<BooleanClause>> booleanClausesListStack = new Stack<>();
     private List<BooleanClause> completeBooleanClauseList = Lists.newArrayList();
@@ -310,7 +308,6 @@ public class LuceneQueryListener extends LuceneSqlBaseListener {
 
     public QueryParseResults getParseResults() {
         return queryResultsBuilder.withBooleanClausesList(this.completeBooleanClauseList)
-                .withFilterClausesList(this.filterClauses)
                 .withIndexPath(this.indexPath)
                 .withLimit(this.limit)
                 .withSelectFields(this.selectedFields).build();

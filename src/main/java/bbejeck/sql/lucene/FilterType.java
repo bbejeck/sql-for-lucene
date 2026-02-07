@@ -22,8 +22,10 @@
 package bbejeck.sql.lucene;
 
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queries.TermsFilter;
-import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,34 +41,38 @@ public enum FilterType implements LuceneQueryFunctions,LuceneAnalyzingFunctions 
 
     TERMS_FILTER {
         @Override
-        Filter filter(String field, Collection<String> filterValues) {
+        Query filter(String field, Collection<String> filterValues) {
             List<Term> filterTerms = filterValues.stream().map(createFilterTerm.apply(field)).collect(Collectors.toList());
-            return new TermsFilter(filterTerms);
+            BooleanQuery.Builder builder = new BooleanQuery.Builder();
+            for (Term term : filterTerms) {
+                builder.add(new TermQuery(term), BooleanClause.Occur.SHOULD);
+            }
+            return builder.build();
         }
     },
 
     TERM_RANGE_FILTER{
         @Override
-        Filter filter(String field, Collection<String> filterValues) {
+        Query filter(String field, Collection<String> filterValues) {
             throw new RuntimeException("Not Implemented");
         }
     },
 
     NUMERIC_RANGE_FILTER{
         @Override
-        Filter filter(String field, Collection<String> filterValues) {
+        Query filter(String field, Collection<String> filterValues) {
             throw new RuntimeException("Not Implemented");
         }
     },
 
     QUERY_FILTER{
         @Override
-        Filter filter(String field, Collection<String> filterValues) {
+        Query filter(String field, Collection<String> filterValues) {
             throw new RuntimeException("Not Implemented");
         }
     };
 
-   abstract Filter filter(String field,Collection<String> filterValues);
+   abstract Query filter(String field,Collection<String> filterValues);
 
     Function<String,Function<String,Term>>  createFilterTerm = f -> lettersNumbersTrimLowerCase.andThen(termFunction.apply(f));
 

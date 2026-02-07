@@ -64,8 +64,8 @@ public class Searcher {
     private ThrowingFunction<String, IndexSearcher> createIndexSearcherFromStringPath = createPath.andThen(createDirectory).andThen(createDirectoryReader).andThen(openIndexSearcher);
     private ThrowingFunction<Path, IndexSearcher> createIndexSearcherFromPath = createDirectory.andThen(createDirectoryReader).andThen(openIndexSearcher);
 
-    private Function<Set<String>, Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>>> getSearchDocsWithSelectedFields = fields -> searcher -> scoreDoc -> searcher.doc(scoreDoc.doc, fields);
-    private Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>> getSearchDocsWithAllFields = searcher -> scoreDoc -> searcher.doc(scoreDoc.doc);
+    private Function<Set<String>, Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>>> getSearchDocsWithSelectedFields = fields -> searcher -> scoreDoc -> searcher.storedFields().document(scoreDoc.doc, fields);
+    private Function<IndexSearcher, ThrowingFunction<ScoreDoc, Document>> getSearchDocsWithAllFields = searcher -> scoreDoc -> searcher.storedFields().document(scoreDoc.doc);
 
 
     private Function<List<IndexableField>, ImmutableMap<String, Object>> loadFieldIntoHashMap = list -> {
